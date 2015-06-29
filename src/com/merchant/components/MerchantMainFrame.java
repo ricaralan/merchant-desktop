@@ -6,8 +6,6 @@
 package com.merchant.components;
 
 import java.awt.Dimension;
-import java.awt.GraphicsEnvironment;
-import java.awt.Rectangle;
 
 /**
  *
@@ -25,6 +23,7 @@ public class MerchantMainFrame extends javax.swing.JFrame {
         backgroundDesktop.setBounds(10, 10, screen.width, screen.height);
         this.setSize(screen);
         setExtendedState(this.MAXIMIZED_BOTH);
+        this.setTitle("Merchant desktop");
     }
 
     /**
@@ -36,10 +35,15 @@ public class MerchantMainFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        popupMenu = new javax.swing.JPopupMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
         backgroundDesktop = new javax.swing.JDesktopPane();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+
+        jMenuItem1.setText("jMenuItem1");
+        popupMenu.add(jMenuItem1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -58,21 +62,21 @@ public class MerchantMainFrame extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Desktop for users");
+        jLabel1.setText("Desktop for users - merchant");
 
         javax.swing.GroupLayout backgroundDesktopLayout = new javax.swing.GroupLayout(backgroundDesktop);
         backgroundDesktop.setLayout(backgroundDesktopLayout);
         backgroundDesktopLayout.setHorizontalGroup(
             backgroundDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundDesktopLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(backgroundDesktopLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1))
             .addGroup(backgroundDesktopLayout.createSequentialGroup()
-                .addGap(156, 156, 156)
+                .addGap(204, 204, 204)
                 .addComponent(jLabel1)
-                .addContainerGap(115, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         backgroundDesktopLayout.setVerticalGroup(
             backgroundDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -80,9 +84,9 @@ public class MerchantMainFrame extends javax.swing.JFrame {
                 .addGroup(backgroundDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
-                .addGap(113, 113, 113)
+                .addGap(112, 112, 112)
                 .addComponent(jLabel1)
-                .addGap(0, 182, Short.MAX_VALUE))
+                .addGap(0, 183, Short.MAX_VALUE))
         );
         backgroundDesktop.setLayer(jButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         backgroundDesktop.setLayer(jButton2, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -111,11 +115,12 @@ public class MerchantMainFrame extends javax.swing.JFrame {
         setState(this.ICONIFIED);
     }//GEN-LAST:event_jButton2ActionPerformed
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane backgroundDesktop;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JPopupMenu popupMenu;
     // End of variables declaration//GEN-END:variables
 }
