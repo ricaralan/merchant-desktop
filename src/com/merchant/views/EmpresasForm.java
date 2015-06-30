@@ -23,6 +23,7 @@ public class EmpresasForm extends javax.swing.JPanel {
     MerchantConnection merchantConnection;
     EmpresaController empresaController;
     private boolean crearEmpresa;
+    private int idActualizar;
     
     public EmpresasForm() {
         initComponents();
@@ -245,14 +246,16 @@ public class EmpresasForm extends javax.swing.JPanel {
 
     private void btnOpcionFormActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpcionFormActionPerformed
         if (crearEmpresa){
-            if (new EmpresaController().create(merchantConnection.getConnection(), getDatosEmpresa())) {
-                initDataTable();
-            } else {
+            if (!new EmpresaController().create(merchantConnection.getConnection(), getDatosEmpresa())) {
                 JOptionPane.showMessageDialog(this, "Por favor intente más tarde...", "ERROR AL REGISTRAR", 1);
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Código para editar!!");
+            if (!new EmpresaController().update(merchantConnection.getConnection(), getDatosEmpresa(), idActualizar)) {
+                JOptionPane.showMessageDialog(this, "Por favor intente más tarde...", "ERROR AL ACTUALIZAR", 1);
+            }
         }
+        initDataTable();
+        cleanDatosEmpresaForm();
     }//GEN-LAST:event_btnOpcionFormActionPerformed
 
     private void EditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditarActionPerformed
@@ -262,6 +265,7 @@ public class EmpresasForm extends javax.swing.JPanel {
             Empresa empresa = ((EmpresaTableModel)tableEmpresas.getModel()).getRowEmpresa(row);
             setDatosEmpresaForm(empresa);
             btnOpcionForm.setText("Editar");
+            idActualizar = empresa.id;
             crearEmpresa = false;
         }
     }//GEN-LAST:event_EditarActionPerformed

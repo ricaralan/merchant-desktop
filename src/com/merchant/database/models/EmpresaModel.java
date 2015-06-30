@@ -31,9 +31,25 @@ public class EmpresaModel {
         }
         return res;
     }
-    
+
+    public Integer update(Connection connection, Empresa empresa, int id) {
+        query = "UPDATE empresa SET nombreEmpresa='" + empresa.nombre + "', "
+                + "rfcEmpresa='" + empresa.rfc + "', regimenEmpresa='" + empresa.regimen
+                + "', logoEmpresa='" + empresa.logo + "', telEmpresa='" + empresa.tel
+                + "', tel2Empresa='" + empresa.tel2 + "', mailEmpresa='" + empresa.email
+                + "', webEmpresa='" + empresa.web + "' WHERE idEmpresa=" + id;
+        Integer res = null;
+        try {
+            Statement statement = connection.createStatement();
+            res = statement.executeUpdate(query);
+        } catch (SQLException e) {
+            System.err.println(query + "\n" + e.getMessage());
+        }
+        return res;
+    }
+
     public Integer delete(Connection connection, int id) {
-        query = "DELETE FROM empresa WHERE idEmpresa="+id+"";
+        query = "DELETE FROM empresa WHERE idEmpresa=" + id + "";
         Integer res = null;
         try {
             Statement statement = connection.createStatement();
