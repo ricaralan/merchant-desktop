@@ -31,6 +31,18 @@ public class EmpresaModel {
         }
         return res;
     }
+    
+    public Integer delete(Connection connection, int id) {
+        query = "DELETE FROM empresa WHERE idEmpresa="+id+"";
+        Integer res = null;
+        try {
+            Statement statement = connection.createStatement();
+            res = statement.executeUpdate(query);
+        } catch (SQLException e) {
+            System.err.println(query + "\n" + e.getMessage());
+        }
+        return res;
+    }
 
     public List<Empresa> getEmpresas(Connection connection) {
         List<Empresa> empresas = new ArrayList<>();

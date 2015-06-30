@@ -55,4 +55,12 @@ public class EmpresaTableModel extends AbstractTableModel{
         return value;
     }
     
+    public Empresa getRowEmpresa (int row) {
+        return empresas.get(row);
+    }
+    
+    public void editRowEmpresa(int row, Empresa empresa) {
+        empresas.set(row, empresa);
+    }
+    
 }
