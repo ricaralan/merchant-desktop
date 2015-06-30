@@ -128,12 +128,18 @@ public class MerchantMainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-        MerchantInternalFrame internal = new MerchantInternalFrame("Empresas", new EmpresasForm());
-        internal.setVisible(true);
-        backgroundDesktop.add(internal);
+        newInternalFrame(new EmpresasForm(), "Empresas");
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void newInternalFrame (final javax.swing.JPanel panel, String internalTitle) {
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                MerchantInternalFrame internal = new MerchantInternalFrame("Empresas", panel);
+                internal.setVisible(true);
+                backgroundDesktop.add(internal);
+            }
+        });
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane backgroundDesktop;
     private javax.swing.JButton jButton1;
