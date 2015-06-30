@@ -26,13 +26,13 @@ public class EmpresasForm extends javax.swing.JPanel {
     /**
      * Creates new form EmpresasForm
      */
-    MerchantConnection merchantConnection;
-    EmpresaController empresaController;
+    private MerchantConnection merchantConnection;
+    private EmpresaController empresaController;
     private boolean crearEmpresa;
     private int idActualizar;
-    ImageJPanel imagePanel;
-    File fotoASubir;
-    private String basePathLogo, basePathSO;
+    private ImageJPanel imagePanel;
+    private File fotoASubir;
+    private String basePathLogo = null, basePathSO = null;
 
     public EmpresasForm() {
         initComponents();
@@ -346,24 +346,7 @@ public class EmpresasForm extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void setFotoLogo(String path) {
-        imagePanel = new ImageJPanel(panelFoto, path);
-        panelFoto.add(imagePanel).repaint();
-    }
-
-    private void copyFile(File from, File to) {
-        try {
-            FileChannel in = (new FileInputStream(from)).getChannel();
-            FileChannel out = (new FileOutputStream(to)).getChannel();
-            in.transferTo(0, from.length(), out);
-            in.close();
-            out.close();
-        } catch (Exception e) {
-            System.err.println(e);
-        }
-    }
-
-    private Empresa getDatosEmpresa() {
+    private synchronized Empresa getDatosEmpresa() {
         Empresa empresa = new Empresa();
         empresa.nombre = txtNombre.getText();
         empresa.rfc = txtRFC.getText();
@@ -380,7 +363,7 @@ public class EmpresasForm extends javax.swing.JPanel {
         return empresa;
     }
 
-    private void setDatosEmpresaForm(Empresa empresa) {
+    private synchronized void setDatosEmpresaForm(Empresa empresa) {
         cleanDatosEmpresaForm();
         txtNombre.setText(empresa.nombre);
         txtRFC.setText(empresa.rfc);
@@ -404,11 +387,28 @@ public class EmpresasForm extends javax.swing.JPanel {
         txtMail.setText("");
         cleanFoto();
     }
-
+    
+    private synchronized void setFotoLogo(String path) {
+        imagePanel = new ImageJPanel(panelFoto, path);
+        panelFoto.add(imagePanel).repaint();
+    }
+    
     private void cleanFoto() {
         fotoASubir = null;
         panelFoto.removeAll();
         panelFoto.repaint();
+    }
+
+    private void copyFile(File from, File to) {
+        try {
+            FileChannel in = (new FileInputStream(from)).getChannel();
+            FileChannel out = (new FileOutputStream(to)).getChannel();
+            in.transferTo(0, from.length(), out);
+            in.close();
+            out.close();
+        } catch (Exception e) {
+            System.err.println(e);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
