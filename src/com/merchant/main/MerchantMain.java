@@ -1,5 +1,6 @@
 package com.merchant.main;
 
+import com.merchant.utils.VerifyProyect;
 import com.merchant.views.Login;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
@@ -21,6 +22,8 @@ public class MerchantMain {
                     break;
                 }
             }
+            VerifyProyect verify = new VerifyProyect();
+            verify.verify();
             login = new Login();
             login.setVisible(true);
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
