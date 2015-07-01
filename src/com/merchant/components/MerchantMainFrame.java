@@ -171,10 +171,11 @@ public class MerchantMainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_itemEmpresasActionPerformed
 
     private void formKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyTyped
-        System.out.println(evt);
+        //System.out.println(evt.getKeyChar() + " = " + evt.getKeyCode());
     }//GEN-LAST:event_formKeyTyped
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        System.out.println(evt.getKeyChar() + " = " + evt.getKeyCode());
         if (evt.getKeyCode() == 524) {
             toggleShowMenuInicio();
         }
