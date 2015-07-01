@@ -7,6 +7,8 @@ package com.merchant.components;
 
 import com.merchant.views.EmpresasForm;
 import java.awt.Dimension;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 
 /**
  *
@@ -18,6 +20,9 @@ public class MerchantMainFrame extends javax.swing.JFrame {
      * Creates new form MerchantMainFrame
      */
     Dimension screen;
+    GraphicsDevice gd;
+       
+       
 
     public MerchantMainFrame() {
         initComponents();
@@ -26,6 +31,13 @@ public class MerchantMainFrame extends javax.swing.JFrame {
         this.setSize(screen);
         setExtendedState(this.MAXIMIZED_BOTH);
         this.setTitle("Merchant desktop");
+        setFullScreen();
+    }
+    
+    private void setFullScreen () {
+        GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        gd = env.getDefaultScreenDevice();
+        gd.setFullScreenWindow(this);
     }
 
     /**
@@ -116,11 +128,11 @@ public class MerchantMainFrame extends javax.swing.JFrame {
                 .addComponent(jButton2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1))
+            .addComponent(jToolBar2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(backgroundDesktopLayout.createSequentialGroup()
                 .addGap(88, 88, 88)
                 .addComponent(jLabel1)
                 .addGap(0, 311, Short.MAX_VALUE))
-            .addComponent(jToolBar2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         backgroundDesktopLayout.setVerticalGroup(
             backgroundDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
