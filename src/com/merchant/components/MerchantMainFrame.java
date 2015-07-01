@@ -18,6 +18,7 @@ public class MerchantMainFrame extends javax.swing.JFrame {
      * Creates new form MerchantMainFrame
      */
     Dimension screen;
+
     public MerchantMainFrame() {
         initComponents();
         screen = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
@@ -38,13 +39,12 @@ public class MerchantMainFrame extends javax.swing.JFrame {
 
         popupMenu = new javax.swing.JPopupMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTree2 = new javax.swing.JTree();
+        jPanel1 = new javax.swing.JPanel();
+        jButton3 = new javax.swing.JButton();
         backgroundDesktop = new javax.swing.JDesktopPane();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
 
         jMenuItem1.setText("jMenuItem1");
         popupMenu.add(jMenuItem1);
@@ -53,10 +53,29 @@ public class MerchantMainFrame extends javax.swing.JFrame {
         setUndecorated(true);
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
 
-        jTree2.setPreferredSize(new java.awt.Dimension(300, 72));
-        jScrollPane2.setViewportView(jTree2);
+        jPanel1.setPreferredSize(new java.awt.Dimension(280, 363));
 
-        getContentPane().add(jScrollPane2);
+        jButton3.setText("Empresas");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 296, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(jPanel1);
 
         jButton1.setText("x");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -74,27 +93,17 @@ public class MerchantMainFrame extends javax.swing.JFrame {
 
         jLabel1.setText("Desktop for users - merchant");
 
-        jButton3.setText("Empresas");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout backgroundDesktopLayout = new javax.swing.GroupLayout(backgroundDesktop);
         backgroundDesktop.setLayout(backgroundDesktopLayout);
         backgroundDesktopLayout.setHorizontalGroup(
             backgroundDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundDesktopLayout.createSequentialGroup()
-                .addContainerGap(97, Short.MAX_VALUE)
-                .addGroup(backgroundDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton3)
-                    .addGroup(backgroundDesktopLayout.createSequentialGroup()
-                        .addGroup(backgroundDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel1)
-                            .addComponent(jButton2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1))))
+                .addContainerGap(41, Short.MAX_VALUE)
+                .addGroup(backgroundDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1)
+                    .addComponent(jButton2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1))
         );
         backgroundDesktopLayout.setVerticalGroup(
             backgroundDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -104,14 +113,11 @@ public class MerchantMainFrame extends javax.swing.JFrame {
                     .addComponent(jButton2))
                 .addGap(114, 114, 114)
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(jButton3)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 209, Short.MAX_VALUE))
         );
         backgroundDesktop.setLayer(jButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         backgroundDesktop.setLayer(jButton2, javax.swing.JLayeredPane.DEFAULT_LAYER);
         backgroundDesktop.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        backgroundDesktop.setLayer(jButton3, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         getContentPane().add(backgroundDesktop);
 
@@ -131,10 +137,11 @@ public class MerchantMainFrame extends javax.swing.JFrame {
         newInternalFrame(new EmpresasForm(), "Empresas");
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void newInternalFrame (final javax.swing.JPanel panel, String internalTitle) {
+    private void newInternalFrame(final javax.swing.JPanel panel, final String internalTitle) {
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
-                MerchantInternalFrame internal = new MerchantInternalFrame("Empresas", panel);
+                MerchantInternalFrame internal = new MerchantInternalFrame(internalTitle, panel);
                 internal.setVisible(true);
                 backgroundDesktop.add(internal);
             }
@@ -147,8 +154,7 @@ public class MerchantMainFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTree jTree2;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPopupMenu popupMenu;
     // End of variables declaration//GEN-END:variables
 }
