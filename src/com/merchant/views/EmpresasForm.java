@@ -137,6 +137,11 @@ public class EmpresasForm extends javax.swing.JPanel {
         tableEmpresas.setModel(new EmpresaTableModel());
         tableEmpresas.setComponentPopupMenu(opcionesEmpresa);
         tableEmpresas.setRowHeight(27);
+        tableEmpresas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableEmpresasMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tableEmpresas);
 
         btnOpcionForm.setText("Crear");
@@ -345,6 +350,20 @@ public class EmpresasForm extends javax.swing.JPanel {
             setFotoLogo(fotoASubir.getAbsolutePath());
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void tableEmpresasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableEmpresasMouseClicked
+        // TODO add your handling code here:
+        if (evt.getClickCount() > 1) {
+            int row = tableEmpresas.getSelectedRow();
+            if (row != -1) {
+                Empresa empresa = ((EmpresaTableModel) tableEmpresas.getModel()).getRowEmpresa(row);
+                setDatosEmpresaForm(empresa);
+                btnOpcionForm.setText("Editar");
+                idActualizar = empresa.id;
+                crearEmpresa = false;
+            }
+        }
+    }//GEN-LAST:event_tableEmpresasMouseClicked
 
     private synchronized Empresa getDatosEmpresa() {
         Empresa empresa = new Empresa();

@@ -309,6 +309,9 @@
             </Property>
             <Property name="rowHeight" type="int" value="27"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tableEmpresasMouseClicked"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
