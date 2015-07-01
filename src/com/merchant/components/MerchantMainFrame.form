@@ -2,19 +2,6 @@
 
 <Form version="1.9" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
-    <Container class="javax.swing.JPopupMenu" name="popupMenu">
-
-      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
-        <Property name="useNullLayout" type="boolean" value="true"/>
-      </Layout>
-      <SubComponents>
-        <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="jMenuItem1"/>
-          </Properties>
-        </MenuItem>
-      </SubComponents>
-    </Container>
     <Container class="javax.swing.JPopupMenu" name="desktopMenu">
       <Properties>
         <Property name="toolTipText" type="java.lang.String" value="Menu"/>
@@ -24,21 +11,44 @@
         <Property name="useNullLayout" type="boolean" value="true"/>
       </Layout>
       <SubComponents>
-        <MenuItem class="javax.swing.JMenuItem" name="otroItem">
+        <Menu class="javax.swing.JMenu" name="menuConfiguracion">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/com/merchant/images/icons/cog.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="&quot;otro item&quot;" type="code"/>
+              <Connection code="&quot;Configuraci&#xf3;n&quot;" type="code"/>
             </Property>
           </Properties>
-        </MenuItem>
-        <MenuItem class="javax.swing.JMenuItem" name="itemEmpresas">
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="itemEmpresas">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/com/merchant/images/icons/enterprise.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="&quot;Empresas&quot;" type="code"/>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itemEmpresasActionPerformed"/>
+              </Events>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
+        <Component class="javax.swing.JPopupMenu$Separator" name="jSeparator1">
+        </Component>
+        <MenuItem class="javax.swing.JMenuItem" name="itemSalir">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/com/merchant/images/icons/exit.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="&quot;Empresas&quot;" type="code"/>
+              <Connection code="&quot;Salir&quot;" type="code"/>
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itemEmpresasActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itemSalirActionPerformed"/>
           </Events>
         </MenuItem>
       </SubComponents>
@@ -82,6 +92,9 @@
   </Layout>
   <SubComponents>
     <Container class="javax.swing.JDesktopPane" name="backgroundDesktop">
+      <Events>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="backgroundDesktopKeyPressed"/>
+      </Events>
 
       <Layout>
         <DimensionLayout dim="0">
@@ -155,7 +168,7 @@
             <Component class="javax.swing.JLabel" name="lblInicio">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/com/merchant/images/cong-mod.png"/>
+                  <Image iconType="3" name="/com/merchant/images/icons/conf.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Inicio"/>
               </Properties>

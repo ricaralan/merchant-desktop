@@ -5,6 +5,7 @@
  */
 package com.merchant.components;
 
+import com.merchant.utils.KeyCode;
 import com.merchant.views.EmpresasForm;
 import java.awt.Dimension;
 import java.awt.GraphicsDevice;
@@ -19,10 +20,9 @@ public class MerchantMainFrame extends javax.swing.JFrame {
     /**
      * Creates new form MerchantMainFrame
      */
-    Dimension screen;
-    GraphicsDevice gd;
-       
-       
+    private Dimension screen;
+    private GraphicsDevice gd;
+    private KeyCode keyCode;
 
     public MerchantMainFrame() {
         initComponents();
@@ -32,6 +32,7 @@ public class MerchantMainFrame extends javax.swing.JFrame {
         setExtendedState(this.MAXIMIZED_BOTH);
         this.setTitle("Merchant desktop");
         setFullScreen();
+        keyCode = new KeyCode();
     }
     
     private void setFullScreen () {
@@ -49,11 +50,11 @@ public class MerchantMainFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        popupMenu = new javax.swing.JPopupMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
         desktopMenu = new javax.swing.JPopupMenu();
-        otroItem = new javax.swing.JMenuItem();
+        menuConfiguracion = new javax.swing.JMenu();
         itemEmpresas = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        itemSalir = new javax.swing.JMenuItem();
         backgroundDesktop = new javax.swing.JDesktopPane();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -61,21 +62,31 @@ public class MerchantMainFrame extends javax.swing.JFrame {
         jToolBar2 = new javax.swing.JToolBar();
         lblInicio = new javax.swing.JLabel();
 
-        jMenuItem1.setText("jMenuItem1");
-        popupMenu.add(jMenuItem1);
-
         desktopMenu.setToolTipText("Menu");
 
-        otroItem.setText("otro item");
-        desktopMenu.add(otroItem);
+        menuConfiguracion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/merchant/images/icons/cog.png"))); // NOI18N
+        menuConfiguracion.setText("Configuración");
 
+        itemEmpresas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/merchant/images/icons/enterprise.png"))); // NOI18N
         itemEmpresas.setText("Empresas");
         itemEmpresas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 itemEmpresasActionPerformed(evt);
             }
         });
-        desktopMenu.add(itemEmpresas);
+        menuConfiguracion.add(itemEmpresas);
+
+        desktopMenu.add(menuConfiguracion);
+        desktopMenu.add(jSeparator1);
+
+        itemSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/merchant/images/icons/exit.png"))); // NOI18N
+        itemSalir.setText("Salir");
+        itemSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemSalirActionPerformed(evt);
+            }
+        });
+        desktopMenu.add(itemSalir);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -85,6 +96,12 @@ public class MerchantMainFrame extends javax.swing.JFrame {
             }
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 formKeyPressed(evt);
+            }
+        });
+
+        backgroundDesktop.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                backgroundDesktopKeyPressed(evt);
             }
         });
 
@@ -110,7 +127,7 @@ public class MerchantMainFrame extends javax.swing.JFrame {
         jToolBar2.setToolTipText("");
         jToolBar2.setBorderPainted(false);
 
-        lblInicio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/merchant/images/cong-mod.png"))); // NOI18N
+        lblInicio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/merchant/images/icons/conf.png"))); // NOI18N
         lblInicio.setText("Inicio");
         lblInicio.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -165,7 +182,7 @@ public class MerchantMainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        this.dispose();
+        System.exit(0);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -183,16 +200,27 @@ public class MerchantMainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_itemEmpresasActionPerformed
 
     private void formKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyTyped
-        //System.out.println(evt.getKeyChar() + " = " + evt.getKeyCode());
+        System.out.println(evt);
     }//GEN-LAST:event_formKeyTyped
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
-        System.out.println(evt.getKeyChar() + " = " + evt.getKeyCode());
-        if (evt.getKeyCode() == 524) {
-            toggleShowMenuInicio();
-        }
+        aparecerMenuInicio(evt.getKeyCode());
     }//GEN-LAST:event_formKeyPressed
 
+    private void itemSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemSalirActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_itemSalirActionPerformed
+
+    private void backgroundDesktopKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_backgroundDesktopKeyPressed
+        aparecerMenuInicio(evt.getKeyCode());
+    }//GEN-LAST:event_backgroundDesktopKeyPressed
+
+    private void aparecerMenuInicio(int code){
+        if (keyCode.codeIsPressed("windows", code)) {
+            toggleShowMenuInicio();
+        }
+    }
+    
     private void toggleShowMenuInicio () {
         int x = lblInicio.getBounds().x;
         int y = (lblInicio.getBounds().y - (lblInicio.getHeight()/2)) - (desktopMenu.getComponentCount() * 20);
@@ -217,13 +245,13 @@ public class MerchantMainFrame extends javax.swing.JFrame {
     private javax.swing.JDesktopPane backgroundDesktop;
     private javax.swing.JPopupMenu desktopMenu;
     private javax.swing.JMenuItem itemEmpresas;
+    private javax.swing.JMenuItem itemSalir;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JToolBar jToolBar2;
     private javax.swing.JLabel lblInicio;
-    private javax.swing.JMenuItem otroItem;
-    private javax.swing.JPopupMenu popupMenu;
+    private javax.swing.JMenu menuConfiguracion;
     // End of variables declaration//GEN-END:variables
 }

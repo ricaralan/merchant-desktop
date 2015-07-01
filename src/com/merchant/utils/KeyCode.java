@@ -94,6 +94,12 @@ public class KeyCode {
         keys.put("alt", 18);
         keys.put("supr", 127);
         keys.put("alt_gr", 65406);
+        keys.put("windows", 524);
+    }
+    
+    public boolean codeIsPressed(String keyName, int codeNumber) {
+        Integer keyCode = (Integer)keys.get(keyName);
+        return keyCode != null && keyCode == codeNumber;
     }
     
 }
