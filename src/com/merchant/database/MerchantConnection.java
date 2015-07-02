@@ -15,8 +15,8 @@ public class MerchantConnection {
 
     public MerchantConnection() {
         database = "merchant";
-        userDB = "root";
-        passwordDB = "RAOR940203";
+        userDB = "merchant";
+        passwordDB = "merchant";
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection("jdbc:mysql://localhost/" + database, userDB, passwordDB);
