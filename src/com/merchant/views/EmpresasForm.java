@@ -6,6 +6,7 @@
 package com.merchant.views;
 
 import com.merchant.components.tableModels.EmpresaTableModel;
+import com.merchant.components.tableModels.MerchantTableModel;
 import com.merchant.controllers.EmpresaController;
 import com.merchant.database.MerchantConnection;
 import com.merchant.pojos.Empresa;
@@ -316,7 +317,7 @@ public class EmpresasForm extends javax.swing.JPanel {
         // TODO add your handling code here:
         int row = tableEmpresas.getSelectedRow();
         if (row != -1) {
-            Empresa empresa = ((EmpresaTableModel) tableEmpresas.getModel()).getObjectByRow(row);
+            Empresa empresa = (Empresa)((MerchantTableModel) tableEmpresas.getModel()).getObjectByRow(row);
             setDatosEmpresaForm(empresa);
             btnOpcionForm.setText("Editar");
             idActualizar = empresa.id;
@@ -328,7 +329,7 @@ public class EmpresasForm extends javax.swing.JPanel {
         // TODO add your handling code here:
         int row = tableEmpresas.getSelectedRow();
         if (row != -1) {
-            Empresa empresa = ((EmpresaTableModel) tableEmpresas.getModel()).getObjectByRow(row);
+            Empresa empresa = (Empresa)((MerchantTableModel) tableEmpresas.getModel()).getObjectByRow(row);
             int res = JOptionPane.showConfirmDialog(null, "¿Esta seguro de eliminar la empresa \"" + empresa.nombre + "\"?");
             if (res == JOptionPane.OK_OPTION) {
                 if (empresaController.delete(merchantConnection.getConnection(), empresa.id)) {
@@ -363,7 +364,7 @@ public class EmpresasForm extends javax.swing.JPanel {
         if (evt.getClickCount() > 1) {
             int row = tableEmpresas.getSelectedRow();
             if (row != -1) {
-                Empresa empresa = ((EmpresaTableModel) tableEmpresas.getModel()).getObjectByRow(row);
+                Empresa empresa = (Empresa)((MerchantTableModel) tableEmpresas.getModel()).getObjectByRow(row);
                 setDatosEmpresaForm(empresa);
                 btnOpcionForm.setText("Editar");
                 idActualizar = empresa.id;
