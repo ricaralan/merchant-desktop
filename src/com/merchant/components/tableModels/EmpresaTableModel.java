@@ -42,14 +42,14 @@ public class EmpresaTableModel extends MerchantTableModel{
     }
 
     @Override
-    public Object getValueAt(int i, int y) {
+    public Object getValueAt(int row, int column) {
         String value = "";
-        switch (y) {
-            case 0: value = empresas.get(i).nombre;break;
-            case 1: value = empresas.get(i).rfc;break;
-            case 2: value = empresas.get(i).email;break;
-            case 3: value = empresas.get(i).tel;break;
-            case 4: value = empresas.get(i).web;break;
+        switch (column) {
+            case 0: value = empresas.get(row).nombre;break;
+            case 1: value = empresas.get(row).rfc;break;
+            case 2: value = empresas.get(row).email;break;
+            case 3: value = empresas.get(row).tel;break;
+            case 4: value = empresas.get(row).web;break;
         }
         return value;
     }
