@@ -6,6 +6,7 @@
 package com.merchant.components;
 
 import com.merchant.utils.KeyCode;
+import com.merchant.views.ConfigurationForm;
 import com.merchant.views.EmpresasForm;
 import java.awt.Dimension;
 import java.awt.GraphicsDevice;
@@ -52,6 +53,7 @@ public class MerchantMainFrame extends javax.swing.JFrame {
 
         desktopMenu = new javax.swing.JPopupMenu();
         menuConfiguracion = new javax.swing.JMenu();
+        itemConfiguracion = new javax.swing.JMenuItem();
         itemEmpresas = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         itemSalir = new javax.swing.JMenuItem();
@@ -66,6 +68,15 @@ public class MerchantMainFrame extends javax.swing.JFrame {
 
         menuConfiguracion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/merchant/images/icons/cog.png"))); // NOI18N
         menuConfiguracion.setText("Configuración");
+
+        itemConfiguracion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/merchant/images/icons/cog.png"))); // NOI18N
+        itemConfiguracion.setText("Configuración");
+        itemConfiguracion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemConfiguracionActionPerformed(evt);
+            }
+        });
+        menuConfiguracion.add(itemConfiguracion);
 
         itemEmpresas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/merchant/images/icons/enterprise.png"))); // NOI18N
         itemEmpresas.setText("Empresas");
@@ -91,9 +102,6 @@ public class MerchantMainFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
         addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                formKeyTyped(evt);
-            }
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 formKeyPressed(evt);
             }
@@ -199,10 +207,6 @@ public class MerchantMainFrame extends javax.swing.JFrame {
         newInternalFrame(new EmpresasForm(), "Empresas");
     }//GEN-LAST:event_itemEmpresasActionPerformed
 
-    private void formKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyTyped
-        System.out.println(evt);
-    }//GEN-LAST:event_formKeyTyped
-
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
         aparecerMenuInicio(evt.getKeyCode());
     }//GEN-LAST:event_formKeyPressed
@@ -214,6 +218,10 @@ public class MerchantMainFrame extends javax.swing.JFrame {
     private void backgroundDesktopKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_backgroundDesktopKeyPressed
         aparecerMenuInicio(evt.getKeyCode());
     }//GEN-LAST:event_backgroundDesktopKeyPressed
+
+    private void itemConfiguracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemConfiguracionActionPerformed
+        newInternalFrame(new ConfigurationForm(), "Configuraciones");
+    }//GEN-LAST:event_itemConfiguracionActionPerformed
 
     private void aparecerMenuInicio(int code){
         if (keyCode.codeIsPressed("windows", code)) {
@@ -227,6 +235,7 @@ public class MerchantMainFrame extends javax.swing.JFrame {
         if (!desktopMenu.isShowing()){
             desktopMenu.show(lblInicio, x, y);
         } else {
+            desktopMenu.setFocusable(false);
             desktopMenu.setVisible(false);
         }
     }
@@ -244,6 +253,7 @@ public class MerchantMainFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane backgroundDesktop;
     private javax.swing.JPopupMenu desktopMenu;
+    private javax.swing.JMenuItem itemConfiguracion;
     private javax.swing.JMenuItem itemEmpresas;
     private javax.swing.JMenuItem itemSalir;
     private javax.swing.JButton jButton1;

@@ -1,17 +1,16 @@
-package com.merchant.components;
+package com.merchant.components.tableModels;
 
 import com.merchant.controllers.EmpresaController;
 import com.merchant.pojos.Empresa;
 import java.sql.Connection;
 import java.util.List;
 import java.util.ArrayList;
-import javax.swing.table.AbstractTableModel;
 
 /**
  *
  * @author alan
  */
-public class EmpresaTableModel extends AbstractTableModel{
+public class EmpresaTableModel extends MerchantTableModel{
 
     List<Empresa> empresas;
     EmpresaController empresaController;
@@ -55,12 +54,19 @@ public class EmpresaTableModel extends AbstractTableModel{
         return value;
     }
     
-    public Empresa getRowEmpresa (int row) {
+    @Override
+    public Object getObjectByRow (int row) {
         return empresas.get(row);
     }
     
-    public void editRowEmpresa(int row, Empresa empresa) {
-        empresas.set(row, empresa);
+    @Override
+    public void editRowByObject(int row, Object empresa) {
+        empresas.set(row, (Empresa)empresa);
+    }
+    
+    @Override
+    public void delRow(int row) {
+        empresas.remove(row);
     }
     
 }
