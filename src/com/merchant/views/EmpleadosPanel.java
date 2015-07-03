@@ -377,7 +377,7 @@ public class EmpleadosPanel extends MerchantPanel {
         Empresa empresa = new Empresa();
         empresa.nombre = txtNombre.getText();
         empresa.rfc = txtRFC.getText();
-        empresa.regimen = txtRegimen.getText();
+        //empresa.regimen = txtRegimen.getText();
         empresa.tel = txtTel1.getText();
         empresa.tel2 = txtTel2.getText();
         empresa.web = txtWebEmpresa.getText();
@@ -394,7 +394,7 @@ public class EmpleadosPanel extends MerchantPanel {
         cleanDatosEmpresaForm();
         txtNombre.setText(empresa.nombre);
         txtRFC.setText(empresa.rfc);
-        txtRegimen.setText(empresa.regimen);
+        //txtRegimen.setText(empresa.regimen);
         txtTel1.setText(empresa.tel);
         txtTel2.setText(empresa.tel2);
         txtWebEmpresa.setText(empresa.web);

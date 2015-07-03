@@ -60,7 +60,6 @@ public class MerchantMainFrame extends javax.swing.JFrame {
         desktopMenu = new javax.swing.JPopupMenu();
         menuConfiguracion = new javax.swing.JMenu();
         itemConfiguracion = new javax.swing.JMenuItem();
-        itemEmpresas = new javax.swing.JMenuItem();
         itemEmpleados = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         itemSalir = new javax.swing.JMenuItem();
@@ -84,15 +83,6 @@ public class MerchantMainFrame extends javax.swing.JFrame {
             }
         });
         menuConfiguracion.add(itemConfiguracion);
-
-        itemEmpresas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/merchant/images/icons/enterprise.png"))); // NOI18N
-        itemEmpresas.setText("Empresas");
-        itemEmpresas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemEmpresasActionPerformed(evt);
-            }
-        });
-        menuConfiguracion.add(itemEmpresas);
 
         itemEmpleados.setText("jMenuItem1");
         itemEmpleados.addActionListener(new java.awt.event.ActionListener() {
@@ -218,10 +208,6 @@ public class MerchantMainFrame extends javax.swing.JFrame {
         toggleShowMenuInicio();
     }//GEN-LAST:event_lblInicioMouseClicked
 
-    private void itemEmpresasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEmpresasActionPerformed
-        newInternalFrame(new EmpresasPanel(), "Empresas");
-    }//GEN-LAST:event_itemEmpresasActionPerformed
-
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
         aparecerMenuInicio(evt.getKeyCode());
     }//GEN-LAST:event_formKeyPressed
@@ -279,7 +265,6 @@ public class MerchantMainFrame extends javax.swing.JFrame {
     private javax.swing.JPopupMenu desktopMenu;
     private javax.swing.JMenuItem itemConfiguracion;
     private javax.swing.JMenuItem itemEmpleados;
-    private javax.swing.JMenuItem itemEmpresas;
     private javax.swing.JMenuItem itemSalir;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;

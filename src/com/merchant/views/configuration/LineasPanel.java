@@ -6,7 +6,7 @@
 package com.merchant.views.configuration;
 
 import com.merchant.database.models.RegimenModel;
-import com.merchant.views.MerchantComboSQL;
+import com.merchant.utils.MerchantComboSQL;
 import java.sql.Connection;
 import javax.swing.JTable;
 

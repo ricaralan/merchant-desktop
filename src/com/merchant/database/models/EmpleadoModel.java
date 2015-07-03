@@ -1,6 +1,5 @@
 package com.merchant.database.models;
 
-import com.merchant.database.MerchantConnection;
 import com.merchant.pojos.Empleado;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

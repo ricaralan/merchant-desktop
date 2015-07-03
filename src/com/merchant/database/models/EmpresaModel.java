@@ -17,11 +17,12 @@ public class EmpresaModel {
     String query;
 
     public Integer create(Connection connection, Empresa empresa) {
-        query = "INSERT INTO empresa(nombreEmpresa, rfcEmpresa, regimenEmpresa,"
-                + " logoEmpresa, telEmpresa, tel2Empresa, mailEmpresa, webEmpresa)"
-                + " VALUES('" + empresa.nombre + "', '" + empresa.rfc + "', '"
-                + empresa.regimen + "', '" + empresa.logo + "', '" + empresa.tel + "', '"
-                + empresa.tel2 + "', '" + empresa.email + "', '" + empresa.web + "')";
+        query = "INSERT INTO empresa(nombreEmpresa, rfcEmpresa,"
+                + " logoEmpresa, telEmpresa, tel2Empresa, mailEmpresa, webEmpresa,"
+                + "regimenFiscal_idregimenFiscal) VALUES('" + empresa.nombre
+                + "', '" + empresa.rfc + "'," + " '" + empresa.logo + "', '"
+                + empresa.tel + "', '" + empresa.tel2 + "', '" + empresa.email
+                + "', '" + empresa.web + "', " + empresa.regimenFiscal_idregimenFiscal + ")";
         Integer res = null;
         try {
             Statement statement = connection.createStatement();
@@ -34,10 +35,12 @@ public class EmpresaModel {
 
     public Integer update(Connection connection, Empresa empresa, int id) {
         query = "UPDATE empresa SET nombreEmpresa='" + empresa.nombre + "', "
-                + "rfcEmpresa='" + empresa.rfc + "', regimenEmpresa='" + empresa.regimen
-                + "', logoEmpresa='" + empresa.logo + "', telEmpresa='" + empresa.tel
-                + "', tel2Empresa='" + empresa.tel2 + "', mailEmpresa='" + empresa.email
-                + "', webEmpresa='" + empresa.web + "' WHERE idEmpresa=" + id;
+                + "rfcEmpresa='" + empresa.rfc + "', logoEmpresa='" + empresa.logo
+                + "', telEmpresa='" + empresa.tel + "', tel2Empresa='"
+                + empresa.tel2 + "', mailEmpresa='" + empresa.email
+                + "', webEmpresa='" + empresa.web + "',"
+                + "regimenFiscal_idregimenFiscal=" + empresa.regimenFiscal_idregimenFiscal
+                + " WHERE idEmpresa=" + id;
         Integer res = null;
         try {
             Statement statement = connection.createStatement();
@@ -71,12 +74,12 @@ public class EmpresaModel {
                 empresa.id = todasLasEmpresas.getInt("idEmpresa");
                 empresa.nombre = todasLasEmpresas.getString("nombreEmpresa");
                 empresa.rfc = todasLasEmpresas.getString("rfcEmpresa");
-                empresa.regimen = todasLasEmpresas.getString("regimenEmpresa");
                 empresa.logo = todasLasEmpresas.getString("logoEmpresa");
                 empresa.tel = todasLasEmpresas.getString("telEmpresa");
                 empresa.tel2 = todasLasEmpresas.getString("tel2Empresa");
                 empresa.email = todasLasEmpresas.getString("mailEmpresa");
                 empresa.web = todasLasEmpresas.getString("webEmpresa");
+                empresa.regimenFiscal_idregimenFiscal = todasLasEmpresas.getInt("regimenFiscal_idregimenFiscal");
                 empresas.add(empresa);
             }
         } catch (SQLException e) {
