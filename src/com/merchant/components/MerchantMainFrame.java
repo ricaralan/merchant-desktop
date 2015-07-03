@@ -9,7 +9,6 @@ import com.merchant.database.MerchantConnection;
 import com.merchant.utils.KeyCode;
 import com.merchant.views.EmpleadosPanel;
 import com.merchant.views.configuration.ConfigurationPanel;
-import com.merchant.views.configuration.EmpresasPanel;
 import com.merchant.views.MerchantPanel;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -84,13 +83,15 @@ public class MerchantMainFrame extends javax.swing.JFrame {
         });
         menuConfiguracion.add(itemConfiguracion);
 
-        itemEmpleados.setText("jMenuItem1");
+        itemEmpleados.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/merchant/images/icons/empleados.png"))); // NOI18N
+        itemEmpleados.setText("Empleados");
         itemEmpleados.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 itemEmpleadosActionPerformed(evt);
             }
         });
         menuConfiguracion.add(itemEmpleados);
+        itemEmpleados.getAccessibleContext().setAccessibleName("Empleados");
 
         desktopMenu.add(menuConfiguracion);
         desktopMenu.add(jSeparator1);
