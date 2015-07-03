@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS `merchant`.`empresa` (
   `idEmpresa` INT(11) NOT NULL AUTO_INCREMENT,
   `nombreEmpresa` VARCHAR(45) NOT NULL,
   `rfcEmpresa` VARCHAR(15) NOT NULL,
-  `logoEmpresa` VARCHAR(45) NULL DEFAULT NULL,
+  `logoEmpresa` VARCHAR(145) NULL DEFAULT NULL,
   `telEmpresa` VARCHAR(15) NULL DEFAULT NULL,
   `tel2Empresa` VARCHAR(15) NULL DEFAULT NULL,
   `mailEmpresa` VARCHAR(45) NULL DEFAULT NULL,
