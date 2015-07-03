@@ -16,8 +16,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.nio.channels.FileChannel;
+import java.sql.Connection;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 
 /**
  *
@@ -45,10 +47,20 @@ public class EmpresasPanel extends MerchantPanel {
         basePathLogo = "/images/empresas/";
         basePathSO = new File("").getAbsolutePath();
     }
+    
+    public EmpresasPanel(Connection connection, JTable table){
+        initComponents();
+        merchantConnection = new MerchantConnection();
+        empresaController = new EmpresaController();
+        initDataTable();
+        crearEmpresa = true;
+        basePathLogo = "/images/empresas/";
+        basePathSO = new File("").getAbsolutePath();
+    }
 
     private void initDataTable() {
         ((EmpresaTableModel) tableEmpresas.getModel())
-                .initEmpresas(merchantConnection.getConnection());
+                .initData(merchantConnection.getConnection());
     }
 
     /**
@@ -334,7 +346,7 @@ public class EmpresasPanel extends MerchantPanel {
             int res = JOptionPane.showConfirmDialog(null, "¿Esta seguro de eliminar la empresa \"" + empresa.nombre + "\"?");
             if (res == JOptionPane.OK_OPTION) {
                 if (empresaController.delete(merchantConnection.getConnection(), empresa.id)) {
-                    ((EmpresaTableModel) tableEmpresas.getModel()).initEmpresas(merchantConnection.getConnection());
+                    ((EmpresaTableModel) tableEmpresas.getModel()).initData(merchantConnection.getConnection());
                 } else {
                     JOptionPane.showMessageDialog(null, "Por favor intente más tarde...", "ERROR AL ELIMINAR", 1);
                 }

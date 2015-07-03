@@ -5,6 +5,7 @@
  */
 package com.merchant.components;
 
+import com.merchant.database.MerchantConnection;
 import com.merchant.utils.KeyCode;
 import com.merchant.views.EmpleadosPanel;
 import com.merchant.views.configuration.ConfigurationPanel;
@@ -27,6 +28,7 @@ public class MerchantMainFrame extends javax.swing.JFrame {
     private Dimension screen;
     private GraphicsDevice gd;
     private KeyCode keyCode;
+    public MerchantConnection merchantConnection;
 
     public MerchantMainFrame() {
         initComponents();
@@ -36,6 +38,7 @@ public class MerchantMainFrame extends javax.swing.JFrame {
         setExtendedState(this.MAXIMIZED_BOTH);
         this.setTitle("Merchant desktop");
         setFullScreen();
+        merchantConnection = new MerchantConnection();
         keyCode = new KeyCode();
     }
     
@@ -232,7 +235,7 @@ public class MerchantMainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_backgroundDesktopKeyPressed
 
     private void itemConfiguracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemConfiguracionActionPerformed
-        ConfigurationPanel form = new ConfigurationPanel();
+        ConfigurationPanel form = new ConfigurationPanel(merchantConnection);
         newInternalFrame(form, "Configuraciones");
     }//GEN-LAST:event_itemConfiguracionActionPerformed
 

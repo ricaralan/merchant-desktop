@@ -47,7 +47,7 @@ public class EmpleadosPanel extends MerchantPanel {
 
     private void initDataTable() {
         ((EmpresaTableModel) tableEmpresas.getModel())
-                .initEmpresas(merchantConnection.getConnection());
+                .initData(merchantConnection.getConnection());
     }
 
     /**
@@ -333,7 +333,7 @@ public class EmpleadosPanel extends MerchantPanel {
             int res = JOptionPane.showConfirmDialog(null, "¿Esta seguro de eliminar la empresa \"" + empresa.nombre + "\"?");
             if (res == JOptionPane.OK_OPTION) {
                 if (empresaController.delete(merchantConnection.getConnection(), empresa.id)) {
-                    ((EmpresaTableModel) tableEmpresas.getModel()).initEmpresas(merchantConnection.getConnection());
+                    ((EmpresaTableModel) tableEmpresas.getModel()).initData(merchantConnection.getConnection());
                 } else {
                     JOptionPane.showMessageDialog(null, "Por favor intente más tarde...", "ERROR AL ELIMINAR", 1);
                 }

@@ -6,12 +6,13 @@
 package com.merchant.views.configuration;
 
 import com.merchant.components.listModels.ConfigurationListModel;
+import com.merchant.database.MerchantConnection;
 import com.merchant.views.MerchantPanel;
-import java.awt.BorderLayout;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.lang.reflect.InvocationTargetException;
+import java.sql.Connection;
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 
 /**
  *
@@ -19,18 +20,22 @@ import javax.swing.JPanel;
  */
 public class ConfigurationPanel extends MerchantPanel {
 
+    MerchantConnection merchantConnection;
+
     /**
      * Creates new form ConfigurationForm
      */
-    public ConfigurationPanel() {
+    public ConfigurationPanel(MerchantConnection merchantConnection) {
         initComponents();
+        this.merchantConnection = merchantConnection;
     }
-    
+
     @Override
     public void setParent(JInternalFrame f) {
         parent = f;
         listPrueba.setSelectedIndex(0);
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -40,11 +45,30 @@ public class ConfigurationPanel extends MerchantPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        menuJTable = new javax.swing.JPopupMenu();
+        itemEditar = new javax.swing.JMenuItem();
+        itemEliminar = new javax.swing.JMenuItem();
         jScrollPane1 = new javax.swing.JScrollPane();
         listPrueba = new javax.swing.JList();
         jScrollPane3 = new javax.swing.JScrollPane();
         tableConfigurations = new javax.swing.JTable();
         contentConfigurations = new javax.swing.JPanel();
+
+        itemEditar.setText("Editar");
+        itemEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemEditarActionPerformed(evt);
+            }
+        });
+        menuJTable.add(itemEditar);
+
+        itemEliminar.setText("Eliminar");
+        itemEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemEliminarActionPerformed(evt);
+            }
+        });
+        menuJTable.add(itemEliminar);
 
         listPrueba.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         listPrueba.setModel(new ConfigurationListModel(contentConfigurations, tableConfigurations));
@@ -66,6 +90,12 @@ public class ConfigurationPanel extends MerchantPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tableConfigurations.setComponentPopupMenu(menuJTable);
+        tableConfigurations.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableConfigurationsMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(tableConfigurations);
 
         contentConfigurations.setLayout(new java.awt.CardLayout());
@@ -94,27 +124,58 @@ public class ConfigurationPanel extends MerchantPanel {
 
     private void listPruebaValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listPruebaValueChanged
         int item = listPrueba.getSelectedIndex();
-        String pathClass = ((ConfigurationListModel)listPrueba.getModel()).setConfiguration(item);
+        String pathClass = ((ConfigurationListModel) listPrueba.getModel()).setConfiguration(item);
         try {
-            Object o = Class.forName(pathClass).newInstance();
-            //contentConfigurations.setLayout(new BorderLayout());
+            Class c = Class.forName(pathClass);
+            Object o = c.getDeclaredConstructor(Connection.class, JTable.class).newInstance(merchantConnection.getConnection(), tableConfigurations);
             contentConfigurations.removeAll();
-            //contentConfigurations.add((JPanel)o, BorderLayout.NORTH);
-            contentConfigurations.add((JPanel)o);
-            contentConfigurations.setBounds(0, 0, ((JPanel)o).getWidth(), ((JPanel)o).getHeight());
+            contentConfigurations.add((JPanel) o);
+            contentConfigurations.setBounds(0, 0, ((JPanel) o).getWidth(), ((JPanel) o).getHeight());
             parent.repaint();
             parent.pack();
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
             System.err.println("ERROR: " + ex.getMessage());
+        } catch (IllegalArgumentException | InvocationTargetException ex) {
+            System.err.println("ERROR: " + ex.getMessage());
+        } catch (NoSuchMethodException | SecurityException ex) {
+            System.err.println("ERROR: " + ex.getMessage());
         }
     }//GEN-LAST:event_listPruebaValueChanged
 
+    private void itemEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEditarActionPerformed
+        int row = tableConfigurations.getSelectedRow();
+        if (row != -1) {
+            ((AbstractConfigurationPanel)contentConfigurations.getComponent(0))
+                    .eventEditFromJtable(row);
+        }
+    }//GEN-LAST:event_itemEditarActionPerformed
+
+    private void itemEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEliminarActionPerformed
+        int row = tableConfigurations.getSelectedRow();
+        if (row != -1) {
+            ((AbstractConfigurationPanel)contentConfigurations.getComponent(0))
+                    .eventDelFromJtable(row);
+        }
+    }//GEN-LAST:event_itemEliminarActionPerformed
+
+    private void tableConfigurationsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableConfigurationsMouseClicked
+        int row = tableConfigurations.getSelectedRow();
+        if (row != -1) {
+            if (evt.getClickCount() > 1){
+                ((AbstractConfigurationPanel)contentConfigurations.getComponent(0))
+                        .eventEditFromJtable(row);
+            }
+        }
+    }//GEN-LAST:event_tableConfigurationsMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel contentConfigurations;
+    private javax.swing.JMenuItem itemEditar;
+    private javax.swing.JMenuItem itemEliminar;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JList listPrueba;
+    private javax.swing.JPopupMenu menuJTable;
     private javax.swing.JTable tableConfigurations;
     // End of variables declaration//GEN-END:variables
 }
