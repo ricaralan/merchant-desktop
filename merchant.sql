@@ -64,7 +64,7 @@ DEFAULT CHARACTER SET = latin1;
 -- Table `merchant`.`regimenFiscal`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `merchant`.`regimenFiscal` (
-  `idregimenFiscal` INT NOT NULL,
+  `idregimenFiscal` INT NOT NULL AUTO_INCREMENT,
   `descripcionRegimenFiscal` VARCHAR(50) NOT NULL,
   PRIMARY KEY (`idregimenFiscal`))
 ENGINE = InnoDB;
