@@ -1,35 +1,35 @@
 package com.merchant.controllers;
 
-import com.merchant.database.models.EmpresaModel;
-import com.merchant.pojos.Empresa;
+import com.merchant.database.models.EmpleadoModel;
+import com.merchant.pojos.Empleado;
 import java.sql.Connection;
 import java.util.List;
 
 /**
  *
- * @author alan
+ * @author Eleazar
  */
 public class EmpleadoController {
 
-    EmpresaModel empresaModel;
+    EmpleadoModel empleadoModel;
 
     public EmpleadoController() {
-        empresaModel = new EmpresaModel();
+        empleadoModel = new EmpleadoModel();
     }
 
-    public boolean create(Connection connection, Empresa empresa) {
-        return empresaModel.create(connection, empresa) == 1;
+    public boolean create(Connection connection, Empleado empleado) {
+        return empleadoModel.create(connection, empleado) == 1;
     }
     
-    public boolean update(Connection connection, Empresa empresa, int id) {
-        return empresaModel.update(connection, empresa, id) == 1;
+    public boolean update(Connection connection, Empleado empleado, Integer id) {
+        return empleadoModel.update(connection, empleado, id) == 1;
     }
 
-    public boolean delete(Connection connection, int id) {
-        return empresaModel.delete(connection, id) == 1;
+    public boolean delete(Connection connection, Integer id) {
+        return empleadoModel.delete(connection, id) == 1;
     }
 
-    public List<Empresa> getEmpresas(Connection connection) {
-        return empresaModel.getEmpresas(connection);
+    public List<Object> getObjects(Connection connection) {
+        return empleadoModel.getAll(connection);
     }
 }

@@ -4,7 +4,7 @@ import java.sql.Date;
 
 /**
  *
- * @author alan
+ * @author Eleazar
  */
 public class Empleado {
 
@@ -23,16 +23,5 @@ public class Empleado {
     public int sucursal_idSucursal;
     public Date bajaEmpleado;
     public boolean statusEmpleado;
-    /*
-     * Datos para la tabla de Domicilio Fiscal
-     */
-    public String calle;
-    public String numExt;
-    public String numInt;
-    public String colonia;
-    public String codigoPostal;
-    public String localidad;
-    public String municipio;
-    public String estado;
-    public String pais;
+    
 }
