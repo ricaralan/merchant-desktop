@@ -6,8 +6,12 @@
 package com.merchant.components;
 
 import com.merchant.utils.KeyCode;
+<<<<<<< HEAD
 import com.merchant.views.ConfigurationForm;
 import com.merchant.views.EmpleadosForm;
+=======
+import com.merchant.views.configuration.ConfigurationForm;
+>>>>>>> 2d3a10f1b5c81f92ca31188dd97b900cc772a46c
 import com.merchant.views.EmpresasForm;
 import java.awt.Dimension;
 import java.awt.GraphicsDevice;
@@ -230,7 +234,7 @@ public class MerchantMainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_backgroundDesktopKeyPressed
 
     private void itemConfiguracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemConfiguracionActionPerformed
-        newInternalFrame(new ConfigurationForm(), "Configuraciones");
+        newInternalFrame(new ConfigurationForm(this), "Configuraciones");
     }//GEN-LAST:event_itemConfiguracionActionPerformed
 
     private void itemEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEmpleadosActionPerformed
