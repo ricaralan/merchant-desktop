@@ -7,6 +7,7 @@ package com.merchant.components;
 
 import com.merchant.utils.KeyCode;
 import com.merchant.views.ConfigurationForm;
+import com.merchant.views.EmpleadosForm;
 import com.merchant.views.EmpresasForm;
 import java.awt.Dimension;
 import java.awt.GraphicsDevice;
@@ -55,6 +56,7 @@ public class MerchantMainFrame extends javax.swing.JFrame {
         menuConfiguracion = new javax.swing.JMenu();
         itemConfiguracion = new javax.swing.JMenuItem();
         itemEmpresas = new javax.swing.JMenuItem();
+        itemEmpleados = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         itemSalir = new javax.swing.JMenuItem();
         backgroundDesktop = new javax.swing.JDesktopPane();
@@ -86,6 +88,14 @@ public class MerchantMainFrame extends javax.swing.JFrame {
             }
         });
         menuConfiguracion.add(itemEmpresas);
+
+        itemEmpleados.setText("jMenuItem1");
+        itemEmpleados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemEmpleadosActionPerformed(evt);
+            }
+        });
+        menuConfiguracion.add(itemEmpleados);
 
         desktopMenu.add(menuConfiguracion);
         desktopMenu.add(jSeparator1);
@@ -223,6 +233,10 @@ public class MerchantMainFrame extends javax.swing.JFrame {
         newInternalFrame(new ConfigurationForm(), "Configuraciones");
     }//GEN-LAST:event_itemConfiguracionActionPerformed
 
+    private void itemEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEmpleadosActionPerformed
+         newInternalFrame(new EmpleadosForm(), "Empleados");
+    }//GEN-LAST:event_itemEmpleadosActionPerformed
+
     private void aparecerMenuInicio(int code){
         if (keyCode.codeIsPressed("windows", code)) {
             toggleShowMenuInicio();
@@ -254,6 +268,7 @@ public class MerchantMainFrame extends javax.swing.JFrame {
     private javax.swing.JDesktopPane backgroundDesktop;
     private javax.swing.JPopupMenu desktopMenu;
     private javax.swing.JMenuItem itemConfiguracion;
+    private javax.swing.JMenuItem itemEmpleados;
     private javax.swing.JMenuItem itemEmpresas;
     private javax.swing.JMenuItem itemSalir;
     private javax.swing.JButton jButton1;
