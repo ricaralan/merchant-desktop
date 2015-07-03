@@ -35,7 +35,7 @@ public class EmpresaTableModel extends MerchantTableModel{
             case 1: value = empresa.rfc;break;
             case 2: value = empresa.email;break;
             case 3: value = empresa.tel;break;
-            case 4: value = empresa.web;break;
+            case 4: value = empresa.web;
         }
         return value;
     }
