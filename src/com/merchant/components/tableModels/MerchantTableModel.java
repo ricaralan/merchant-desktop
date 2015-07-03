@@ -9,12 +9,36 @@ import javax.swing.table.AbstractTableModel;
  * @author alan
  */
 public abstract class MerchantTableModel extends AbstractTableModel {
-
-    public abstract Object getObjectByRow(int row);
-
-    public abstract void editRowByObject(int row, Object o);
-
-    public abstract void delRow(int row);
+    
+    protected List<Object> objects;
+    protected String[] header;
+    
+    @Override
+    public int getRowCount() {
+        return objects.size();
+    }
+    
+    @Override
+    public int getColumnCount() {
+        return header.length;
+    }
+    
+    @Override
+    public String getColumnName(int column) {
+        return header[column];
+    }
+    
+    public Object getObjectByRow (int row) {
+        return objects.get(row);
+    }
+    
+    public void editRowByObject(int row, Object o) {
+        objects.set(row, o);
+    }
+    
+    public void delRow(int row) {
+        objects.remove(row);
+    }
     
     public abstract void initData(Connection connnection);
     

@@ -13,9 +13,9 @@ import javax.swing.ComboBoxModel;
  */
 public class MerchantComboSQL extends AbstractListModel implements ComboBoxModel {
 
-    List<Object> items;
-    Object itemSelected = null;
-    String mainField;
+    private List<Object> items;
+    private Object itemSelected = null;
+    private String mainField;
 
     public MerchantComboSQL(Connection connection, MerchantModel model, String field) {
         items = new ArrayList<>();

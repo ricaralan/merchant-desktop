@@ -12,62 +12,32 @@ import java.util.ArrayList;
  */
 public class EmpresaTableModel extends MerchantTableModel{
 
-    List<Empresa> empresas;
     EmpresaController empresaController;
-    private final String[] header = {"Nombre", "R.F.C.", "Email", "Telefono 1", "Web"};
 
     public EmpresaTableModel() {
-        empresas = new ArrayList<>();
+        objects = new ArrayList<>();
+        header = new String[]{"Nombre", "R.F.C.", "Email", "Telefono 1", "Web"};
         empresaController = new EmpresaController();
     }
     
     @Override
     public void initData (Connection connection) {
-        empresas = empresaController.getEmpresas(connection);
+        objects = (List<Object>)(Object)empresaController.getEmpresas(connection);
         fireTableDataChanged();
-    }
-    
-    @Override
-    public int getRowCount() {
-        return empresas.size();
-    }
-
-    @Override
-    public int getColumnCount() {
-        return header.length;
-    }
-    
-    @Override
-    public String getColumnName(int column) {
-        return header[column];
     }
 
     @Override
     public Object getValueAt(int row, int column) {
         String value = "";
+        Empresa empresa = (Empresa)objects.get(row);
         switch (column) {
-            case 0: value = empresas.get(row).nombre;break;
-            case 1: value = empresas.get(row).rfc;break;
-            case 2: value = empresas.get(row).email;break;
-            case 3: value = empresas.get(row).tel;break;
-            case 4: value = empresas.get(row).web;break;
+            case 0: value = empresa.nombre;break;
+            case 1: value = empresa.rfc;break;
+            case 2: value = empresa.email;break;
+            case 3: value = empresa.tel;break;
+            case 4: value = empresa.web;break;
         }
         return value;
-    }
-    
-    @Override
-    public Object getObjectByRow (int row) {
-        return empresas.get(row);
-    }
-    
-    @Override
-    public void editRowByObject(int row, Object empresa) {
-        empresas.set(row, (Empresa)empresa);
-    }
-    
-    @Override
-    public void delRow(int row) {
-        empresas.remove(row);
     }
     
 }
