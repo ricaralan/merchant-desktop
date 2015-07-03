@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.merchant.views;
+package com.merchant.views.configuration;
 
 import com.merchant.components.tableModels.EmpresaTableModel;
 import com.merchant.components.tableModels.MerchantTableModel;
@@ -11,6 +11,7 @@ import com.merchant.controllers.EmpresaController;
 import com.merchant.database.MerchantConnection;
 import com.merchant.pojos.Empresa;
 import com.merchant.utils.ImageJPanel;
+import com.merchant.views.MerchantPanel;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -22,7 +23,7 @@ import javax.swing.JOptionPane;
  *
  * @author alan
  */
-public class EmpresasPanel extends javax.swing.JPanel {
+public class EmpresasPanel extends MerchantPanel {
 
     /**
      * Creates new form EmpresasForm

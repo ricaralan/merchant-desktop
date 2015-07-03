@@ -22,7 +22,7 @@ import javax.swing.JOptionPane;
  *
  * @author alan
  */
-public class EmpleadosPanel extends javax.swing.JPanel {
+public class EmpleadosPanel extends MerchantPanel {
 
     /**
      * Creates new form EmpresasForm

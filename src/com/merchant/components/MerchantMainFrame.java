@@ -8,12 +8,12 @@ package com.merchant.components;
 import com.merchant.utils.KeyCode;
 import com.merchant.views.EmpleadosPanel;
 import com.merchant.views.configuration.ConfigurationPanel;
-import com.merchant.views.EmpresasPanel;
+import com.merchant.views.configuration.EmpresasPanel;
 import com.merchant.views.MerchantPanel;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
-import javax.swing.JInternalFrame;
 
 /**
  *
@@ -257,18 +257,9 @@ public class MerchantMainFrame extends javax.swing.JFrame {
         }
     }
     
-    private void newInternalFrame(final javax.swing.JPanel panel, final String internalTitle) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                MerchantInternalFrame internal = new MerchantInternalFrame(internalTitle, panel);
-                internal.setVisible(true);
-                backgroundDesktop.add(internal);
-            }
-        });
-    }
-    
     private void newInternalFrame(final MerchantPanel panel, final String internalTitle) {
+        final MerchantMainFrame frame = this;
+        frame.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -276,6 +267,7 @@ public class MerchantMainFrame extends javax.swing.JFrame {
                 internal.setVisible(true);
                 backgroundDesktop.add(internal);
                 panel.setParent(internal);
+                frame.setCursor(Cursor.getDefaultCursor());
             }
         });
     }
