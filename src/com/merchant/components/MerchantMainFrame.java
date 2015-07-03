@@ -6,16 +6,14 @@
 package com.merchant.components;
 
 import com.merchant.utils.KeyCode;
-<<<<<<< HEAD
-import com.merchant.views.ConfigurationForm;
-import com.merchant.views.EmpleadosForm;
-=======
-import com.merchant.views.configuration.ConfigurationForm;
->>>>>>> 2d3a10f1b5c81f92ca31188dd97b900cc772a46c
-import com.merchant.views.EmpresasForm;
+import com.merchant.views.EmpleadosPanel;
+import com.merchant.views.configuration.ConfigurationPanel;
+import com.merchant.views.EmpresasPanel;
+import com.merchant.views.MerchantPanel;
 import java.awt.Dimension;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import javax.swing.JInternalFrame;
 
 /**
  *
@@ -218,7 +216,7 @@ public class MerchantMainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_lblInicioMouseClicked
 
     private void itemEmpresasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEmpresasActionPerformed
-        newInternalFrame(new EmpresasForm(), "Empresas");
+        newInternalFrame(new EmpresasPanel(), "Empresas");
     }//GEN-LAST:event_itemEmpresasActionPerformed
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
@@ -234,11 +232,12 @@ public class MerchantMainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_backgroundDesktopKeyPressed
 
     private void itemConfiguracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemConfiguracionActionPerformed
-        newInternalFrame(new ConfigurationForm(this), "Configuraciones");
+        ConfigurationPanel form = new ConfigurationPanel();
+        newInternalFrame(form, "Configuraciones");
     }//GEN-LAST:event_itemConfiguracionActionPerformed
 
     private void itemEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEmpleadosActionPerformed
-         newInternalFrame(new EmpleadosForm(), "Empleados");
+         newInternalFrame(new EmpleadosPanel(), "Empleados");
     }//GEN-LAST:event_itemEmpleadosActionPerformed
 
     private void aparecerMenuInicio(int code){
@@ -265,6 +264,18 @@ public class MerchantMainFrame extends javax.swing.JFrame {
                 MerchantInternalFrame internal = new MerchantInternalFrame(internalTitle, panel);
                 internal.setVisible(true);
                 backgroundDesktop.add(internal);
+            }
+        });
+    }
+    
+    private void newInternalFrame(final MerchantPanel panel, final String internalTitle) {
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                MerchantInternalFrame internal = new MerchantInternalFrame(internalTitle, panel);
+                internal.setVisible(true);
+                backgroundDesktop.add(internal);
+                panel.setParent(internal);
             }
         });
     }

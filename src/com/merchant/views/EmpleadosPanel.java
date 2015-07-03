@@ -22,7 +22,7 @@ import javax.swing.JOptionPane;
  *
  * @author alan
  */
-public class EmpleadosForm extends javax.swing.JPanel {
+public class EmpleadosPanel extends javax.swing.JPanel {
 
     /**
      * Creates new form EmpresasForm
@@ -35,7 +35,7 @@ public class EmpleadosForm extends javax.swing.JPanel {
     private File fotoASubir;
     private String basePathLogo = null, basePathSO = null;
 
-    public EmpleadosForm() {
+    public EmpleadosPanel() {
         initComponents();
         merchantConnection = new MerchantConnection();
         empresaController = new EmpresaController();

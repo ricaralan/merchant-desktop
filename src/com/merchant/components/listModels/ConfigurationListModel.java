@@ -27,7 +27,7 @@ public final class ConfigurationListModel extends AbstractListModel {
 
     public ConfigurationListModel(JPanel panel, JTable table) {
         this.configurationNames = new String[]{"Empresa", "Regimen", "Sucursal", "Impuestos", "Lineas", "Tipo de comprobante", "Tipo de empleado", "Tipo de unidad", "Álmacen"};
-        this.configurationPathClass = new String[]{"com.merchant.views.EmpresasForm", "", "", "", "", "", "", "", ""};
+        this.configurationPathClass = new String[]{"com.merchant.views.EmpresasPanel", "", "", "", "", "", "", "", ""};
         this.panel = panel;
         this.table = table;
         configurations = new ArrayList<>();

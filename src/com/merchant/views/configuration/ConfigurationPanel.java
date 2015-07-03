@@ -6,6 +6,7 @@
 package com.merchant.views.configuration;
 
 import com.merchant.components.listModels.ConfigurationListModel;
+import com.merchant.views.MerchantPanel;
 import java.awt.BorderLayout;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,17 +17,20 @@ import javax.swing.JPanel;
  *
  * @author alan
  */
-public class ConfigurationForm extends javax.swing.JPanel {
+public class ConfigurationPanel extends MerchantPanel {
 
     /**
      * Creates new form ConfigurationForm
      */
-    Object parent;
-    public ConfigurationForm(Object parent) {
+    public ConfigurationPanel() {
         initComponents();
-        this.parent = parent;
     }
-
+    
+    @Override
+    public void setParent(JInternalFrame f) {
+        parent = f;
+        listPrueba.setSelectedIndex(0);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -49,6 +53,11 @@ public class ConfigurationForm extends javax.swing.JPanel {
                 listPruebaMouseClicked(evt);
             }
         });
+        listPrueba.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                listPruebaValueChanged(evt);
+            }
+        });
         jScrollPane1.setViewportView(listPrueba);
 
         tableConfigurations.setModel(new javax.swing.table.DefaultTableModel(
@@ -64,16 +73,7 @@ public class ConfigurationForm extends javax.swing.JPanel {
         ));
         jScrollPane3.setViewportView(tableConfigurations);
 
-        javax.swing.GroupLayout contentConfigurationsLayout = new javax.swing.GroupLayout(contentConfigurations);
-        contentConfigurations.setLayout(contentConfigurationsLayout);
-        contentConfigurationsLayout.setHorizontalGroup(
-            contentConfigurationsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        contentConfigurationsLayout.setVerticalGroup(
-            contentConfigurationsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 241, Short.MAX_VALUE)
-        );
+        contentConfigurations.setLayout(new javax.swing.BoxLayout(contentConfigurations, javax.swing.BoxLayout.LINE_AXIS));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -97,6 +97,10 @@ public class ConfigurationForm extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void listPruebaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listPruebaMouseClicked
+        
+    }//GEN-LAST:event_listPruebaMouseClicked
+
+    private void listPruebaValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listPruebaValueChanged
         int item = listPrueba.getSelectedIndex();
         String pathClass = ((ConfigurationListModel)listPrueba.getModel()).setConfiguration(item);
         try {
@@ -104,12 +108,12 @@ public class ConfigurationForm extends javax.swing.JPanel {
             contentConfigurations.setLayout(new BorderLayout());
             contentConfigurations.removeAll();
             contentConfigurations.add((JPanel)o, BorderLayout.NORTH);
-            contentConfigurations.repaint();
-            ((JInternalFrame)parent).repaint();
+            parent.repaint();
+            parent.pack();
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
-            Logger.getLogger(ConfigurationForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ConfigurationPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_listPruebaMouseClicked
+    }//GEN-LAST:event_listPruebaValueChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
