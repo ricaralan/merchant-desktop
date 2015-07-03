@@ -3,6 +3,8 @@ package com.merchant.components.listModels;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.AbstractListModel;
+import javax.swing.JPanel;
+import javax.swing.JTable;
 
 /**
  *
@@ -10,12 +12,24 @@ import javax.swing.AbstractListModel;
  */
 public final class ConfigurationListModel extends AbstractListModel {
 
-    List<Configuration> configurations;
-    private final String configurationNames[];
+    private List<Configuration> configurations;
+    private final String configurationNames[], configurationPathClass[];
+    public JPanel panel;
+    public JTable table;
 
     public ConfigurationListModel() {
         // Primero se inicializan de manera estatica... Despues se recogerán de la DB
         this.configurationNames = new String[]{"Empresa", "Regimen", "Sucursal", "Impuestos", "Lineas", "Tipo de comprobante", "Tipo de empleado", "Tipo de unidad", "Álmacen"};
+        this.configurationPathClass = new String[]{""};
+        configurations = new ArrayList<>();
+        fillConfigurations();
+    }
+
+    public ConfigurationListModel(JPanel panel, JTable table) {
+        this.configurationNames = new String[]{"Empresa", "Regimen", "Sucursal", "Impuestos", "Lineas", "Tipo de comprobante", "Tipo de empleado", "Tipo de unidad", "Álmacen"};
+        this.configurationPathClass = new String[]{"com.merchant.views.EmpresasForm", "", "", "", "", "", "", "", ""};
+        this.panel = panel;
+        this.table = table;
         configurations = new ArrayList<>();
         fillConfigurations();
     }
@@ -28,6 +42,7 @@ public final class ConfigurationListModel extends AbstractListModel {
         for (int i = 0; i < configurationNames.length; i++) {
             configurations.add(new Configuration());
             configurations.get(i).name = configurationNames[i];
+            configurations.get(i).pathClass = configurationPathClass[i];
         }
     }
 
@@ -41,8 +56,13 @@ public final class ConfigurationListModel extends AbstractListModel {
         return configurations.get(i).name;
     }
 
+    public String setConfiguration(int i) {
+        return configurationPathClass[i];
+    }
+
     class Configuration {
 
         public String name;
+        public String pathClass;
     }
 }
