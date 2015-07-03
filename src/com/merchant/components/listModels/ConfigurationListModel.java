@@ -17,18 +17,18 @@ public final class ConfigurationListModel extends AbstractListModel {
     public JPanel panel;
     public JTable table;
 
-    public ConfigurationListModel() {
-        // Primero se inicializan de manera estatica... Despues se recogerán de la DB
-        this.configurationNames = new String[]{"Empresa", "Regimen", "Sucursal", "Impuestos", "Lineas", "Tipo de comprobante", "Tipo de empleado", "Tipo de unidad", "Álmacen"};
-        this.configurationPathClass = new String[]{""};
-        configurations = new ArrayList<>();
-        fillConfigurations();
-    }
-
     public ConfigurationListModel(JPanel panel, JTable table) {
         this.configurationNames = new String[]{"Empresa", "Regimen", "Sucursal", "Impuestos", "Lineas", "Tipo de comprobante", "Tipo de empleado", "Tipo de unidad", "Álmacen"};
         this.configurationPathClass = new String[]{
-            "com.merchant.views.configuration.EmpresasPanel", "", "", "", "", "", "", "", ""
+            "com.merchant.views.configuration.EmpresasPanel",
+            "com.merchant.views.configuration.RegimenPanel",
+            "com.merchant.views.configuration.SucursalesPanel",
+            "com.merchant.views.configuration.ImpuestosPanel",
+            "com.merchant.views.configuration.LineasPanel",
+            "com.merchant.views.configuration.TiposDeComprobantesPanel",
+            "com.merchant.views.configuration.TiposDeEmpleadosPanel",
+            "com.merchant.views.configuration.TiposDeUnidadesPanel",
+            "com.merchant.views.configuration.AlmacenesPanel"
         };
         this.panel = panel;
         this.table = table;

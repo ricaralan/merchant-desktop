@@ -48,11 +48,6 @@ public class ConfigurationPanel extends MerchantPanel {
 
         listPrueba.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         listPrueba.setModel(new ConfigurationListModel(contentConfigurations, tableConfigurations));
-        listPrueba.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                listPruebaMouseClicked(evt);
-            }
-        });
         listPrueba.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 listPruebaValueChanged(evt);
@@ -73,7 +68,7 @@ public class ConfigurationPanel extends MerchantPanel {
         ));
         jScrollPane3.setViewportView(tableConfigurations);
 
-        contentConfigurations.setLayout(new javax.swing.BoxLayout(contentConfigurations, javax.swing.BoxLayout.LINE_AXIS));
+        contentConfigurations.setLayout(new java.awt.CardLayout());
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -81,37 +76,36 @@ public class ConfigurationPanel extends MerchantPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(contentConfigurations, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 602, Short.MAX_VALUE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane3)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(contentConfigurations, javax.swing.GroupLayout.PREFERRED_SIZE, 596, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(contentConfigurations, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(jScrollPane1)
+                .addComponent(contentConfigurations, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void listPruebaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listPruebaMouseClicked
-        
-    }//GEN-LAST:event_listPruebaMouseClicked
 
     private void listPruebaValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listPruebaValueChanged
         int item = listPrueba.getSelectedIndex();
         String pathClass = ((ConfigurationListModel)listPrueba.getModel()).setConfiguration(item);
         try {
             Object o = Class.forName(pathClass).newInstance();
-            contentConfigurations.setLayout(new BorderLayout());
+            //contentConfigurations.setLayout(new BorderLayout());
             contentConfigurations.removeAll();
-            contentConfigurations.add((JPanel)o, BorderLayout.NORTH);
+            //contentConfigurations.add((JPanel)o, BorderLayout.NORTH);
+            contentConfigurations.add((JPanel)o);
+            contentConfigurations.setBounds(0, 0, ((JPanel)o).getWidth(), ((JPanel)o).getHeight());
             parent.repaint();
             parent.pack();
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
-            Logger.getLogger(ConfigurationPanel.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("ERROR: " + ex.getMessage());
         }
     }//GEN-LAST:event_listPruebaValueChanged
 
