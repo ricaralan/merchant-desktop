@@ -1,41 +1,50 @@
 package com.merchant.components.tableModels;
 
-import com.merchant.controllers.EmpresaController;
-import com.merchant.pojos.Empresa;
+import com.merchant.controllers.EmpleadoController;
+import com.merchant.pojos.Empleado;
 import java.sql.Connection;
 import java.util.List;
 import java.util.ArrayList;
 
 /**
  *
- * @author alan
+ * @author Eleazar
  */
 public class EmpleadoTableModel extends MerchantTableModel{
 
-    EmpresaController empresaController;
+    EmpleadoController empleadoController;
 
     public EmpleadoTableModel() {
         objects = new ArrayList<>();
-        empresaController = new EmpresaController();
-        header = new String[] {"Nombre", "R.F.C.", "Email", "Telefono 1", "Web"};
+        header = new String[]{"idEmpleado","nombreEmpleado","apellidosEmpleado",
+                        "telefonoEmpleado","mailEmpleado","salarioDiarioEmpleado",
+                        "diasLaboralesEmpleado","altaEmpleado","usuario_idUsuario",
+                        "domicilioFiscal_idDomicilioFiscal","sucursal_idSucursal",
+                        "bajaEmpleado","statusEmpleado"};
+        empleadoController = new EmpleadoController();
     }
     
     @Override
     public void initData (Connection connection) {
-        objects = (List<Object>)(Object) empresaController.getEmpresas(connection);
+        objects = (List<Object>)(Object)empleadoController.getEmpleados(connection);
         fireTableDataChanged();
     }
 
     @Override
     public Object getValueAt(int row, int column) {
         String value = "";
-        Empresa empresa = (Empresa)objects.get(row);
+        Empleado empleado = (Empleado)objects.get(row);
         switch (column) {
-            case 0: value = empresa.nombre;break;
-            case 1: value = empresa.rfc;break;
-            case 2: value = empresa.email;break;
-            case 3: value = empresa.tel;break;
-            case 4: value = empresa.web;break;
+            case 0: value = empleado.nombreEmpleado;break;
+            case 1: value = empleado.apellidosEmpleado;break;
+            case 2: value = empleado.telefonoEmpleado;break;
+            case 3: value = empleado.mailEmpleado;break;
+            case 4: value = ""+empleado.salarioDiarioEmpleado;break;
+            case 5: value = ""+empleado.diasLaboralesEmpleado;break;
+            case 6: value = ""+empleado.altaEmpleado;break;
+            case 7: value = ""+empleado.usuario_idUsuario;break;
+            case 8: value = ""+empleado.domicilioFiscal_idDomicilioFiscal;break;
+            case 9: value = ""+empleado.sucursal_idSucursal;break;
         }
         return value;
     }

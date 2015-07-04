@@ -29,7 +29,7 @@ public class EmpleadoController {
         return empleadoModel.delete(connection, id) == 1;
     }
 
-    public List<Object> getObjects(Connection connection) {
+    public List<Object> getEmpleados(Connection connection) {
         return empleadoModel.getAll(connection);
     }
 }
