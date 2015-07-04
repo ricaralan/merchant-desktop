@@ -5,6 +5,7 @@
  */
 package com.merchant.components;
 
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 /**

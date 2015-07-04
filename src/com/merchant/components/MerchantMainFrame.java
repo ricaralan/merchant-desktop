@@ -12,8 +12,12 @@ import com.merchant.views.configuration.ConfigurationPanel;
 import com.merchant.views.MerchantPanel;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.awt.Image;
+import javax.swing.ImageIcon;
+import javax.swing.JDesktopPane;
 
 /**
  *
