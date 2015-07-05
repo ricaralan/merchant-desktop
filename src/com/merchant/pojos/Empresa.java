@@ -8,7 +8,7 @@ import java.sql.Date;
  */
 public class Empresa {
 
-    public int    id;
+    public int id;
     public String nombre;
     public String rfc;
     public String logo;
@@ -16,6 +16,6 @@ public class Empresa {
     public String tel2;
     public String email;
     public String web;
-    public Date   fechaAlta;
+    public Date fechaAlta;
     public int regimenFiscal_idregimenFiscal;
 }
