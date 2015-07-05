@@ -15,5 +15,12 @@ import java.lang.annotation.Target;
 @Target(ElementType.ANNOTATION_TYPE)
 public @interface MerchantAnnotation {
 
+    // Clase validadora de la anotación
     public Class<?> validatedBy();
+
+    // Nombres de los fields que validan
+    public String[] fieldsValidatedBy();
+    
+    //values
+    public String value() default "";
 }

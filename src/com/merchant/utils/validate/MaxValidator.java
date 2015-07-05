@@ -11,7 +11,11 @@ import java.util.Map;
  *
  * @author alan
  */
-public abstract class MerchantValidator {
+public class MaxValidator extends MerchantValidator {
 
-    public abstract boolean isValid(Map<String, Object> o);
+    @Override
+    public boolean isValid(Map<String, Object> o) {
+        return ((int)o.get("value")) <= ((int)o.get("max"));
+    }
+    
 }

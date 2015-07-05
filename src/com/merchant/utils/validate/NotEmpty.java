@@ -6,11 +6,11 @@ import java.util.Map;
  *
  * @author alan
  */
-public class MinValidator extends MerchantValidator {
+public class NotEmpty extends MerchantValidator{
 
     @Override
     public boolean isValid(Map<String, Object> o) {
-        return (int)o.get("value") >= (int)o.get("min");
+        return !((String)o.get("value")).isEmpty();
     }
     
 }

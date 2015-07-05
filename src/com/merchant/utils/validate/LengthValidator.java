@@ -11,7 +11,12 @@ import java.util.Map;
  *
  * @author alan
  */
-public abstract class MerchantValidator {
+public class LengthValidator extends MerchantValidator{
 
-    public abstract boolean isValid(Map<String, Object> o);
+    @Override
+    public boolean isValid(Map<String, Object> o) {
+        int lengthStr = ((String)o.get("value")).length();
+        return lengthStr >= (int)o.get("min") && lengthStr <= (int)o.get("max");
+    }
+    
 }

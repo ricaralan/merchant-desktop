@@ -1,6 +1,11 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.merchant.utils.validate.annotations;
 
-import com.merchant.utils.validate.MinValidator;
+import com.merchant.utils.validate.MaxValidator;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -12,8 +17,8 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-@MerchantAnnotation(validatedBy = MinValidator.class, fieldsValidatedBy = {"min", "value"})
-public @interface Min {
+@MerchantAnnotation(validatedBy = MaxValidator.class, fieldsValidatedBy = {"max", "value"})
+public @interface Max {
 
     public String message() default "{error.invalid.min.length}";
 

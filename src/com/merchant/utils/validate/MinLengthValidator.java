@@ -11,7 +11,11 @@ import java.util.Map;
  *
  * @author alan
  */
-public abstract class MerchantValidator {
+public class MinLengthValidator extends MerchantValidator{
 
-    public abstract boolean isValid(Map<String, Object> o);
+    @Override
+    public boolean isValid(Map<String, Object> o) {
+        return ((String)o.get("value")).length() >= (int)o.get("min");
+    }
+    
 }
