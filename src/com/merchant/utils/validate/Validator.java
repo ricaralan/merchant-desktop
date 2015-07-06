@@ -9,14 +9,13 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
  * @Description Clase validadora
- * @version 0.0.2
+ * @version 0.0.3
  * @author alan
  */
 public class Validator<T> {
@@ -134,7 +133,7 @@ public class Validator<T> {
 
     static class Persona {
 
-        @NotNull
+        @NotNull(message="Error de longitud en email")
         @Length(min = 18, max = 18)
         String curp;
         @NotNull
