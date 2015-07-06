@@ -13,11 +13,11 @@ import java.util.List;
  *
  * @author Eleazar
  */
-public class DomicilioModel extends MerchantModel {
-    
+public class DomicilioModel extends MerchantModel<Domicilio> {
+
     @Override
-    public List<Object> getAll(Connection connection) {
-        List<Object> domicilios = new ArrayList<>();
+    public List<Domicilio> getAll(Connection connection) {
+        List<Domicilio> domicilios = new ArrayList<>();
         String query = "SELECT * FROM domiciliofiscal";
         try {
             Statement statement = connection.createStatement();
@@ -41,10 +41,9 @@ public class DomicilioModel extends MerchantModel {
         }
         return domicilios;
     }
-    
+
     @Override
-    public Integer create(Connection connection, Object obj) {
-        Domicilio domicilio = (Domicilio) obj;
+    public Integer create(Connection connection, Domicilio domicilio) {
         String query = "INSERT INTO domiciliofiscal(calle,numExt,numInt,colonia,"
                 + "codigoPostal,localidad,municipio,estado,pais)"
                 + "VALUES ('" + domicilio.calle + "','" + domicilio.numExt + "','"
@@ -65,8 +64,7 @@ public class DomicilioModel extends MerchantModel {
     }
 
     @Override
-    public Integer update(Connection connection, Object obj, Object id) {
-        Domicilio domicilio = (Domicilio) obj;
+    public Integer update(Connection connection, Domicilio domicilio, Object id) {
         String query = "UPDATE domiciliofiscal SET"
                 + "calle = '" + domicilio.calle + "',"
                 + "numExt = '" + domicilio.numExt + "',"
@@ -77,7 +75,7 @@ public class DomicilioModel extends MerchantModel {
                 + "municipio = '" + domicilio.municipio + "',"
                 + "estado = '" + domicilio.estado + "',"
                 + "pais = '" + domicilio.pais + "'"
-                + "WHERE idDomicilioFiscal = " + (Integer)id;
+                + "WHERE idDomicilioFiscal = " + (Integer) id;
         Integer res = null;
         try {
             Statement statement = connection.createStatement();
@@ -90,7 +88,7 @@ public class DomicilioModel extends MerchantModel {
 
     @Override
     public Integer delete(Connection connection, Object id) {
-        String query = "DELETE FROM domiciliofiscal WHERE idDomicilioFiscal=" + (Integer)id + "";
+        String query = "DELETE FROM domiciliofiscal WHERE idDomicilioFiscal=" + (Integer) id + "";
         Integer res = null;
         try {
             Statement statement = connection.createStatement();
@@ -100,5 +98,5 @@ public class DomicilioModel extends MerchantModel {
         }
         return res;
     }
-    
+
 }

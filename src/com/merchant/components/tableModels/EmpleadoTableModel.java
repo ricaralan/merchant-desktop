@@ -26,7 +26,7 @@ public class EmpleadoTableModel extends MerchantTableModel{
     
     @Override
     public void initData (Connection connection) {
-        objects = (List<Object>)(Object)empleadoController.getEmpleados(connection);
+        objects = (List<Object>)(Object)empleadoController.getAll(connection);
         fireTableDataChanged();
     }
 

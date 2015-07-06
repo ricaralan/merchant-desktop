@@ -12,13 +12,13 @@ import java.util.List;
  *
  * @author Eleazar
  */
-public abstract class MerchantModel {
-    
-    public abstract List<Object> getAll(Connection connection);
+public abstract class MerchantModel<T> {
 
-    public abstract Integer create(Connection connection, Object o);
+    public abstract Integer create(Connection connection, T o);
 
-    public abstract Integer update(Connection connection, Object o, Object id);
+    public abstract Integer update(Connection connection, T o, Object id);
 
     public abstract Integer delete(Connection connection, Object id);
+
+    public abstract List<T> getAll(Connection connection);
 }

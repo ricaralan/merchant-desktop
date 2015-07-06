@@ -12,11 +12,11 @@ import java.util.List;
  *
  * @author alan
  */
-public class ImpuestosModel extends MerchantModel {
+public class ImpuestosModel extends MerchantModel<Impuesto> {
 
     @Override
-    public List<Object> getAll(Connection connection) {
-        List<Object> impuestos = new ArrayList<>();
+    public List<Impuesto> getAll(Connection connection) {
+        List<Impuesto> impuestos = new ArrayList<>();
         String query = "SELECT * FROM impuesto";
         try {
             Statement statement = connection.createStatement();
@@ -36,7 +36,7 @@ public class ImpuestosModel extends MerchantModel {
     }
 
     @Override
-    public Integer create(Connection connection, Object o) {
+    public Integer create(Connection connection, Impuesto o) {
         Impuesto impuesto = (Impuesto) o;
         String query = "INSERT INTO impuesto(codigoImpuesto,valorImpuesto,descripcionImpuesto)"
                 + " VALUES('" + impuesto.codigoImpuesto + "', '"
@@ -52,7 +52,7 @@ public class ImpuestosModel extends MerchantModel {
     }
 
     @Override
-    public Integer update(Connection connection, Object o, Object id) {
+    public Integer update(Connection connection, Impuesto o, Object id) {
         Impuesto impuesto = (Impuesto) o;
         String query = "UPDATE impuesto SET codigoImpuesto='"
                 + impuesto.codigoImpuesto + "',valorImpuesto='" + impuesto.valorImpuesto
@@ -70,7 +70,7 @@ public class ImpuestosModel extends MerchantModel {
 
     @Override
     public Integer delete(Connection connection, Object id) {
-        String query = "DELETE FROM impuesto WHERE idImpuesto="+(Integer)id;
+        String query = "DELETE FROM impuesto WHERE idImpuesto=" + (Integer) id;
         Integer res = null;
         try {
             Statement statement = connection.createStatement();

@@ -22,7 +22,7 @@ public class EmpresaTableModel extends MerchantTableModel{
     
     @Override
     public void initData (Connection connection) {
-        objects = (List<Object>)(Object)empresaController.getEmpresas(connection);
+        objects = (List<Object>)(Object)empresaController.getAll(connection);
         fireTableDataChanged();
     }
 

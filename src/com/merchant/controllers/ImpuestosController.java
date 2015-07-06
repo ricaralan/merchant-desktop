@@ -9,27 +9,31 @@ import java.util.List;
  *
  * @author alan
  */
-public class ImpuestosController {
+public class ImpuestosController extends MerchantController<Impuesto> {
 
-    private ImpuestosModel model;
-    
+    private final ImpuestosModel model;
+
     public ImpuestosController() {
         model = new ImpuestosModel();
     }
 
+    @Override
     public boolean create(Connection connection, Impuesto impuesto) {
         return model.create(connection, impuesto) == 1;
     }
 
-    public boolean update(Connection connection, Impuesto impuesto, int id) {
+    @Override
+    public boolean update(Connection connection, Impuesto impuesto, Object id) {
         return model.update(connection, impuesto, id) == 1;
     }
 
-    public boolean delete(Connection connection, int id) {
+    @Override
+    public boolean delete(Connection connection, Object id) {
         return model.delete(connection, id) == 1;
     }
 
-    public List<Object> getImpuestos(Connection connection) {
+    @Override
+    public List<Impuesto> getAll(Connection connection) {
         return model.getAll(connection);
     }
 }

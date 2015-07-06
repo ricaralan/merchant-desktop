@@ -22,7 +22,7 @@ public class ImpuestosTableModel extends MerchantTableModel {
 
     @Override
     public void initData(Connection connnection) {
-        objects = (List<Object>) (Object) controller.getImpuestos(connnection);
+        objects = (List<Object>) (Object) controller.getAll(connnection);
         fireTableDataChanged();
     }
 

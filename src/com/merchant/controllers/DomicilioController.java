@@ -9,7 +9,7 @@ import java.util.List;
  *
  * @author Eleazar
  */
-public class DomicilioController {
+public class DomicilioController extends MerchantController<Domicilio> {
 
     DomicilioModel domicilioModel;
 
@@ -17,19 +17,23 @@ public class DomicilioController {
         domicilioModel = new DomicilioModel();
     }
 
+    @Override
     public boolean create(Connection connection, Domicilio domicilio) {
         return domicilioModel.create(connection, domicilio) == 1;
     }
-    
-    public boolean update(Connection connection, Domicilio domicilio, Integer id) {
+
+    @Override
+    public boolean update(Connection connection, Domicilio domicilio, Object id) {
         return domicilioModel.update(connection, domicilio, id) == 1;
     }
 
-    public boolean delete(Connection connection, Integer id) {
+    @Override
+    public boolean delete(Connection connection, Object id) {
         return domicilioModel.delete(connection, id) == 1;
     }
 
-    public List<Object> getObjects(Connection connection) {
+    @Override
+    public List<Domicilio> getAll(Connection connection) {
         return domicilioModel.getAll(connection);
     }
 }

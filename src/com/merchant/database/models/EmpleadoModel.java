@@ -12,11 +12,11 @@ import java.util.List;
  *
  * @author Eleazar
  */
-public class EmpleadoModel extends MerchantModel {
+public class EmpleadoModel extends MerchantModel<Empleado> {
 
     @Override
-    public List<Object> getAll(Connection connection) {
-        List<Object> empleados = new ArrayList<>();
+    public List<Empleado> getAll(Connection connection) {
+        List<Empleado> empleados = new ArrayList<>();
         String query = "SELECT * FROM empleado";
         try {
             Statement statement = connection.createStatement();
@@ -45,8 +45,7 @@ public class EmpleadoModel extends MerchantModel {
     }
 
     @Override
-    public Integer create(Connection connection, Object obj) {
-        Empleado empleado = (Empleado) obj;
+    public Integer create(Connection connection, Empleado empleado) {
         String query = "INSERT INTO empleado(rfcEmpleado,tipoEmpleado_idtipoEmpleado,"
                 + "nombreEmpleado,apellidosEmpleado,telefonoEmpleado,mailEmpleado,"
                 + "salarioDiarioEmpleado,diasLaboralesEmpleado,altaEmpleado,"
@@ -69,8 +68,7 @@ public class EmpleadoModel extends MerchantModel {
     }
 
     @Override
-    public Integer update(Connection connection, Object obj, Object id) {
-        Empleado empleado = (Empleado) obj;
+    public Integer update(Connection connection, Empleado empleado, Object id) {
         /*if (update(connection,empleado.domicilioFiscal_idDomicilioFiscal) != null) {
             
          }*/

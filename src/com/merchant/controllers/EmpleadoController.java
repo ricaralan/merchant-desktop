@@ -9,7 +9,7 @@ import java.util.List;
  *
  * @author Eleazar
  */
-public class EmpleadoController {
+public class EmpleadoController extends MerchantController<Empleado> {
 
     EmpleadoModel empleadoModel;
 
@@ -17,19 +17,23 @@ public class EmpleadoController {
         empleadoModel = new EmpleadoModel();
     }
 
+    @Override
     public boolean create(Connection connection, Empleado empleado) {
         return empleadoModel.create(connection, empleado) == 1;
     }
-    
-    public boolean update(Connection connection, Empleado empleado, Integer id) {
+
+    @Override
+    public boolean update(Connection connection, Empleado empleado, Object id) {
         return empleadoModel.update(connection, empleado, id) == 1;
     }
 
-    public boolean delete(Connection connection, Integer id) {
+    @Override
+    public boolean delete(Connection connection, Object id) {
         return empleadoModel.delete(connection, id) == 1;
     }
 
-    public List<Object> getEmpleados(Connection connection) {
+    @Override
+    public List<Empleado> getAll(Connection connection) {
         return empleadoModel.getAll(connection);
     }
 }

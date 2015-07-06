@@ -12,10 +12,11 @@ import java.util.List;
  *
  * @author alan
  */
-public class EmpresaModel {
+public class EmpresaModel extends MerchantModel<Empresa> {
 
     String query;
 
+    @Override
     public Integer create(Connection connection, Empresa empresa) {
         query = "INSERT INTO empresa(nombreEmpresa, rfcEmpresa,"
                 + " logoEmpresa, telEmpresa, tel2Empresa, mailEmpresa, webEmpresa,"
@@ -33,7 +34,8 @@ public class EmpresaModel {
         return res;
     }
 
-    public Integer update(Connection connection, Empresa empresa, int id) {
+    @Override
+    public Integer update(Connection connection, Empresa empresa, Object id) {
         query = "UPDATE empresa SET nombreEmpresa='" + empresa.nombre + "', "
                 + "rfcEmpresa='" + empresa.rfc + "', logoEmpresa='" + empresa.logo
                 + "', telEmpresa='" + empresa.tel + "', tel2Empresa='"
@@ -51,7 +53,8 @@ public class EmpresaModel {
         return res;
     }
 
-    public Integer delete(Connection connection, int id) {
+    @Override
+    public Integer delete(Connection connection, Object id) {
         query = "DELETE FROM empresa WHERE idEmpresa=" + id + "";
         Integer res = null;
         try {
@@ -63,7 +66,7 @@ public class EmpresaModel {
         return res;
     }
 
-    public List<Empresa> getEmpresas(Connection connection) {
+    public List<Empresa> getAll(Connection connection) {
         List<Empresa> empresas = new ArrayList<>();
         query = "SELECT * FROM empresa";
         try {

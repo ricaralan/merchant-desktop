@@ -22,7 +22,7 @@ public class RegimenesTableModel extends MerchantTableModel {
 
     @Override
     public void initData(Connection connnection) {
-        objects = (List<Object>)(Object) controller.getRegimenes(connnection);
+        objects = (List<Object>)(Object) controller.getAll(connnection);
         fireTableDataChanged();
     }
     

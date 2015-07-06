@@ -9,7 +9,7 @@ import java.util.List;
  *
  * @author alan
  */
-public class RegimenesController {
+public class RegimenesController extends MerchantController<Regimen> {
 
     RegimenModel model;
 
@@ -17,19 +17,23 @@ public class RegimenesController {
         model = new RegimenModel();
     }
 
-    public List<Object> getRegimenes(Connection connection) {
+    @Override
+    public List<Regimen> getAll(Connection connection) {
         return model.getAll(connection);
     }
 
+    @Override
     public boolean create(Connection connection, Regimen regimen) {
         return model.create(connection, regimen) == 1;
     }
 
-    public boolean update(Connection connection, Regimen regimen, Integer id) {
+    @Override
+    public boolean update(Connection connection, Regimen regimen, Object id) {
         return model.update(connection, regimen, id) == 1;
     }
 
-    public boolean delete(Connection connection, Integer id) {
+    @Override
+    public boolean delete(Connection connection, Object id) {
         return model.delete(connection, id) == 1;
     }
 }

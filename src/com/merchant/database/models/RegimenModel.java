@@ -5,7 +5,6 @@
  */
 package com.merchant.database.models;
 
-import com.merchant.database.MerchantConnection;
 import com.merchant.pojos.Regimen;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -18,11 +17,11 @@ import java.util.List;
  *
  * @author alan
  */
-public class RegimenModel extends MerchantModel {
+public class RegimenModel extends MerchantModel<Regimen> {
 
     @Override
-    public List<Object> getAll(Connection connection) {
-        List<Object> regimenes = new ArrayList<>();
+    public List<Regimen> getAll(Connection connection) {
+        List<Regimen> regimenes = new ArrayList<>();
         String query = "SELECT * FROM regimenFiscal";
         try {
             Statement statement = connection.createStatement();
@@ -40,8 +39,7 @@ public class RegimenModel extends MerchantModel {
     }
 
     @Override
-    public Integer create(Connection connection, Object o) {
-        Regimen regimen = (Regimen) o;
+    public Integer create(Connection connection, Regimen regimen) {
         String query = "INSERT INTO regimenFiscal(descripcionRegimenFiscal)"
                 + " VALUES('" + regimen.descripcionRegimenFiscal + "')";
         Integer res = null;
@@ -55,10 +53,9 @@ public class RegimenModel extends MerchantModel {
     }
 
     @Override
-    public Integer update(Connection connection, Object o, Object id) {
-        Regimen regimen = (Regimen) o;
-        String query = "UPDATE regimenFiscal SET descripcionRegimenFiscal='"+
-                regimen.descripcionRegimenFiscal+"' WHERE idregimenFiscal="+(Integer)id;
+    public Integer update(Connection connection, Regimen regimen, Object id) {
+        String query = "UPDATE regimenFiscal SET descripcionRegimenFiscal='"
+                + regimen.descripcionRegimenFiscal + "' WHERE idregimenFiscal=" + (Integer) id;
         Integer res = null;
         try {
             Statement statement = connection.createStatement();
@@ -71,7 +68,7 @@ public class RegimenModel extends MerchantModel {
 
     @Override
     public Integer delete(Connection connection, Object id) {
-        String query = "DELETE FROM regimenFiscal WHERE idregimenFiscal="+(Integer)id;
+        String query = "DELETE FROM regimenFiscal WHERE idregimenFiscal=" + (Integer) id;
         Integer res = null;
         try {
             Statement statement = connection.createStatement();
