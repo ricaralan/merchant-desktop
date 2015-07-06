@@ -21,6 +21,6 @@ public @interface MerchantAnnotation {
     // Nombres de los fields que validan
     public String[] fieldsValidatedBy();
     
-    //values
+    // Values (REQUIRED)
     public String value() default "";
 }

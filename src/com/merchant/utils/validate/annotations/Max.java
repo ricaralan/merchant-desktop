@@ -5,7 +5,7 @@
  */
 package com.merchant.utils.validate.annotations;
 
-import com.merchant.utils.validate.MaxValidator;
+import com.merchant.utils.validate.validators.MaxValidator;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -20,7 +20,7 @@ import java.lang.annotation.Target;
 @MerchantAnnotation(validatedBy = MaxValidator.class, fieldsValidatedBy = {"max", "value"})
 public @interface Max {
 
-    public String message() default "{error.invalid.min.length}";
+    public String message() default "{error.invalid.max.length}";
 
     public int min();
 }

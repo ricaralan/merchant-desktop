@@ -1,6 +1,6 @@
 package com.merchant.utils.validate.annotations;
 
-import com.merchant.utils.validate.MinValidator;
+import com.merchant.utils.validate.validators.MinValidator;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
