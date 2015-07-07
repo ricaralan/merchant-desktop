@@ -14,6 +14,8 @@ public abstract class AbstractConfigurationPanel extends JPanel {
     public abstract void eventEditFromJtable(int row);
 
     public abstract void eventDelFromJtable(int row);
+    
+    public abstract boolean validar();
 
     public void setParent(JInternalFrame f) {
         parent = f;

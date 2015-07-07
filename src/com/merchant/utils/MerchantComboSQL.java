@@ -21,6 +21,11 @@ public class MerchantComboSQL extends AbstractListModel implements ComboBoxModel
         items = new ArrayList<>();
         mainField = field;
         items = model.getAll(connection);
+        if (items.size() > 0) {initSelected();}
+    }
+    
+    private void initSelected(){
+        itemSelected = getMainFieldValue(items.get(0));
     }
 
     @Override

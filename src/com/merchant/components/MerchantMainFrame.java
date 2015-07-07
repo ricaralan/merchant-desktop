@@ -69,7 +69,6 @@ public class MerchantMainFrame extends javax.swing.JFrame {
         backgroundDesktop = new javax.swing.JDesktopPane();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
         jToolBar2 = new javax.swing.JToolBar();
         lblInicio = new javax.swing.JLabel();
 
@@ -137,8 +136,6 @@ public class MerchantMainFrame extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Desktop for users - merchant");
-
         jToolBar2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jToolBar2.setFloatable(false);
         jToolBar2.setRollover(true);
@@ -159,15 +156,11 @@ public class MerchantMainFrame extends javax.swing.JFrame {
         backgroundDesktopLayout.setHorizontalGroup(
             backgroundDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(backgroundDesktopLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(519, Short.MAX_VALUE)
                 .addComponent(jButton2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1))
             .addComponent(jToolBar2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(backgroundDesktopLayout.createSequentialGroup()
-                .addGap(88, 88, 88)
-                .addComponent(jLabel1)
-                .addGap(0, 311, Short.MAX_VALUE))
         );
         backgroundDesktopLayout.setVerticalGroup(
             backgroundDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -175,14 +168,11 @@ public class MerchantMainFrame extends javax.swing.JFrame {
                 .addGroup(backgroundDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
-                .addGap(85, 85, 85)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 107, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 207, Short.MAX_VALUE)
                 .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         backgroundDesktop.setLayer(jButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         backgroundDesktop.setLayer(jButton2, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        backgroundDesktop.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         backgroundDesktop.setLayer(jToolBar2, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -273,7 +263,6 @@ public class MerchantMainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemSalir;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JToolBar jToolBar2;
     private javax.swing.JLabel lblInicio;

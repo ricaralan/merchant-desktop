@@ -13,14 +13,20 @@ import com.merchant.pojos.Empresa;
 import com.merchant.pojos.Regimen;
 import com.merchant.utils.ImageJPanel;
 import com.merchant.utils.MerchantComboSQL;
+import com.merchant.utils.validate.ValidateFieldError;
+import com.merchant.utils.validate.Validator;
+import java.awt.Color;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.nio.channels.FileChannel;
 import java.sql.Connection;
+import java.util.List;
+import javax.swing.BorderFactory;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.border.Border;
 
 /**
  *
@@ -137,7 +143,7 @@ public class EmpresasPanel extends AbstractConfigurationPanel {
         );
         panelFotoLayout.setVerticalGroup(
             panelFotoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 89, Short.MAX_VALUE)
         );
 
         btnOpcionForm.setText("Crear");
@@ -253,7 +259,7 @@ public class EmpresasPanel extends AbstractConfigurationPanel {
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(txtTel2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(comboRegimen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(panelFoto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(panelFoto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
@@ -270,31 +276,33 @@ public class EmpresasPanel extends AbstractConfigurationPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnOpcionFormActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpcionFormActionPerformed
-        try{
-            Empresa empresa = getDatosEmpresa();
-            if (crearEmpresa) {
-                if (!new EmpresaController().create(connection, empresa)) {
-                    JOptionPane.showMessageDialog(this, "Por favor intente más tarde...", "ERROR AL REGISTRAR", 1);
-                } else {
-                    copyFile(fotoASubir, new File(basePathSO + empresa.logo));
-                }
-            } else {
-                if (!new EmpresaController().update(connection, empresa, idActualizar)) {
-                    JOptionPane.showMessageDialog(this, "Por favor intente más tarde...", "ERROR AL ACTUALIZAR", 1);
-                } else {
-                    crearEmpresa = true;
-                    btnOpcionForm.setText("Crear");
-                    idActualizar = 0;
-                    if (fotoASubir != null) {
+        if(validar()){
+            try{
+                Empresa empresa = getDatosEmpresa();
+                if (crearEmpresa) {
+                    if (!new EmpresaController().create(connection, empresa)) {
+                        JOptionPane.showMessageDialog(this, "Por favor intente más tarde...", "ERROR AL REGISTRAR", 1);
+                    } else {
                         copyFile(fotoASubir, new File(basePathSO + empresa.logo));
                     }
+                } else {
+                    if (!new EmpresaController().update(connection, empresa, idActualizar)) {
+                        JOptionPane.showMessageDialog(this, "Por favor intente más tarde...", "ERROR AL ACTUALIZAR", 1);
+                    } else {
+                        crearEmpresa = true;
+                        btnOpcionForm.setText("Crear");
+                        idActualizar = 0;
+                        if (fotoASubir != null) {
+                            copyFile(fotoASubir, new File(basePathSO + empresa.logo));
+                        }
+                    }
                 }
+                initDataTable();
+                cleanDatosEmpresaForm();
+
+            }catch (NullPointerException e){
+                JOptionPane.showMessageDialog(this, "Tienes que seleccionar un regimen para tu empresa", "ERROR...", 1);
             }
-            initDataTable();
-            cleanDatosEmpresaForm();
-        
-        }catch (NullPointerException e){
-            JOptionPane.showMessageDialog(this, "Tienes que seleccionar un regimen para tu empresa", "ERROR...", 1);
         }
     }//GEN-LAST:event_btnOpcionFormActionPerformed
 
@@ -397,6 +405,36 @@ public class EmpresasPanel extends AbstractConfigurationPanel {
         } catch (Exception e) {
             System.err.println(e);
         }
+    }
+    
+    @Override
+    public boolean validar() {
+        // PRUEBA DE VALIDACIÓN DE LOS CAMPOS RFC E EMAIL
+        boolean valido = true;
+        Empresa empresa = getDatosEmpresa();
+        Validator v = new Validator();
+        List<ValidateFieldError> errors = v.validateFields(empresa);
+        Border borderRED = BorderFactory.createLineBorder(Color.RED, 3);
+        for (ValidateFieldError e:errors){
+            switch (e.fieldName){
+                case "email":
+                    if (e.getErrors().size() > 0){
+                        txtMail.setBorder(borderRED);
+                        valido = false;
+                    } else {
+                        txtMail.setBorder(null);
+                    }
+                    break;
+                case "rfc":
+                    if (e.getErrors().size() > 0){
+                        txtRFC.setBorder(borderRED);
+                        valido = false;
+                    } else {
+                        txtRFC.setBorder(null);
+                    }
+            }
+        }
+        return valido;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

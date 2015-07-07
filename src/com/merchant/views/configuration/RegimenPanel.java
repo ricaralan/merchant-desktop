@@ -196,4 +196,9 @@ public class RegimenPanel extends AbstractConfigurationPanel {
             }
         }
     }
+
+    @Override
+    public boolean validar() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

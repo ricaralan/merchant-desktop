@@ -1,9 +1,6 @@
 package com.merchant.utils.validate;
 
-import com.merchant.utils.validate.annotations.Email;
-import com.merchant.utils.validate.annotations.Length;
 import com.merchant.utils.validate.annotations.MerchantAnnotation;
-import com.merchant.utils.validate.annotations.NotNull;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -15,73 +12,57 @@ import java.util.Map;
 
 /**
  * @Description Clase validadora
- * @version 0.0.3
+ * @version 0.0.4
  * @author alan
  */
-public class Validator<T> {
+public class Validator {
 
-    private Map<String, List<Class<?>>> mapValidate;
-    private final T claseAValidar;
-    private Field[] fields;
-
-    public List<FieldToValidate> fieldsToValidate;
-
-    public Validator(T c) {
-        claseAValidar = c;
-        mapValidate = new HashMap<>();
-        fieldsToValidate = new ArrayList<>();
-        init();
-    }
-
-    private void init() {
-        fields = claseAValidar.getClass().getDeclaredFields();
-        // Aquí sabremos por que se tienen que validar lo fields de la clase indicada
+    public List<ValidateFieldError> validateFields(Object clase) {
+        List<ValidateFieldError> errores = new ArrayList<>();
+        Field fields[] = clase.getClass().getDeclaredFields();
         for (Field f : fields) {
             if (f.getAnnotations().length > 0){
-                FieldToValidate newFieldToValidate = new FieldToValidate();
-                newFieldToValidate.fieldName = f.getName();
-                Annotation annotations[] = f.getAnnotations();
-                for (Annotation a : annotations) {
-                    try {
-                        MerchantAnnotation merchatAnnotation = a.annotationType()
-                                .getAnnotation(MerchantAnnotation.class);
-                        if (merchatAnnotation != null) {
-                            // Clase que valida la anotación
-                            newFieldToValidate.classValidateAnnotations
-                                    .put(a.annotationType().getName(), merchatAnnotation.validatedBy());
-                            newFieldToValidate.fieldsToValidate
-                                    .put(a.annotationType().getName(), merchatAnnotation.fieldsValidatedBy());
-                        }
-                        Method methods[] = a.annotationType().getDeclaredMethods();
-                        Map<String, Object> values = new HashMap<>();
-                        for (Method m : methods) {
-                            // Aqui se guardan todos los valores de la anotación
-                            values.put(m.getName(), m.invoke(a));
-                        }
-                        // Nombre de la anotacion con sus respectivos valores
-                        newFieldToValidate.valuesAnnotations.put(a.annotationType().getName(), values);
-                    } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-                        System.err.println("ERROR Validator: " + ex);
-                    }
-                }
-                try {
-                    newFieldToValidate.fieldValue = f.get(claseAValidar);
-                } catch (IllegalArgumentException | IllegalAccessException ex) {
-                    System.out.println("ERROR Validator: " + ex);
-                }
-                // ADD clases validadoras del field
-                fieldsToValidate.add(newFieldToValidate);
+                errores.add(validateField(clase, f.getName()));
             }
         }
+        return errores;
     }
 
-    public void validateAll() {
-        for (FieldToValidate f : fieldsToValidate) {
-            validateField(f);
+    public ValidateFieldError validateField(Object clase, String fieldName) {
+        FieldToValidate newFieldToValidate = new FieldToValidate();
+        try {
+            Field field = clase.getClass().getDeclaredField(fieldName);
+            // Aquí de guarda el nombre del field
+            newFieldToValidate.fieldName = field.getName();
+            Annotation[] annotations = field.getAnnotations();
+            for (Annotation a : annotations) {
+                MerchantAnnotation merchantAnnotation = a.annotationType().getAnnotation(MerchantAnnotation.class);
+                if (merchantAnnotation != null) {
+                    // Aquí de guarda la clase que valida la anotación
+                    newFieldToValidate.classValidateAnnotations
+                            .put(a.annotationType().getName(), merchantAnnotation.validatedBy());
+                    // Aquí de guardan los parametros que utiliza la clase validadora para validar
+                    newFieldToValidate.fieldsToValidate
+                            .put(a.annotationType().getName(), merchantAnnotation.fieldsValidatedBy());
+                }
+                Method methods[] = a.annotationType().getDeclaredMethods();
+                Map<String, Object> values = new HashMap<>();
+                for (Method m : methods) {
+                    // Aqui se guardan todos los valores de la anotación
+                    values.put(m.getName(), m.invoke(a));
+                }
+                // Nombre de la anotacion con sus respectivos valores
+                newFieldToValidate.valuesAnnotations.put(a.annotationType().getName(), values);
+                // Valor del field
+                newFieldToValidate.fieldValue = field.get(clase);
+            }
+        } catch (NoSuchFieldException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+            System.err.println(ex);
         }
+        return getErrorFieldToValidate(newFieldToValidate);
     }
 
-    public ValidateFieldError validateField(FieldToValidate field) {
+    public ValidateFieldError getErrorFieldToValidate(FieldToValidate field) {
         ValidateFieldError errors = new ValidateFieldError();
         errors.fieldName = field.fieldName;
         field.setAnnotationsValuesToValidate();
@@ -99,54 +80,6 @@ public class Validator<T> {
             }
         }
         return errors;
-    }
-    
-    public ValidateFieldError validateField(String nameField) {
-        FieldToValidate field = getFieldByName(nameField);
-        field.setAnnotationsValuesToValidate();
-        return validateField(field);
-    }
-    
-    private FieldToValidate getFieldByName (String name) {
-        FieldToValidate field = null;
-        for (FieldToValidate f : fieldsToValidate){
-            if (f.fieldName.equals(name)){
-                field = f;
-            }
-        }
-        return field;
-    }
-
-    /**
-     * MINI TEST
-     */
-    public static void main(String args[]) {
-        Validator validator = new Validator(new Persona());
-        validator.validateAll();
-        for(Object f : validator.fieldsToValidate){
-            System.out.println( ((FieldToValidate)f).fieldName + " - " + ((FieldToValidate)f).fieldValue );
-        }
-        // Validar error por nombre del field
-        System.out.println("\n\nERRORES POR FIELD\n"+validator.validateField("curp").getErrors());
-        System.out.println(validator.validateField("curp").getErrors().size());
-    }
-
-    static class Persona {
-
-        @NotNull(message="Error de longitud en email")
-        @Length(min = 18, max = 18)
-        String curp;
-        @NotNull
-        String nombre;
-        String apellidos;
-        @Email
-        String correo;
-
-        public Persona() {
-            curp = null;
-            nombre = "Alan";
-            correo = "gmail@gmail.com";
-        }
     }
 
 }
