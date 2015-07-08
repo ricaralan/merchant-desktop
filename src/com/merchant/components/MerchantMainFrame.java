@@ -17,7 +17,6 @@ import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import javax.swing.ImageIcon;
-import javax.swing.JDesktopPane;
 
 /**
  *
@@ -114,6 +113,9 @@ public class MerchantMainFrame extends javax.swing.JFrame {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 formKeyPressed(evt);
             }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                formKeyReleased(evt);
+            }
         });
 
         backgroundDesktop.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -136,11 +138,35 @@ public class MerchantMainFrame extends javax.swing.JFrame {
             }
         });
 
+        javax.swing.GroupLayout backgroundDesktopLayout = new javax.swing.GroupLayout(backgroundDesktop);
+        backgroundDesktop.setLayout(backgroundDesktopLayout);
+        backgroundDesktopLayout.setHorizontalGroup(
+            backgroundDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(backgroundDesktopLayout.createSequentialGroup()
+                .addContainerGap(555, Short.MAX_VALUE)
+                .addComponent(jButton2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1))
+        );
+        backgroundDesktopLayout.setVerticalGroup(
+            backgroundDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(backgroundDesktopLayout.createSequentialGroup()
+                .addGroup(backgroundDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
+                .addContainerGap(300, Short.MAX_VALUE))
+        );
+        backgroundDesktop.setLayer(jButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        backgroundDesktop.setLayer(jButton2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        getContentPane().add(backgroundDesktop, java.awt.BorderLayout.CENTER);
+
         jToolBar2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jToolBar2.setFloatable(false);
         jToolBar2.setRollover(true);
         jToolBar2.setToolTipText("");
-        jToolBar2.setBorderPainted(false);
+        jToolBar2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jToolBar2.setPreferredSize(new java.awt.Dimension(75, 43));
 
         lblInicio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/merchant/images/icons/conf.png"))); // NOI18N
         lblInicio.setText("Inicio");
@@ -151,40 +177,7 @@ public class MerchantMainFrame extends javax.swing.JFrame {
         });
         jToolBar2.add(lblInicio);
 
-        javax.swing.GroupLayout backgroundDesktopLayout = new javax.swing.GroupLayout(backgroundDesktop);
-        backgroundDesktop.setLayout(backgroundDesktopLayout);
-        backgroundDesktopLayout.setHorizontalGroup(
-            backgroundDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(backgroundDesktopLayout.createSequentialGroup()
-                .addContainerGap(519, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1))
-            .addComponent(jToolBar2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        backgroundDesktopLayout.setVerticalGroup(
-            backgroundDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(backgroundDesktopLayout.createSequentialGroup()
-                .addGroup(backgroundDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 207, Short.MAX_VALUE)
-                .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        backgroundDesktop.setLayer(jButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        backgroundDesktop.setLayer(jButton2, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        backgroundDesktop.setLayer(jToolBar2, javax.swing.JLayeredPane.DEFAULT_LAYER);
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(backgroundDesktop)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(backgroundDesktop)
-        );
+        getContentPane().add(jToolBar2, java.awt.BorderLayout.PAGE_END);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -224,6 +217,11 @@ public class MerchantMainFrame extends javax.swing.JFrame {
          newInternalFrame(new EmpleadosPanel(), "Empleados");
     }//GEN-LAST:event_itemEmpleadosActionPerformed
 
+    private void formKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyReleased
+        // TODO add your handling code here:
+        toggleShowMenuInicio();
+    }//GEN-LAST:event_formKeyReleased
+
     private void aparecerMenuInicio(int code){
         if (keyCode.codeIsPressed("windows", code)) {
             toggleShowMenuInicio();
@@ -231,7 +229,7 @@ public class MerchantMainFrame extends javax.swing.JFrame {
     }
     
     private void toggleShowMenuInicio () {
-        int x = lblInicio.getBounds().x;
+        int x = lblInicio.getBounds().x - 10;
         int y = (lblInicio.getBounds().y - (lblInicio.getHeight()/2)) - (desktopMenu.getComponentCount() * 20);
         if (!desktopMenu.isShowing()){
             desktopMenu.show(lblInicio, x, y);
