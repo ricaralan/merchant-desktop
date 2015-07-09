@@ -16,8 +16,13 @@ import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.beans.PropertyVetoException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 
@@ -114,9 +119,6 @@ public class MerchantMainFrame extends javax.swing.JFrame {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 formKeyPressed(evt);
             }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                formKeyReleased(evt);
-            }
         });
 
         backgroundDesktop.setBackground(new java.awt.Color(52, 138, 192));
@@ -171,7 +173,10 @@ public class MerchantMainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_formKeyPressed
 
     private void itemSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemSalirActionPerformed
-        System.exit(0);
+        int res = JOptionPane.showConfirmDialog(this, "¿Realmente deseas salir?");
+        if(res == JOptionPane.OK_OPTION) {
+            System.exit(0);
+        }
     }//GEN-LAST:event_itemSalirActionPerformed
 
     private void backgroundDesktopKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_backgroundDesktopKeyPressed
@@ -187,12 +192,7 @@ public class MerchantMainFrame extends javax.swing.JFrame {
          newInternalFrame(new EmpleadosPanel(), "Empleados");
     }//GEN-LAST:event_itemEmpleadosActionPerformed
 
-    private void formKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyReleased
-        // TODO add your handling code here:
-        toggleShowMenuInicio();
-    }//GEN-LAST:event_formKeyReleased
-
-    private void aparecerMenuInicio(int code){
+    public void aparecerMenuInicio(int code){
         if (keyCode.codeIsPressed("windows", code)) {
             toggleShowMenuInicio();
         }
@@ -266,6 +266,11 @@ public class MerchantMainFrame extends javax.swing.JFrame {
                 barraInicio.add(botonInternal);
                 panel.setParent(internal);
                 frame.setCursor(Cursor.getDefaultCursor());
+                try {
+                    internal.setSelected(true);
+                } catch (PropertyVetoException ex) {
+                    Logger.getLogger(MerchantMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
