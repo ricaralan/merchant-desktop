@@ -5,7 +5,6 @@
  */
 package com.merchant.components;
 
-import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 /**
@@ -19,6 +18,15 @@ public class MerchantInternalFrame extends javax.swing.JInternalFrame {
      */
     public MerchantInternalFrame(String title, JPanel panel) {
         super(title, true, true, true, true);
+        initComponents();
+        panel.setVisible(true);
+        this.setContentPane(panel);
+        this.pack();
+    }
+    
+    public MerchantInternalFrame(String title, JPanel panel,
+            boolean resizable, boolean closable, boolean maximizable, boolean iconable) {
+        super(title, resizable, closable, maximizable, iconable);
         initComponents();
         panel.setVisible(true);
         this.setContentPane(panel);
@@ -38,11 +46,11 @@ public class MerchantInternalFrame extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 22, Short.MAX_VALUE)
+            .addGap(0, 30, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 4, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         pack();

@@ -12,11 +12,14 @@ import com.merchant.views.configuration.ConfigurationPanel;
 import com.merchant.views.MerchantPanel;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
-import java.awt.Image;
-import javax.swing.ImageIcon;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.beans.PropertyVetoException;
+import javax.swing.JButton;
+import javax.swing.event.InternalFrameEvent;
+import javax.swing.event.InternalFrameListener;
 
 /**
  *
@@ -66,9 +69,7 @@ public class MerchantMainFrame extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         itemSalir = new javax.swing.JMenuItem();
         backgroundDesktop = new javax.swing.JDesktopPane();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jToolBar2 = new javax.swing.JToolBar();
+        barraInicio = new javax.swing.JToolBar();
         lblInicio = new javax.swing.JLabel();
 
         desktopMenu.setToolTipText("Menu");
@@ -118,23 +119,11 @@ public class MerchantMainFrame extends javax.swing.JFrame {
             }
         });
 
+        backgroundDesktop.setBackground(new java.awt.Color(52, 138, 192));
+        backgroundDesktop.setForeground(new java.awt.Color(255, 255, 255));
         backgroundDesktop.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 backgroundDesktopKeyPressed(evt);
-            }
-        });
-
-        jButton1.setText("x");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        jButton2.setText("_");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
             }
         });
 
@@ -142,31 +131,21 @@ public class MerchantMainFrame extends javax.swing.JFrame {
         backgroundDesktop.setLayout(backgroundDesktopLayout);
         backgroundDesktopLayout.setHorizontalGroup(
             backgroundDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(backgroundDesktopLayout.createSequentialGroup()
-                .addContainerGap(555, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1))
+            .addGap(0, 642, Short.MAX_VALUE)
         );
         backgroundDesktopLayout.setVerticalGroup(
             backgroundDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(backgroundDesktopLayout.createSequentialGroup()
-                .addGroup(backgroundDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addContainerGap(300, Short.MAX_VALUE))
+            .addGap(0, 325, Short.MAX_VALUE)
         );
-        backgroundDesktop.setLayer(jButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        backgroundDesktop.setLayer(jButton2, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         getContentPane().add(backgroundDesktop, java.awt.BorderLayout.CENTER);
 
-        jToolBar2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jToolBar2.setFloatable(false);
-        jToolBar2.setRollover(true);
-        jToolBar2.setToolTipText("");
-        jToolBar2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jToolBar2.setPreferredSize(new java.awt.Dimension(75, 43));
+        barraInicio.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        barraInicio.setFloatable(false);
+        barraInicio.setRollover(true);
+        barraInicio.setToolTipText("");
+        barraInicio.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        barraInicio.setPreferredSize(new java.awt.Dimension(75, 43));
 
         lblInicio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/merchant/images/icons/conf.png"))); // NOI18N
         lblInicio.setText("Inicio");
@@ -175,21 +154,12 @@ public class MerchantMainFrame extends javax.swing.JFrame {
                 lblInicioMouseClicked(evt);
             }
         });
-        jToolBar2.add(lblInicio);
+        barraInicio.add(lblInicio);
 
-        getContentPane().add(jToolBar2, java.awt.BorderLayout.PAGE_END);
+        getContentPane().add(barraInicio, java.awt.BorderLayout.PAGE_END);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        System.exit(0);
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        setState(this.ICONIFIED);
-    }//GEN-LAST:event_jButton2ActionPerformed
 
     private void lblInicioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblInicioMouseClicked
         // TODO add your handling code here:
@@ -229,10 +199,10 @@ public class MerchantMainFrame extends javax.swing.JFrame {
     }
     
     private void toggleShowMenuInicio () {
-        int x = lblInicio.getBounds().x - 10;
+        int x = lblInicio.getBounds().x - 15;
         int y = (lblInicio.getBounds().y - (lblInicio.getHeight()/2)) - (desktopMenu.getComponentCount() * 20);
         if (!desktopMenu.isShowing()){
-            desktopMenu.show(lblInicio, x, y);
+            desktopMenu.show(lblInicio, x, y + 5);
         } else {
             desktopMenu.setFocusable(false);
             desktopMenu.setVisible(false);
@@ -245,9 +215,55 @@ public class MerchantMainFrame extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                MerchantInternalFrame internal = new MerchantInternalFrame(internalTitle, panel);
+                final MerchantInternalFrame internal = new MerchantInternalFrame(internalTitle, panel, false, true, false, true);
+                final JButton botonInternal = new JButton(internalTitle);
+                botonInternal.addActionListener(new ActionListener(){
+                    @Override
+                    public void actionPerformed(ActionEvent ae) {
+                        try {
+                            if (internal.isVisible()){
+                                internal.setIcon(true);
+                            }else {
+                                internal.setIcon(false);
+                            }
+                            internal.setSelected(true);
+                        } catch (PropertyVetoException ex) {
+                            System.err.println(ex);
+                        }
+                    }
+                });
+                internal.addInternalFrameListener(new InternalFrameListener(){
+                    @Override
+                    public void internalFrameOpened(InternalFrameEvent ife) {}
+
+                    @Override
+                    public void internalFrameClosing(InternalFrameEvent ife) {}
+
+                    @Override
+                    public void internalFrameClosed(InternalFrameEvent ife) {
+                        barraInicio.remove(botonInternal);
+                        barraInicio.repaint();
+                    }
+
+                    @Override
+                    public void internalFrameIconified(InternalFrameEvent ife) {
+                        internal.setVisible(false);
+                    }
+
+                    @Override
+                    public void internalFrameDeiconified(InternalFrameEvent ife) {
+                        internal.setVisible(true);
+                    }
+
+                    @Override
+                    public void internalFrameActivated(InternalFrameEvent ife) {}
+
+                    @Override
+                    public void internalFrameDeactivated(InternalFrameEvent ife) {}
+                });
                 internal.setVisible(true);
                 backgroundDesktop.add(internal);
+                barraInicio.add(botonInternal);
                 panel.setParent(internal);
                 frame.setCursor(Cursor.getDefaultCursor());
             }
@@ -255,14 +271,12 @@ public class MerchantMainFrame extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane backgroundDesktop;
+    private javax.swing.JToolBar barraInicio;
     private javax.swing.JPopupMenu desktopMenu;
     private javax.swing.JMenuItem itemConfiguracion;
     private javax.swing.JMenuItem itemEmpleados;
     private javax.swing.JMenuItem itemSalir;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
-    private javax.swing.JToolBar jToolBar2;
     private javax.swing.JLabel lblInicio;
     private javax.swing.JMenu menuConfiguracion;
     // End of variables declaration//GEN-END:variables

@@ -9,8 +9,8 @@ import com.merchant.views.Login;
  */
 public class MerchantMain {
 
-    public static Login login;
-    
+    private static Login login;
+
     public static void main(String args[]) {
         VerifyProyect verify = new VerifyProyect();
         verify.verify();
