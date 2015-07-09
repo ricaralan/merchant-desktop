@@ -221,7 +221,7 @@ public class MerchantMainFrame extends javax.swing.JFrame {
                     @Override
                     public void actionPerformed(ActionEvent ae) {
                         try {
-                            if (internal.isVisible()){
+                            if (internal.isVisible() && internal.isSelected()){
                                 internal.setIcon(true);
                             }else {
                                 internal.setIcon(false);
