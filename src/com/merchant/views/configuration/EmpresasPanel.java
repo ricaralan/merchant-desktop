@@ -13,17 +13,13 @@ import com.merchant.pojos.Empresa;
 import com.merchant.pojos.Regimen;
 import com.merchant.utils.ImageJPanel;
 import com.merchant.utils.MerchantComboSQL;
+import com.merchant.utils.Photo;
 import com.merchant.utils.validate.ValidateFieldError;
 import com.merchant.utils.validate.Validator;
 import java.awt.Color;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.nio.channels.FileChannel;
 import java.sql.Connection;
 import java.util.List;
 import javax.swing.BorderFactory;
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.border.Border;
@@ -41,22 +37,20 @@ public class EmpresasPanel extends AbstractConfigurationPanel {
     private EmpresaController empresaController = null;
     private boolean crearEmpresa;
     private int idActualizar;
-    private ImageJPanel imagePanel;
-    private File fotoASubir;
-    private String basePathLogo = null, basePathSO = null;
     private JTable tableEmpresas;
+    private final Photo photo;
 
     public EmpresasPanel(Connection connection, JTable table) {
         initComponents();
         this.connection = connection;
         empresaController = new EmpresaController();
         crearEmpresa = true;
-        basePathLogo = "/images/empresas/";
         tableEmpresas = table;
         tableEmpresas.setModel(new EmpresaTableModel());
-        basePathSO = new File("").getAbsolutePath();
         comboRegimen.setModel(new MerchantComboSQL(connection, new RegimenModel(), "descripcionRegimenFiscal"));
         initDataTable();
+        photo = new Photo();
+        photo.setBasePath("/images/empresas/");
     }
 
     private void initDataTable() {
@@ -282,8 +276,6 @@ public class EmpresasPanel extends AbstractConfigurationPanel {
                 if (crearEmpresa) {
                     if (!new EmpresaController().create(connection, empresa)) {
                         JOptionPane.showMessageDialog(this, "Por favor intente más tarde...", "ERROR AL REGISTRAR", 1);
-                    } else {
-                        copyFile(fotoASubir, new File(basePathSO + empresa.logo));
                     }
                 } else {
                     if (!new EmpresaController().update(connection, empresa, idActualizar)) {
@@ -292,14 +284,11 @@ public class EmpresasPanel extends AbstractConfigurationPanel {
                         crearEmpresa = true;
                         btnOpcionForm.setText("Crear");
                         idActualizar = 0;
-                        if (fotoASubir != null) {
-                            copyFile(fotoASubir, new File(basePathSO + empresa.logo));
-                        }
                     }
                 }
+                photo.uploadSelectedPhoto();
                 initDataTable();
                 cleanDatosEmpresaForm();
-
             }catch (NullPointerException e){
                 JOptionPane.showMessageDialog(this, "Tienes que seleccionar un regimen para tu empresa", "ERROR...", 1);
             }
@@ -321,13 +310,8 @@ public class EmpresasPanel extends AbstractConfigurationPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.showOpenDialog(this);
-        fotoASubir = fileChooser.getSelectedFile();
-        if (fotoASubir != null) {
-            // Buscar logo y ponerlo en el JPanel para vista previa...
-            setFotoLogo(fotoASubir.getAbsolutePath());
-        }
+        photo.setPhoto(parent);
+        photo.setPhotoJPanel(panelFoto);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private synchronized Empresa getDatosEmpresa() {
@@ -339,11 +323,7 @@ public class EmpresasPanel extends AbstractConfigurationPanel {
         empresa.web = txtWebEmpresa.getText();
         empresa.email = txtMail.getText();
         empresa.regimenFiscal_idregimenFiscal = getIdRegimenFiscal();
-        if (fotoASubir != null) {
-            empresa.logo = basePathLogo + fotoASubir.getName();
-        } else {
-            empresa.logo = "";
-        }
+        empresa.logo = photo.getPosiblePathPhoto();
         return empresa;
     }
 
@@ -357,7 +337,8 @@ public class EmpresasPanel extends AbstractConfigurationPanel {
         txtMail.setText(empresa.email);
         setIdRegimenFiscal(empresa);
         if (empresa.logo.length() > 1) {
-            setFotoLogo(basePathSO + empresa.logo);
+            photo.setPhoto(empresa.logo);
+            photo.setPhotoJPanel(panelFoto);
         }
     }
 
@@ -369,7 +350,7 @@ public class EmpresasPanel extends AbstractConfigurationPanel {
         txtWebEmpresa.setText("");
         txtMail.setText("");
         comboRegimen.setSelectedIndex(0);
-        cleanFoto();
+        photo.cleanPanelPhoto(panelFoto);
     }
     
     private int getIdRegimenFiscal() {
@@ -382,29 +363,6 @@ public class EmpresasPanel extends AbstractConfigurationPanel {
         getComboSQLModel().findByFielNameAndValue("idregimenFiscal",
                 empresa.regimenFiscal_idregimenFiscal)).descripcionRegimenFiscal
         );
-    }
-
-    private synchronized void setFotoLogo(String path) {
-        imagePanel = new ImageJPanel(panelFoto, path);
-        panelFoto.add(imagePanel).repaint();
-    }
-
-    private void cleanFoto() {
-        fotoASubir = null;
-        panelFoto.removeAll();
-        panelFoto.repaint();
-    }
-
-    private void copyFile(File from, File to) {
-        try {
-            FileChannel in = (new FileInputStream(from)).getChannel();
-            FileChannel out = (new FileOutputStream(to)).getChannel();
-            in.transferTo(0, from.length(), out);
-            in.close();
-            out.close();
-        } catch (Exception e) {
-            System.err.println(e);
-        }
     }
     
     @Override
@@ -482,5 +440,6 @@ public class EmpresasPanel extends AbstractConfigurationPanel {
                     JOptionPane.showMessageDialog(null, "Por favor intente más tarde...", "ERROR AL ELIMINAR", 1);
                 }
             }
+            cleanDatosEmpresaForm();
     }
 }
