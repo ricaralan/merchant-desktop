@@ -19,9 +19,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyVetoException;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
@@ -50,12 +52,34 @@ public class MerchantMainFrame extends javax.swing.JFrame {
         setFullScreen();
         merchantConnection = new MerchantConnection();
         keyCode = new KeyCode();
+        initHora();
     }
     
     private void setFullScreen () {
         GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
         gd = env.getDefaultScreenDevice();
         gd.setFullScreenWindow(this);
+    }
+    
+    private void initHora(){
+        class Hora extends Thread{
+            @Override
+            public void run(){
+                while(true) {
+                    String hora[] = new Date().toString().split(":");
+                    int horas = Integer.parseInt(hora[0].substring(hora[0].length()-2, hora[0].length()));
+                    int minutos = Integer.parseInt(hora[1]);
+                    int segundos = Integer.parseInt(hora[2].substring(0, 2));
+                    txtHora.setText(horas + ":" + minutos + ":" + segundos);
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(MerchantMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        }
+        new Hora().start();
     }
 
     /**
@@ -74,6 +98,7 @@ public class MerchantMainFrame extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         itemSalir = new javax.swing.JMenuItem();
         backgroundDesktop = new javax.swing.JDesktopPane();
+        txtHora = new javax.swing.JLabel();
         barraInicio = new javax.swing.JToolBar();
         lblInicio = new javax.swing.JLabel();
 
@@ -129,16 +154,25 @@ public class MerchantMainFrame extends javax.swing.JFrame {
             }
         });
 
+        txtHora.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        txtHora.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtHora.setText("00:00:00");
+
         javax.swing.GroupLayout backgroundDesktopLayout = new javax.swing.GroupLayout(backgroundDesktop);
         backgroundDesktop.setLayout(backgroundDesktopLayout);
         backgroundDesktopLayout.setHorizontalGroup(
             backgroundDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 642, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundDesktopLayout.createSequentialGroup()
+                .addGap(0, 508, Short.MAX_VALUE)
+                .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         backgroundDesktopLayout.setVerticalGroup(
             backgroundDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 325, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundDesktopLayout.createSequentialGroup()
+                .addGap(0, 302, Short.MAX_VALUE)
+                .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
+        backgroundDesktop.setLayer(txtHora, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         getContentPane().add(backgroundDesktop, java.awt.BorderLayout.CENTER);
 
@@ -284,5 +318,6 @@ public class MerchantMainFrame extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JLabel lblInicio;
     private javax.swing.JMenu menuConfiguracion;
+    private javax.swing.JLabel txtHora;
     // End of variables declaration//GEN-END:variables
 }
