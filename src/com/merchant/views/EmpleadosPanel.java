@@ -5,49 +5,76 @@
  */
 package com.merchant.views;
 
-import com.merchant.components.tableModels.EmpresaTableModel;
+import com.merchant.components.tableModels.EmpleadoTableModel;
 import com.merchant.components.tableModels.MerchantTableModel;
-import com.merchant.controllers.EmpresaController;
+import com.merchant.controllers.EmpleadoController;
 import com.merchant.database.MerchantConnection;
-import com.merchant.pojos.Empresa;
+import com.merchant.database.models.SucursalModel;
+import com.merchant.database.models.TipoEmpleadoModel;
+import com.merchant.database.models.UsuarioModel;
+import com.merchant.pojos.Domicilio;
+import com.merchant.pojos.Empleado;
+import com.merchant.pojos.Sucursal;
+import com.merchant.pojos.TipoEmpleado;
+import com.merchant.pojos.Usuario;
 import com.merchant.utils.ImageJPanel;
+import com.merchant.utils.MerchantComboSQL;
+import com.merchant.utils.Photo;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.nio.channels.FileChannel;
+import java.sql.Connection;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 /**
  *
- * @author alan
+ * @author Eleazar
  */
 public class EmpleadosPanel extends MerchantPanel {
 
     /**
-     * Creates new form EmpresasForm
+     * Creates new form EmpleadoForm
      */
-    private MerchantConnection merchantConnection = null;
-    private EmpresaController empresaController = null;
-    private boolean crearEmpresa;
+    Connection connection = null;
+    private EmpleadoController empleadoController = null;
+    private boolean crearEmpleado;
     private int idActualizar;
     private ImageJPanel imagePanel;
-    private File fotoASubir;
-    private String basePathLogo = null, basePathSO = null;
+    private Photo photo;
+    //private JTable tableEmpleados;
 
-    public EmpleadosPanel() {
+    public EmpleadosPanel(MerchantConnection c) {
         initComponents();
-        /*merchantConnection = new MerchantConnection();
-        empresaController = new EmpresaController();
+        this.connection = c.getConnection();
+        empleadoController = new EmpleadoController();
+        crearEmpleado = true;
+        photo = new Photo();
+        photo.setBasePath("/images/empleados/");
+        //tableEmpleados = table;
+        tableEmpleados.setModel(new EmpleadoTableModel());
+        comboEmpleado.setModel(new MerchantComboSQL(connection, new TipoEmpleadoModel(), "tipoEmpleado"));
+        comboSucursal.setModel(new MerchantComboSQL(connection, new SucursalModel(), "nombreSucursal"));
         initDataTable();
-        crearEmpresa = true;
-        basePathLogo = "/images/empresas/";
-        basePathSO = new File("").getAbsolutePath();*/
     }
 
     private void initDataTable() {
-        /*((EmpresaTableModel) tableEmpresas.getModel())
-                .initData(merchantConnection.getConnection());*/
+        getTableModel().initData(connection);
+    }
+
+    private MerchantTableModel getTableModel() {
+        return ((MerchantTableModel) tableEmpleados.getModel());
+    }
+
+    private MerchantComboSQL getComboSQLModelEmpleado() {
+        return (MerchantComboSQL) (comboEmpleado.getModel());
+    }
+
+    private MerchantComboSQL getComboSQLModelSucursal() {
+        return (MerchantComboSQL) (comboSucursal.getModel());
     }
 
     /**
@@ -59,12 +86,12 @@ public class EmpleadosPanel extends MerchantPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        opcionesEmpresa = new javax.swing.JPopupMenu();
+        opcionesEmpleado = new javax.swing.JPopupMenu();
         Editar = new javax.swing.JMenuItem();
         Eliminar = new javax.swing.JMenuItem();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tableEmpresas = new javax.swing.JTable();
-        jButton2 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        btnCancel = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -99,18 +126,19 @@ public class EmpleadosPanel extends MerchantPanel {
         jLabel21 = new javax.swing.JLabel();
         txtEstado = new javax.swing.JTextField();
         jLabel22 = new javax.swing.JLabel();
-        txtNombre12 = new javax.swing.JTextField();
+        txtPais = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jLabel24 = new javax.swing.JLabel();
         txtDiasLaborales = new javax.swing.JTextField();
         jLabel27 = new javax.swing.JLabel();
         txtSalario = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        cbxTipoEmpleado = new javax.swing.JComboBox();
-        cbxSucursal = new javax.swing.JComboBox();
+        comboEmpleado = new javax.swing.JComboBox();
+        comboSucursal = new javax.swing.JComboBox();
         jLabel8 = new javax.swing.JLabel();
         btnOpcionForm = new javax.swing.JButton();
-        btnOpcionForm1 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tableEmpleados = new javax.swing.JTable();
 
         Editar.setText("Editar");
         Editar.addActionListener(new java.awt.event.ActionListener() {
@@ -118,7 +146,7 @@ public class EmpleadosPanel extends MerchantPanel {
                 EditarActionPerformed(evt);
             }
         });
-        opcionesEmpresa.add(Editar);
+        opcionesEmpleado.add(Editar);
 
         Eliminar.setText("Eliminar");
         Eliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -126,23 +154,25 @@ public class EmpleadosPanel extends MerchantPanel {
                 EliminarActionPerformed(evt);
             }
         });
-        opcionesEmpresa.add(Eliminar);
+        opcionesEmpleado.add(Eliminar);
 
-        tableEmpresas.setFont(new java.awt.Font("Dialog", 0, 13)); // NOI18N
-        tableEmpresas.setModel(new EmpresaTableModel());
-        tableEmpresas.setComponentPopupMenu(opcionesEmpresa);
-        tableEmpresas.setRowHeight(27);
-        tableEmpresas.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tableEmpresasMouseClicked(evt);
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
             }
-        });
-        jScrollPane2.setViewportView(tableEmpresas);
+        ));
+        jScrollPane1.setViewportView(jTable1);
 
-        jButton2.setText("Cancelar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnCancel.setText("Cancelar");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnCancelActionPerformed(evt);
             }
         });
 
@@ -160,11 +190,6 @@ public class EmpleadosPanel extends MerchantPanel {
         txtRFC.setText("XXXXXXXXXXXXXX");
 
         txtApellidos.setText("Fernández Ramírez ");
-        txtApellidos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtApellidosActionPerformed(evt);
-            }
-        });
 
         txtNombre.setText("Eleazar  ");
 
@@ -296,11 +321,6 @@ public class EmpleadosPanel extends MerchantPanel {
         jLabel18.setText("Colonia");
 
         txtColonia.setText("23 de Marzo ");
-        txtColonia.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtColoniaActionPerformed(evt);
-            }
-        });
 
         jLabel19.setText("Localidad");
 
@@ -316,7 +336,7 @@ public class EmpleadosPanel extends MerchantPanel {
 
         jLabel22.setText("Pais");
 
-        txtNombre12.setText("México");
+        txtPais.setText("México");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -375,7 +395,7 @@ public class EmpleadosPanel extends MerchantPanel {
                                     .addComponent(jLabel22, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(15, 15, 15))
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(txtNombre12, javax.swing.GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE)
+                                .addComponent(txtPais, javax.swing.GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE)
                                 .addGap(84, 84, 84))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -420,7 +440,7 @@ public class EmpleadosPanel extends MerchantPanel {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtMunicipio, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNombre12, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtPais, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -433,26 +453,14 @@ public class EmpleadosPanel extends MerchantPanel {
         jLabel27.setText("Salario Diario");
 
         txtSalario.setText("63.99");
-        txtSalario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtSalarioActionPerformed(evt);
-            }
-        });
 
         jLabel7.setText("Tipo Empleado");
 
-        cbxTipoEmpleado.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboEmpleado.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        cbxSucursal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboSucursal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel8.setText("Sucursal");
-
-        btnOpcionForm.setText("Asignar Usuario");
-        btnOpcionForm.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnOpcionFormActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -462,77 +470,91 @@ public class EmpleadosPanel extends MerchantPanel {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtSalario)
-                    .addComponent(jLabel27, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel27, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE))
                 .addGap(10, 10, 10)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtDiasLaborales)
-                    .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE))
                 .addGap(10, 10, 10)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(89, 89, 89))
+                        .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(cbxTipoEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(comboEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cbxSucursal, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addComponent(btnOpcionForm, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                        .addComponent(comboSucursal, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(15, 15, 15)))
+                .addGap(244, 244, 244))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnOpcionForm, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel24)
-                            .addComponent(jLabel27)
-                            .addComponent(jLabel8))
-                        .addGap(12, 12, 12)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(cbxTipoEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(cbxSucursal, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(txtSalario, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtDiasLaborales, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel24)
+                    .addComponent(jLabel27)
+                    .addComponent(jLabel8))
+                .addGap(12, 12, 12)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(comboEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(comboSucursal, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtSalario, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtDiasLaborales, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        btnOpcionForm1.setText("Crear");
-        btnOpcionForm1.addActionListener(new java.awt.event.ActionListener() {
+        btnOpcionForm.setText("Crear");
+        btnOpcionForm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnOpcionForm1ActionPerformed(evt);
+                btnOpcionFormActionPerformed(evt);
             }
         });
+
+        tableEmpleados.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(tableEmpleados);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2)
-            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(15, 15, 15))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnOpcionForm1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31))
+                        .addComponent(jScrollPane2)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(15, 15, 15))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(456, 456, 456)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnOpcionForm, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(26, 26, 26)
+                                .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(31, 31, 31))))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -545,191 +567,217 @@ public class EmpleadosPanel extends MerchantPanel {
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnOpcionForm1)
-                    .addComponent(jButton2))
+                    .addComponent(btnOpcionForm)
+                    .addComponent(btnCancel))
                 .addGap(15, 15, 15)
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnOpcionFormActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpcionFormActionPerformed
-        /*Empresa empresa = getDatosEmpresa();
-        if (crearEmpresa) {
-            if (!new EmpresaController().create(merchantConnection.getConnection(), empresa)) {
-                JOptionPane.showMessageDialog(this, "Por favor intente más tarde...", "ERROR AL REGISTRAR", 1);
-            } else {
-                copyFile(fotoASubir, new File(basePathSO + empresa.logo));
-            }
-        } else {
-            if (!new EmpresaController().update(merchantConnection.getConnection(), empresa, idActualizar)) {
-                JOptionPane.showMessageDialog(this, "Por favor intente más tarde...", "ERROR AL ACTUALIZAR", 1);
-            } else {
-                crearEmpresa = true;
-                btnOpcionForm.setText("Crear");
-                idActualizar = 0;
-                if ( fotoASubir != null ) {
-                    copyFile(fotoASubir, new File(basePathSO + empresa.logo));
-                }
-            }
-        }
-        initDataTable();
-        cleanDatosEmpresaForm();*/
-    }//GEN-LAST:event_btnOpcionFormActionPerformed
-
     private void EditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditarActionPerformed
-       /*
-        int row = tableEmpresas.getSelectedRow();
+        int row = tableEmpleados.getSelectedRow();
         if (row != -1) {
-            Empresa empresa = (Empresa)((MerchantTableModel) tableEmpresas.getModel()).getObjectByRow(row);
-            setDatosEmpresaForm(empresa);
+            Empleado empleado = (Empleado) ((MerchantTableModel) tableEmpleados.getModel()).getObjectByRow(row);
+            setDatosEmpleadoForm(empleado);
             btnOpcionForm.setText("Editar");
-            idActualizar = empresa.id;
-            crearEmpresa = false;
-        }*/
+            idActualizar = empleado.idEmpleado;
+            crearEmpleado = false;
+        }
     }//GEN-LAST:event_EditarActionPerformed
 
     private void EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarActionPerformed
-        /*
-        int row = tableEmpresas.getSelectedRow();
+        int row = tableEmpleados.getSelectedRow();
         if (row != -1) {
-            Empresa empresa = (Empresa)((MerchantTableModel) tableEmpresas.getModel()).getObjectByRow(row);
-            int res = JOptionPane.showConfirmDialog(null, "¿Esta seguro de eliminar la empresa \"" + empresa.nombre + "\"?");
+            Empleado empleado = (Empleado) ((MerchantTableModel) tableEmpleados.getModel()).getObjectByRow(row);
+            int res = JOptionPane.showConfirmDialog(null, "¿Esta seguro de eliminar al empleado \"" + empleado.nombreEmpleado + "\"?");
             if (res == JOptionPane.OK_OPTION) {
-                if (empresaController.delete(merchantConnection.getConnection(), empresa.id)) {
-                    ((EmpresaTableModel) tableEmpresas.getModel()).initData(merchantConnection.getConnection());
+                if (empleadoController.delete(connection, empleado.idEmpleado)) {
+                    ((EmpleadoTableModel) tableEmpleados.getModel()).initData(connection);
                 } else {
                     JOptionPane.showMessageDialog(null, "Por favor intente más tarde...", "ERROR AL ELIMINAR", 1);
                 }
             }
-        }*/
+        }
     }//GEN-LAST:event_EliminarActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        /*
-        cleanDatosEmpresaForm();
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        cleanDatosEmpleadoForm();
         btnOpcionForm.setText("Crear");
-        crearEmpresa = true;*/
-    }//GEN-LAST:event_jButton2ActionPerformed
+        crearEmpleado = true;
+    }//GEN-LAST:event_btnCancelActionPerformed
 
-    private void tableEmpresasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableEmpresasMouseClicked
-        /*
-        if (evt.getClickCount() > 1) {
-            int row = tableEmpresas.getSelectedRow();
-            if (row != -1) {
-                Empresa empresa = (Empresa)((MerchantTableModel) tableEmpresas.getModel()).getObjectByRow(row);
-                setDatosEmpresaForm(empresa);
-                btnOpcionForm.setText("Editar");
-                idActualizar = empresa.id;
-                crearEmpresa = false;
+    private void btnOpcionFormActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpcionFormActionPerformed
+        try {
+            Empleado empleado = getDatosEmpleado();
+            Domicilio domicilio = getDatosDomicilio();
+            if (true) {
+                if (!new EmpleadoController().create(connection, empleado, domicilio, new Usuario())) {
+                    JOptionPane.showMessageDialog(this, "Por favor intente más tarde...", "ERROR AL REGISTRAR", 1);
+                }
+            } else {
+                if (!new EmpleadoController().update(connection, empleado, idActualizar)) {
+                    JOptionPane.showMessageDialog(this, "Por favor intente más tarde...", "ERROR AL ACTUALIZAR", 1);
+                } else {
+                    crearEmpleado = true;
+                    btnOpcionForm.setText("Actualizar");
+                    idActualizar = 0;
+                }
             }
-        }*/
-    }//GEN-LAST:event_tableEmpresasMouseClicked
+            photo.uploadSelectedPhoto();
+            initDataTable();
+            cleanDatosEmpleadoForm();
 
-    private void txtColoniaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtColoniaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtColoniaActionPerformed
-
-    private void txtSalarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSalarioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtSalarioActionPerformed
-
-    private void btnOpcionForm1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpcionForm1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnOpcionForm1ActionPerformed
+        } catch (NullPointerException e) {
+            JOptionPane.showMessageDialog(this, "Tienes que asignar Sucursal y definir el "
+                    + "Tipo de empleado para el Empleado" + e, "ERROR...", 1);
+        }
+    }//GEN-LAST:event_btnOpcionFormActionPerformed
 
     private void btnCargarImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarImagenActionPerformed
-        /*
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.showOpenDialog(this);
-        fotoASubir = fileChooser.getSelectedFile();
-        if (fotoASubir != null) {
-            // Buscar logo y ponerlo en el JPanel para vista previa...
-            setFotoLogo(fotoASubir.getAbsolutePath());
-        }*/
+        photo.setPhoto(parent);
+        photo.setPhotoJPanel(panelFoto);
     }//GEN-LAST:event_btnCargarImagenActionPerformed
 
-    private void txtApellidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtApellidosActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtApellidosActionPerformed
+    private synchronized Empleado getDatosEmpleado() {
+        Empleado empleado = new Empleado();
+        empleado.rfcEmpleado = txtRFC.getText();
+        empleado.tipoEmpleado_idtipoEmpleado = getIdTipoEmpleado();
+        empleado.nombreEmpleado = txtNombre.getText();
+        empleado.apellidosEmpleado = txtApellidos.getText();
+        empleado.telefonoCelularEmpleado = txtTelCelular.getText();
+        empleado.telefonoEmpleado = txtTelCasa.getText();
+        empleado.mailEmpleado = txtEmail.getText();
+        empleado.salarioDiarioEmpleado = Float.parseFloat(txtSalario.getText());
+        empleado.diasLaboralesEmpleado = Integer.parseInt(txtDiasLaborales.getText());
+        empleado.altaEmpleado = fecha();
+        //empleado.usuario_idUsuario = getIdCreateUsuario();
+        //empleado.domicilioFiscal_idDomicilioFiscal = getIdCreateDomicilioFiscal();
+        empleado.sucursal_idSucursal = getIdSucursal();
+        empleado.statusEmpleado = 1;
+        empleado.imagenEmpleado = photo.getPosiblePathPhoto();
+        return empleado;
+    }
 
-    /*
-    private synchronized Empresa getDatosEmpresa() {
-        Empresa empresa = new Empresa();
-        empresa.nombre = txtNombre.getText();
-        empresa.rfc = txtRFC.getText();
-        //empresa.regimen = txtRegimen.getText();
-        empresa.tel = txtTel1.getText();
-        empresa.tel2 = txtTel2.getText();
-        empresa.web = txtWebEmpresa.getText();
-        empresa.email = txtMail.getText();
-        if (fotoASubir != null) {
-            empresa.logo = basePathLogo + fotoASubir.getName();
-        } else {
-            empresa.logo = "";
+    private synchronized Domicilio getDatosDomicilio() {
+        Domicilio domicilio = new Domicilio();
+        domicilio.calle = txtCalle.getText();
+        domicilio.numExt = txtNoExt.getText();
+        domicilio.numInt = txtNoInt.getText();
+        domicilio.colonia = txtColonia.getText();
+        domicilio.codigoPostal = txtCP.getText();
+        domicilio.localidad = txtLocalidad.getText();
+        domicilio.municipio = txtMunicipio.getText();
+        domicilio.estado = txtEstado.getText();
+        domicilio.pais = txtPais.getText();
+        return domicilio;
+    }
+
+    private synchronized void setDatosEmpleadoForm(Empleado empleado) {
+        cleanDatosEmpleadoForm();
+        txtRFC.setText(empleado.rfcEmpleado);
+        setIdTipoEmpleado(empleado);
+        txtNombre.setText(empleado.nombreEmpleado);
+        txtApellidos.setText(empleado.apellidosEmpleado);
+        txtTelCelular.setText(empleado.telefonoCelularEmpleado);
+        txtTelCasa.setText(empleado.telefonoEmpleado);
+        txtEmail.setText(empleado.mailEmpleado);
+        txtSalario.setText(Float.toString(empleado.salarioDiarioEmpleado));
+        txtDiasLaborales.setText(Integer.toString(empleado.diasLaboralesEmpleado));
+        //Date.valueOf(fecha(empleado));
+        //setIdCreateUsuario(empleado);
+        //getIdCreateDomicilioFiscal();
+        setIdSucursal(empleado);
+        //true;
+        if (empleado.imagenEmpleado.length() > 1) {
+            photo.setPhoto(empleado.imagenEmpleado);
+            photo.setPhotoJPanel(panelFoto);
         }
-        return empresa;
-    }
-    */
-
-    private synchronized void setDatosEmpresaForm(Empresa empresa) {
-        /*cleanDatosEmpresaForm();
-        txtNombre.setText(empresa.nombre);
-        txtRFC.setText(empresa.rfc);
-        //txtRegimen.setText(empresa.regimen);
-        txtTel1.setText(empresa.tel);
-        txtTel2.setText(empresa.tel2);
-        txtWebEmpresa.setText(empresa.web);
-        txtMail.setText(empresa.email);
-        if (empresa.logo.length() > 1) {
-            setFotoLogo(basePathSO + empresa.logo);
-        }*/
     }
 
-    private void cleanDatosEmpresaForm() {
-        /*txtNombre.setText("");
+    private void cleanDatosEmpleadoForm() {
+        txtApellidos.setText("");
+        txtCP.setText("");
+        txtCalle.setText("");
+        txtColonia.setText("");
+        txtDiasLaborales.setText("");
+        txtEmail.setText("");
+        txtEstado.setText("");
+        txtLocalidad.setText("");
+        txtMunicipio.setText("");
+        txtNoExt.setText("");
+        txtNoInt.setText("");
+        txtNombre.setText("");
+        txtPais.setText("");
         txtRFC.setText("");
-        txtRegimen.setText("");
-        txtTel1.setText("");
-        txtTel2.setText("");
-        txtWebEmpresa.setText("");
-        txtMail.setText("");
-        cleanFoto();*/
-    }
-    
-    private synchronized void setFotoLogo(String path) {
-        /*imagePanel = new ImageJPanel(panelFoto, path);
-        panelFoto.add(imagePanel).repaint();*/
-    }
-    
-    private void cleanFoto() {
-        /*fotoASubir = null;
-        panelFoto.removeAll();
-        panelFoto.repaint();*/
+        txtSalario.setText("");
+        txtTelCasa.setText("");
+        txtTelCelular.setText("");
+        comboEmpleado.setSelectedIndex(0);
+        comboSucursal.setSelectedIndex(0);
+        photo.cleanPanelPhoto(panelFoto);
     }
 
-    private void copyFile(File from, File to) {
-        /*try {
-            FileChannel in = (new FileInputStream(from)).getChannel();
-            FileChannel out = (new FileOutputStream(to)).getChannel();
-            in.transferTo(0, from.length(), out);
-            in.close();
-            out.close();
-        } catch (Exception e) {
-            System.err.println(e);
-        }*/
+    private int getIdTipoEmpleado() {
+        String selectedValue = (String) comboEmpleado.getSelectedItem();
+        return ((TipoEmpleado) (getComboSQLModelEmpleado().findByMainField(selectedValue))).idtipoEmpleado;
+    }
+
+    private void setIdTipoEmpleado(Empleado empleado) {
+        comboEmpleado.setSelectedItem(((TipoEmpleado) getComboSQLModelEmpleado().findByFielNameAndValue("idtipoEmpleado",
+                empleado.tipoEmpleado_idtipoEmpleado)).tipoEmpleado
+        );
+    }
+
+    private int getIdSucursal() {
+        String selectedValue = (String) comboSucursal.getSelectedItem();
+        return ((Sucursal) (getComboSQLModelSucursal().findByMainField(selectedValue))).idSucursal;
+    }
+
+    private void setIdSucursal(Empleado empleado) {
+        comboSucursal.setSelectedItem(((Sucursal) getComboSQLModelSucursal().findByFielNameAndValue("idSucursal",
+                empleado.sucursal_idSucursal)).nombreSucursal
+        );
+    }
+
+    //Aquí se mandara a los textField el valor del domicilio, recuperando todos sus valores mediante el id
+    private void setIdCreateDomicilioFiscal(Domicilio domicilio) {
+
+        txtCalle.setText(domicilio.calle);
+        txtNoExt.setText(domicilio.numExt);
+        txtNoInt.setText(domicilio.numInt);
+        txtColonia.setText(domicilio.colonia);
+        txtCP.setText(domicilio.codigoPostal);
+        txtLocalidad.setText(domicilio.localidad);
+        txtMunicipio.setText(domicilio.municipio);
+        txtEstado.setText(domicilio.estado);
+        txtPais.setText(domicilio.pais);
+
+    }
+
+    private String fecha() {
+        Date now = new Date(System.currentTimeMillis());
+        SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat hour = new SimpleDateFormat("HH:mm:ss");
+        String fecha = date.format(now) + " " + hour.format(now);
+        return fecha;
+    }
+
+    private synchronized void setFotoLogo(String path) {
+        imagePanel = new ImageJPanel(panelFoto, path);
+        panelFoto.add(imagePanel).repaint();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem Editar;
     private javax.swing.JMenuItem Eliminar;
+    private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnCargarImagen;
     private javax.swing.JButton btnOpcionForm;
-    private javax.swing.JButton btnOpcionForm1;
-    private javax.swing.JComboBox cbxSucursal;
-    private javax.swing.JComboBox cbxTipoEmpleado;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JComboBox comboEmpleado;
+    private javax.swing.JComboBox comboSucursal;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel14;
@@ -753,10 +801,12 @@ public class EmpleadosPanel extends MerchantPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JPopupMenu opcionesEmpresa;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JPopupMenu opcionesEmpleado;
     private javax.swing.JPanel panelFoto;
-    private javax.swing.JTable tableEmpresas;
+    private javax.swing.JTable tableEmpleados;
     private javax.swing.JTextField txtApellidos;
     private javax.swing.JTextField txtCP;
     private javax.swing.JTextField txtCalle;
@@ -769,7 +819,7 @@ public class EmpleadosPanel extends MerchantPanel {
     private javax.swing.JTextField txtNoExt;
     private javax.swing.JTextField txtNoInt;
     private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtNombre12;
+    private javax.swing.JTextField txtPais;
     private javax.swing.JTextField txtRFC;
     private javax.swing.JTextField txtSalario;
     private javax.swing.JTextField txtTelCasa;

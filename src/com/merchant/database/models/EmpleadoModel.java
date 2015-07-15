@@ -23,19 +23,19 @@ public class EmpleadoModel extends MerchantModel<Empleado> {
             ResultSet todasLosEmpleados = statement.executeQuery(query);
             while (todasLosEmpleados.next()) {
                 Empleado empleado = new Empleado();
-                empleado.idEmpleado = todasLosEmpleados.getInt("idEmpleado");
+                //empleado.idEmpleado = todasLosEmpleados.getInt("idEmpleado");
                 empleado.nombreEmpleado = todasLosEmpleados.getString("nombreEmpleado");
                 empleado.apellidosEmpleado = todasLosEmpleados.getString("apellidosEmpleado");
                 empleado.telefonoEmpleado = todasLosEmpleados.getString("telefonoEmpleado");
                 empleado.mailEmpleado = todasLosEmpleados.getString("mailEmpleado");
                 empleado.salarioDiarioEmpleado = todasLosEmpleados.getFloat("salarioDiarioEmpleado");
                 empleado.diasLaboralesEmpleado = todasLosEmpleados.getInt("diasLaboralesEmpleado");
-                empleado.altaEmpleado = todasLosEmpleados.getDate("altaEmpleado");
+                empleado.altaEmpleado = todasLosEmpleados.getString("altaEmpleado");
                 empleado.usuario_idUsuario = todasLosEmpleados.getInt("usuario_idUsuario");
                 empleado.domicilioFiscal_idDomicilioFiscal = todasLosEmpleados.getInt("domicilioFiscal_idDomicilioFiscal");
                 empleado.sucursal_idSucursal = todasLosEmpleados.getInt("sucursal_idSucursal");
-                empleado.bajaEmpleado = todasLosEmpleados.getDate("bajaEmpleado");
-                empleado.statusEmpleado = todasLosEmpleados.getBoolean("statusEmpleado");
+                empleado.bajaEmpleado = todasLosEmpleados.getString("bajaEmpleado");
+                empleado.statusEmpleado = todasLosEmpleados.getInt("statusEmpleado");
                 empleados.add(empleado);
             }
         } catch (SQLException e) {
@@ -48,15 +48,16 @@ public class EmpleadoModel extends MerchantModel<Empleado> {
     public Integer create(Connection connection, Empleado empleado) {
         String query = "INSERT INTO empleado(rfcEmpleado,tipoEmpleado_idtipoEmpleado,"
                 + "nombreEmpleado,apellidosEmpleado,telefonoEmpleado,mailEmpleado,"
-                + "salarioDiarioEmpleado,diasLaboralesEmpleado,altaEmpleado,"
+                + "salarioDiarioEmpleado,diasLaboralesEmpleado,"
                 + "usuario_idUsuario,domicilioFiscal_idDomicilioFiscal,"
-                + "sucursal_idSucursal)"
+                + "sucursal_idSucursal,statusEmpleado,imagenEmpleado)"
                 + "VALUES ('" + empleado.rfcEmpleado + "'," + empleado.tipoEmpleado_idtipoEmpleado + ",'"
                 + empleado.nombreEmpleado + "','" + empleado.apellidosEmpleado + "','"
                 + empleado.telefonoEmpleado + "','" + empleado.mailEmpleado + "',"
-                + empleado.salarioDiarioEmpleado + "," + empleado.diasLaboralesEmpleado + ",'"
-                + empleado.altaEmpleado + "'," + empleado.usuario_idUsuario + ","
-                + empleado.sucursal_idSucursal + "," + /*create(connection)*/ 3 + ")";
+                + empleado.salarioDiarioEmpleado + "," + empleado.diasLaboralesEmpleado + ","
+                + empleado.usuario_idUsuario + ","
+                + empleado.domicilioFiscal_idDomicilioFiscal + "," +  empleado.sucursal_idSucursal+","
+                + empleado.statusEmpleado+",'"+empleado.imagenEmpleado+"')";
         Integer res = null;
         try {
             Statement statement = connection.createStatement();

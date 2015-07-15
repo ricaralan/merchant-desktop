@@ -66,6 +66,7 @@ public class EmpresaModel extends MerchantModel<Empresa> {
         return res;
     }
 
+    @Override
     public List<Empresa> getAll(Connection connection) {
         List<Empresa> empresas = new ArrayList<>();
         query = "SELECT * FROM empresa";

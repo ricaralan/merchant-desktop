@@ -5,6 +5,7 @@ import com.merchant.pojos.Empleado;
 import java.sql.Connection;
 import java.util.List;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -16,7 +17,7 @@ public class EmpleadoTableModel extends MerchantTableModel{
 
     public EmpleadoTableModel() {
         objects = new ArrayList<>();
-        header = new String[]{"idEmpleado","nombreEmpleado","apellidosEmpleado",
+        header = new String[]{"nombreEmpleado","apellidosEmpleado",
                         "telefonoEmpleado","mailEmpleado","salarioDiarioEmpleado",
                         "diasLaboralesEmpleado","altaEmpleado","usuario_idUsuario",
                         "domicilioFiscal_idDomicilioFiscal","sucursal_idSucursal",
@@ -45,6 +46,7 @@ public class EmpleadoTableModel extends MerchantTableModel{
             case 7: value = ""+empleado.usuario_idUsuario;break;
             case 8: value = ""+empleado.domicilioFiscal_idDomicilioFiscal;break;
             case 9: value = ""+empleado.sucursal_idSucursal;break;
+            case 10: value = ""+empleado.bajaEmpleado;break;
         }
         return value;
     }

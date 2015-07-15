@@ -223,7 +223,8 @@ public class MerchantMainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_itemConfiguracionActionPerformed
 
     private void itemEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEmpleadosActionPerformed
-         newInternalFrame(new EmpleadosPanel(), "Empleados");
+        EmpleadosPanel form = new EmpleadosPanel(merchantConnection); 
+        newInternalFrame(form, "Empleados");
     }//GEN-LAST:event_itemEmpleadosActionPerformed
 
     public void aparecerMenuInicio(int code){

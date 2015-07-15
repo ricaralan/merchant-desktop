@@ -18,6 +18,7 @@ public class VerifyProyect {
     public VerifyProyect() {
         folders = new File[1];
         folders[0] = new File("images/empresas");
+        folders[0] = new File("images/empleados");
     }
 
     public void verify() {

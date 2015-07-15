@@ -11,7 +11,6 @@ import com.merchant.controllers.EmpresaController;
 import com.merchant.database.models.RegimenModel;
 import com.merchant.pojos.Empresa;
 import com.merchant.pojos.Regimen;
-import com.merchant.utils.ImageJPanel;
 import com.merchant.utils.MerchantComboSQL;
 import com.merchant.utils.Photo;
 import com.merchant.utils.validate.ValidateFieldError;

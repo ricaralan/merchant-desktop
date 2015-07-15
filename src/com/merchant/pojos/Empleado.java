@@ -13,15 +13,17 @@ public class Empleado {
     public int tipoEmpleado_idtipoEmpleado;
     public String nombreEmpleado;
     public String apellidosEmpleado;
+    public String telefonoCelularEmpleado;
     public String telefonoEmpleado;
     public String mailEmpleado;
     public float salarioDiarioEmpleado;
     public int diasLaboralesEmpleado;
-    public Date altaEmpleado;
-    public int usuario_idUsuario;
+    public String altaEmpleado;
+    public Integer usuario_idUsuario;
     public int domicilioFiscal_idDomicilioFiscal;
     public int sucursal_idSucursal;
-    public Date bajaEmpleado;
-    public boolean statusEmpleado;
+    public String bajaEmpleado;
+    public int statusEmpleado;
+    public String imagenEmpleado;
     
 }
