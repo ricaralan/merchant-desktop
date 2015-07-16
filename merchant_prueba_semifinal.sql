@@ -206,7 +206,7 @@ CREATE TABLE `empresa` (
   `regimenFiscal_idregimenFiscal` int(11) NOT NULL,
   PRIMARY KEY (`idEmpresa`,`regimenFiscal_idregimenFiscal`),
   KEY `fk_empresa_regimenFiscal1_idx` (`regimenFiscal_idregimenFiscal`),
-  CONSTRAINT `fk_empresa_regimenFiscal1` FOREIGN KEY (`regimenFiscal_idregimenFiscal`) REFERENCES `regimenfiscal` (`idregimenFiscal`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_empresa_regimenFiscal1` FOREIGN KEY (`regimenFiscal_idregimenFiscal`) REFERENCES `regimenFiscFl` (`idregimenFiscal`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
@@ -314,19 +314,19 @@ CREATE TABLE `proveedor` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for regimenfiscal
+-- Table structure for regimenFiscal
 -- ----------------------------
-DROP TABLE IF EXISTS `regimenfiscal`;
-CREATE TABLE `regimenfiscal` (
+DROP TABLE IF EXISTS `regimenFiscal`;
+CREATE TABLE `regimenFiscal` (
   `idregimenFiscal` int(11) NOT NULL AUTO_INCREMENT,
   `descripcionRegimenFiscal` varchar(50) NOT NULL,
   PRIMARY KEY (`idregimenFiscal`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
--- Records of regimenfiscal
+-- Records of regimenFiscal
 -- ----------------------------
-INSERT INTO `regimenfiscal` VALUES ('1', 'Régimen de Incorporación Fiscal');
+INSERT INTO `regimenFiscal` VALUES ('1', 'Régimen de Incorporación Fiscal');
 
 -- ----------------------------
 -- Table structure for sucursal
