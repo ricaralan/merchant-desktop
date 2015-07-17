@@ -23,10 +23,10 @@ public class ImpuestosModel extends MerchantModel<Impuesto> {
             ResultSet todosLosImpuestos = statement.executeQuery(query);
             while (todosLosImpuestos.next()) {
                 Impuesto impuesto = new Impuesto();
-                impuesto.idImpuesto = todosLosImpuestos.getInt("idImpuesto");
-                impuesto.codigoImpuesto = todosLosImpuestos.getString("codigoImpuesto");
-                impuesto.valorImpuesto = todosLosImpuestos.getString("valorImpuesto");
-                impuesto.descripcionImpuesto = todosLosImpuestos.getString("descripcionImpuesto");
+                impuesto.id_impuesto = todosLosImpuestos.getInt("id_impuesto");
+                impuesto.impto_codigo = todosLosImpuestos.getString("impto_codigo");
+                impuesto.impto_descripcion = todosLosImpuestos.getString("impto_descripcion");
+                impuesto.impto_valor = todosLosImpuestos.getString("impto_valor");
                 impuestos.add(impuesto);
             }
         } catch (SQLException e) {
@@ -38,9 +38,9 @@ public class ImpuestosModel extends MerchantModel<Impuesto> {
     @Override
     public Integer create(Connection connection, Impuesto o) {
         Impuesto impuesto = (Impuesto) o;
-        String query = "INSERT INTO impuesto(codigoImpuesto,valorImpuesto,descripcionImpuesto)"
-                + " VALUES('" + impuesto.codigoImpuesto + "', '"
-                + impuesto.valorImpuesto + "', '" + impuesto.descripcionImpuesto + "')";
+        String query = "INSERT INTO impuesto(impto_codigo,impto_descripcion,impto_valor)"
+                + " VALUES('" + impuesto.impto_codigo + "', '"
+                + impuesto.impto_descripcion + "', '" + impuesto.impto_valor + "')";
         Integer res = null;
         try {
             Statement statement = connection.createStatement();
@@ -54,10 +54,10 @@ public class ImpuestosModel extends MerchantModel<Impuesto> {
     @Override
     public Integer update(Connection connection, Impuesto o, Object id) {
         Impuesto impuesto = (Impuesto) o;
-        String query = "UPDATE impuesto SET codigoImpuesto='"
-                + impuesto.codigoImpuesto + "',valorImpuesto='" + impuesto.valorImpuesto
-                + "',descripcionImpuesto='" + impuesto.descripcionImpuesto
-                + "' WHERE idImpuesto=" + (Integer) id;
+        String query = "UPDATE impuesto SET impto_codigo='"
+                + impuesto.impto_codigo + "',impto_valor='" + impuesto.impto_valor
+                + "',impto_descripcion ='" + impuesto.impto_descripcion
+                + "' WHERE id_impuesto=" + (Integer) id;
         Integer res = null;
         try {
             Statement statement = connection.createStatement();
@@ -70,7 +70,7 @@ public class ImpuestosModel extends MerchantModel<Impuesto> {
 
     @Override
     public Integer delete(Connection connection, Object id) {
-        String query = "DELETE FROM impuesto WHERE idImpuesto=" + (Integer) id;
+        String query = "DELETE FROM impuesto WHERE id_impuesto=" + (Integer) id;
         Integer res = null;
         try {
             Statement statement = connection.createStatement();

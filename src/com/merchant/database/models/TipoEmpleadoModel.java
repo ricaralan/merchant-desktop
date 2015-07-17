@@ -24,14 +24,14 @@ public class TipoEmpleadoModel extends MerchantModel<TipoEmpleado> {
     @Override
     public List<TipoEmpleado> getAll(Connection connection) {
         List<TipoEmpleado> tipoEmpleados = new ArrayList<>();
-        String query = "SELECT * FROM tipoempleado";
+        String query = "SELECT * FROM tipo_empleado";
         try {
             Statement statement = connection.createStatement();
             ResultSet todosLosTiposEmpleados = statement.executeQuery(query);
             while (todosLosTiposEmpleados.next()) {
                 TipoEmpleado tipoEmpleado = new TipoEmpleado();
-                tipoEmpleado.idtipoEmpleado = todosLosTiposEmpleados.getInt("idtipoEmpleado");
-                tipoEmpleado.tipoEmpleado = todosLosTiposEmpleados.getString("tipoEmpleado");
+                tipoEmpleado.id_tipo_empleado = todosLosTiposEmpleados.getInt("id_tipo_empleado");
+                tipoEmpleado.tipo_empleado = todosLosTiposEmpleados.getString("tipo_empleado");
                 tipoEmpleados.add(tipoEmpleado);
             }
         } catch (SQLException e) {
@@ -42,8 +42,8 @@ public class TipoEmpleadoModel extends MerchantModel<TipoEmpleado> {
 
     @Override
     public Integer create(Connection connection, TipoEmpleado o) {
-        String query = "INSERT INTO tipoempleado(tipoEmpleado)"
-                + " VALUES('" + o.tipoEmpleado + "')";
+        String query = "INSERT INTO tipo_empleado(tipo_empleado)"
+                + " VALUES('" + o.tipo_empleado + "')";
         Integer res = null;
         try {
             Statement statement = connection.createStatement();
@@ -56,8 +56,8 @@ public class TipoEmpleadoModel extends MerchantModel<TipoEmpleado> {
 
     @Override
     public Integer update(Connection connection, TipoEmpleado o, Object id) {
-        String query = "UPDATE tipoempleado SET tipoEmpleado='"+
-                o.tipoEmpleado+"' WHERE idtipoEmpleado ="+(Integer)id;
+        String query = "UPDATE tipo_empleado SET tipo_empleado='"+
+                o.tipo_empleado+"' WHERE id_tipo_empleado ="+(Integer)id;
         Integer res = null;
         try {
             Statement statement = connection.createStatement();
@@ -70,7 +70,7 @@ public class TipoEmpleadoModel extends MerchantModel<TipoEmpleado> {
   
     @Override
     public Integer delete(Connection connection, Object id) {
-        String query = "DELETE FROM tipoempleado WHERE idtipoEmpleado="+(Integer)id;
+        String query = "DELETE FROM tipo_empleado WHERE id_tipo_empleado = "+(Integer)id;
         Integer res = null;
         try {
             Statement statement = connection.createStatement();

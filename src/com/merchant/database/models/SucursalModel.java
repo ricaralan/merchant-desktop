@@ -29,10 +29,10 @@ public class SucursalModel extends MerchantModel<Sucursal> {
             ResultSet todosLasSucursales = statement.executeQuery(query);
             while (todosLasSucursales.next()) {
                 Sucursal sucursal = new Sucursal();
-                sucursal.idSucursal = todosLasSucursales.getInt("idSucursal");
-                sucursal.nombreSucursal = todosLasSucursales.getString("nombreSucursal");
-                sucursal.empresa_idEmpresa = todosLasSucursales.getInt("empresa_idEmpresa");
-                sucursal.domicilioFiscal_idDomicilioFiscal = todosLasSucursales.getInt("domicilioFiscal_idDomicilioFiscal");
+                sucursal.id_sucursal = todosLasSucursales.getInt("id_sucursal");
+                sucursal.suc_nombre = todosLasSucursales.getString("suc_nombre");
+                sucursal.empresa_id_empresa = todosLasSucursales.getInt("empresa_id_empresa");
+                sucursal.domicilio_id_domicilio = todosLasSucursales.getInt("domicilio_id_domicilio");
                 sucursales.add(sucursal);
             }
         } catch (SQLException e) {
@@ -43,9 +43,9 @@ public class SucursalModel extends MerchantModel<Sucursal> {
 
     @Override
     public Integer create(Connection connection, Sucursal o) {
-        String query = "INSERT INTO sucursal (nombreSucursal,empresa_idEmpresa,domicilioFiscal_idDomicilioFiscal)"
-                + " VALUES('" + o.nombreSucursal + "'," + o.empresa_idEmpresa + ","
-                + o.domicilioFiscal_idDomicilioFiscal + ")";
+        String query = "INSERT INTO sucursal (suc_nombre,empresa_id_empresa,domicilio_id_domicilio)"
+                + " VALUES('" + o.suc_nombre + "'," + o.empresa_id_empresa + ","
+                + o.domicilio_id_domicilio + ")";
         Integer res = null;
         try {
             Statement statement = connection.createStatement();
@@ -58,11 +58,11 @@ public class SucursalModel extends MerchantModel<Sucursal> {
 
     @Override
     public Integer update(Connection connection, Sucursal o, Object id) {
-        String query = "INSERT INTO sucursal (nombreSucursal,"
-                + " empresa_idEmpresa,dimicilioFiscal_idDomicilioFiscal) "
-                + "VALUES('" + o.nombreSucursal + "',"
-                + o.empresa_idEmpresa + ","
-                + o.domicilioFiscal_idDomicilioFiscal + ")";
+        String query = "INSERT INTO sucursal (suc_nombre,"
+                + " empresa_id_empresa,domicilio_id_domicilio) "
+                + "VALUES('" + o.suc_nombre + "',"
+                + o.empresa_id_empresa + ","
+                + o.domicilio_id_domicilio + ")";
         Integer res = null;
         try {
             Statement statement = connection.createStatement();

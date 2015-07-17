@@ -19,15 +19,15 @@ public class UsuarioModel extends MerchantModel<Usuario> {
         Usuario usuario = new Usuario();
         /*En esta consulta se recogen los usuarios creados previamente y cuando 
          se asigne a un empleado se cambiara el estatus a 2 */
-        String query = "SELECT * FROM usuario WHERE statusUsuario = 1 and idUsuario="+id;
+        String query = "SELECT * FROM usuario WHERE usu_status = 1 and id_usuario="+id;
         try {
             Statement statement = connection.createStatement();
             ResultSet todosLosUsuarios = statement.executeQuery(query);
             if (todosLosUsuarios.next()) {
-                usuario.idUsuario = todosLosUsuarios.getInt("idUsuario");
-                usuario.nombreUsuario = todosLosUsuarios.getString("nombreUsuario");
-                usuario.passwordUsuario = todosLosUsuarios.getString("passwordUsuario");
-                usuario.statusUsuario = todosLosUsuarios.getInt("statusUsuario");
+                usuario.id_usuario = todosLosUsuarios.getInt("id_usuario");
+                usuario.usu_nombre = todosLosUsuarios.getString("usu_nombre");
+                usuario.usu_password = todosLosUsuarios.getString("usu_password");
+                usuario.usu_status = todosLosUsuarios.getInt("usu_status");
             }
         } catch (SQLException e) {
             System.err.println(e.getMessage());
@@ -44,10 +44,10 @@ public class UsuarioModel extends MerchantModel<Usuario> {
             ResultSet todosLosUsuarios = statement.executeQuery(query);
             while (todosLosUsuarios.next()) {
                 Usuario usuario = new Usuario();
-                usuario.idUsuario = todosLosUsuarios.getInt("idUsuario");
-                usuario.nombreUsuario = todosLosUsuarios.getString("nombreUsuario");
-                usuario.passwordUsuario = todosLosUsuarios.getString("passwordUsuario");
-                usuario.statusUsuario = todosLosUsuarios.getInt("statusUsuario");
+                usuario.id_usuario = todosLosUsuarios.getInt("id_usuario");
+                usuario.usu_nombre = todosLosUsuarios.getString("usu_nombre");
+                usuario.usu_password = todosLosUsuarios.getString("usu_password");
+                usuario.usu_status = todosLosUsuarios.getInt("usu_status");
                 usuarios.add(usuario);
             }
         } catch (SQLException e) {
@@ -58,9 +58,9 @@ public class UsuarioModel extends MerchantModel<Usuario> {
 
     @Override
     public Integer create(Connection connection, Usuario o) {
-        String query = "INSERT INTO usuario (nombreUsuario,passwordUsuario)"
-                + "VALUES ('" + o.nombreUsuario + "','"
-                + o.passwordUsuario + "')";
+        String query = "INSERT INTO usuario (usu_nombre,usu_password)"
+                + "VALUES ('" + o.usu_nombre + "','"
+                + o.usu_password + "')";
          Integer res = null;
         try {
             PreparedStatement pstm = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -77,10 +77,10 @@ public class UsuarioModel extends MerchantModel<Usuario> {
     @Override
     public Integer update(Connection connection, Usuario o, Object id) {
         String query = "UPDATE usuario SET"
-                + "nombreusuario = '" + o.nombreUsuario + "',"
-                + "passwordUsuario = '" + o.passwordUsuario + "',"
-                + "statusUsuario = '" + o.statusUsuario + "',"
-                + "WHERE idUsuario = " + (Integer) id;
+                + "usu_nombre = '" + o.usu_nombre + "',"
+                + "usu_password = '" + o.usu_password + "',"
+                + "usu_status = '" + o.usu_status + "',"
+                + "WHERE id_usuario = " + (Integer) id;
         Integer res = null;
         try {
             Statement statement = connection.createStatement();
@@ -96,7 +96,7 @@ public class UsuarioModel extends MerchantModel<Usuario> {
          * 0 = Inactivo, 1 = Activo(es cuando se crea)
          * 2 = Asignado (Esta ligado a un empleado y no se podra borrar)
          */
-        String query = "DELETE FROM usuario WHERE idUsuario AND statusUsuario = 0" + (Integer) id + "";
+        String query = "DELETE FROM usuario WHERE id_usuario AND usu_status = 0" + (Integer) id + "";
         Integer res = null;
         try {
             Statement statement = connection.createStatement();

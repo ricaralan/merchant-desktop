@@ -22,14 +22,14 @@ public class RegimenModel extends MerchantModel<Regimen> {
     @Override
     public List<Regimen> getAll(Connection connection) {
         List<Regimen> regimenes = new ArrayList<>();
-        String query = "SELECT * FROM regimenFiscal";
+        String query = "SELECT * FROM regimen";
         try {
             Statement statement = connection.createStatement();
             ResultSet todosLosRegimenes = statement.executeQuery(query);
             while (todosLosRegimenes.next()) {
                 Regimen regimen = new Regimen();
-                regimen.idregimenFiscal = todosLosRegimenes.getInt("idregimenFiscal");
-                regimen.descripcionRegimenFiscal = todosLosRegimenes.getString("descripcionRegimenFiscal");
+                regimen.id_regimen = todosLosRegimenes.getInt("id_regimen");
+                regimen.reg_descripcion = todosLosRegimenes.getString("reg_descripcion");
                 regimenes.add(regimen);
             }
         } catch (SQLException e) {
@@ -40,8 +40,8 @@ public class RegimenModel extends MerchantModel<Regimen> {
 
     @Override
     public Integer create(Connection connection, Regimen regimen) {
-        String query = "INSERT INTO regimenFiscal(descripcionRegimenFiscal)"
-                + " VALUES('" + regimen.descripcionRegimenFiscal + "')";
+        String query = "INSERT INTO regimen(reg_descripcion)"
+                + " VALUES('" + regimen.reg_descripcion + "')";
         Integer res = null;
         try {
             Statement statement = connection.createStatement();
@@ -54,8 +54,8 @@ public class RegimenModel extends MerchantModel<Regimen> {
 
     @Override
     public Integer update(Connection connection, Regimen regimen, Object id) {
-        String query = "UPDATE regimenFiscal SET descripcionRegimenFiscal='"
-                + regimen.descripcionRegimenFiscal + "' WHERE idregimenFiscal=" + (Integer) id;
+        String query = "UPDATE regimen SET reg_descripcion='"
+                + regimen.reg_descripcion + "' WHERE id_regimen=" + (Integer) id;
         Integer res = null;
         try {
             Statement statement = connection.createStatement();
@@ -68,7 +68,7 @@ public class RegimenModel extends MerchantModel<Regimen> {
 
     @Override
     public Integer delete(Connection connection, Object id) {
-        String query = "DELETE FROM regimenFiscal WHERE idregimenFiscal=" + (Integer) id;
+        String query = "DELETE FROM regimen WHERE id_regimen=" + (Integer) id;
         Integer res = null;
         try {
             Statement statement = connection.createStatement();

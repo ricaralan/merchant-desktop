@@ -18,12 +18,12 @@ public class EmpresaModel extends MerchantModel<Empresa> {
 
     @Override
     public Integer create(Connection connection, Empresa empresa) {
-        query = "INSERT INTO empresa(nombreEmpresa, rfcEmpresa,"
-                + " logoEmpresa, telEmpresa, tel2Empresa, mailEmpresa, webEmpresa,"
-                + "regimenFiscal_idregimenFiscal) VALUES('" + empresa.nombre
-                + "', '" + empresa.rfc + "'," + " '" + empresa.logo + "', '"
-                + empresa.tel + "', '" + empresa.tel2 + "', '" + empresa.email
-                + "', '" + empresa.web + "', " + empresa.regimenFiscal_idregimenFiscal + ")";
+        query = "INSERT INTO empresa(emp_nombre, emp_rfc,"
+                + " emp_logo, emp_tel, emp_tel2, emp_email, emp_web,"
+                + "regimen_id_regimen) VALUES('" + empresa.emp_nombre
+                + "', '" + empresa.emp_rfc + "'," + " '" + empresa.emp_logo + "', '"
+                + empresa.emp_tel + "', '" + empresa.emp_tel2 + "', '" + empresa.emp_email
+                + "', '" + empresa.emp_web + "', " + empresa.regimen_id_regimen + ")";
         Integer res = null;
         try {
             Statement statement = connection.createStatement();
@@ -36,13 +36,13 @@ public class EmpresaModel extends MerchantModel<Empresa> {
 
     @Override
     public Integer update(Connection connection, Empresa empresa, Object id) {
-        query = "UPDATE empresa SET nombreEmpresa='" + empresa.nombre + "', "
-                + "rfcEmpresa='" + empresa.rfc + "', logoEmpresa='" + empresa.logo
-                + "', telEmpresa='" + empresa.tel + "', tel2Empresa='"
-                + empresa.tel2 + "', mailEmpresa='" + empresa.email
-                + "', webEmpresa='" + empresa.web + "',"
-                + "regimenFiscal_idregimenFiscal=" + empresa.regimenFiscal_idregimenFiscal
-                + " WHERE idEmpresa=" + id;
+        query = "UPDATE empresa SET emp_nombre='" + empresa.emp_nombre + "', "
+                + "emp_rfc='" + empresa.emp_rfc + "', emp_logo='" + empresa.emp_logo
+                + "', emp_tel='" + empresa.emp_tel + "', emp_tel2='"
+                + empresa.emp_tel2 + "', emp_email='" + empresa.emp_email
+                + "', emp_web='" + empresa.emp_web + "',"
+                + "regimen_id_regimen =" + empresa.regimen_id_regimen
+                + " WHERE id_empresa=" + id;
         Integer res = null;
         try {
             Statement statement = connection.createStatement();
@@ -55,7 +55,7 @@ public class EmpresaModel extends MerchantModel<Empresa> {
 
     @Override
     public Integer delete(Connection connection, Object id) {
-        query = "DELETE FROM empresa WHERE idEmpresa=" + id + "";
+        query = "DELETE FROM empresa WHERE id_empresa=" + id + "";
         Integer res = null;
         try {
             Statement statement = connection.createStatement();
@@ -75,15 +75,15 @@ public class EmpresaModel extends MerchantModel<Empresa> {
             ResultSet todasLasEmpresas = statement.executeQuery(query);
             while (todasLasEmpresas.next()) {
                 Empresa empresa = new Empresa();
-                empresa.id = todasLasEmpresas.getInt("idEmpresa");
-                empresa.nombre = todasLasEmpresas.getString("nombreEmpresa");
-                empresa.rfc = todasLasEmpresas.getString("rfcEmpresa");
-                empresa.logo = todasLasEmpresas.getString("logoEmpresa");
-                empresa.tel = todasLasEmpresas.getString("telEmpresa");
-                empresa.tel2 = todasLasEmpresas.getString("tel2Empresa");
-                empresa.email = todasLasEmpresas.getString("mailEmpresa");
-                empresa.web = todasLasEmpresas.getString("webEmpresa");
-                empresa.regimenFiscal_idregimenFiscal = todasLasEmpresas.getInt("regimenFiscal_idregimenFiscal");
+                empresa.id_empresa = todasLasEmpresas.getInt("id_empresa");
+                empresa.emp_nombre = todasLasEmpresas.getString("emp_nombre");
+                empresa.emp_rfc = todasLasEmpresas.getString("emp_rfc");
+                empresa.emp_logo = todasLasEmpresas.getString("emp_logo");
+                empresa.emp_tel = todasLasEmpresas.getString("emp_tel");
+                empresa.emp_tel2 = todasLasEmpresas.getString("emp_tel2");
+                empresa.emp_email = todasLasEmpresas.getString("emp_email");
+                empresa.emp_web = todasLasEmpresas.getString("emp_web");
+                empresa.regimen_id_regimen = todasLasEmpresas.getInt("regimen_id_regimen");
                 empresas.add(empresa);
             }
         } catch (SQLException e) {

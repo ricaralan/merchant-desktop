@@ -26,13 +26,13 @@ public class EmpleadoController extends MerchantController<Empleado> {
     }
     
     public boolean create(Connection connection, Empleado empleado, Domicilio dom,Usuario usu) {
-        empleado.domicilioFiscal_idDomicilioFiscal = domicilioModel.create(connection, dom);
-        empleado.usuario_idUsuario = usuarioModel.create(connection, usu);
+        empleado.domicilio_id_domicilio = domicilioModel.create(connection, dom);
+        empleado.usuario_id_usuario = usuarioModel.create(connection, usu);
         return empleadoModel.create(connection, empleado) == 1;
     }
     
     public boolean create(Connection connection, Empleado empleado, Domicilio dom) {
-        empleado.domicilioFiscal_idDomicilioFiscal = domicilioModel.create(connection, dom);
+        empleado.domicilio_id_domicilio = domicilioModel.create(connection, dom);
         return empleadoModel.create(connection, empleado) == 1;
     }
 

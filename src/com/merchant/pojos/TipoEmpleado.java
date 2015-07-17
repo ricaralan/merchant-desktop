@@ -6,6 +6,6 @@ package com.merchant.pojos;
  */
 public class TipoEmpleado {
 
-    public int idtipoEmpleado;
-    public String tipoEmpleado;
+    public int id_tipo_empleado;
+    public String tipo_empleado;
 }

@@ -46,7 +46,7 @@ public class EmpresasPanel extends AbstractConfigurationPanel {
         crearEmpresa = true;
         tableEmpresas = table;
         tableEmpresas.setModel(new EmpresaTableModel());
-        comboRegimen.setModel(new MerchantComboSQL(connection, new RegimenModel(), "descripcionRegimenFiscal"));
+        comboRegimen.setModel(new MerchantComboSQL(connection, new RegimenModel(), "reg_descripcion"));
         initDataTable();
         photo = new Photo();
         photo.setBasePath("/images/empresas/");
@@ -315,28 +315,28 @@ public class EmpresasPanel extends AbstractConfigurationPanel {
 
     private synchronized Empresa getDatosEmpresa() {
         Empresa empresa = new Empresa();
-        empresa.nombre = txtNombre.getText();
-        empresa.rfc = txtRFC.getText();
-        empresa.tel = txtTel1.getText();
-        empresa.tel2 = txtTel2.getText();
-        empresa.web = txtWebEmpresa.getText();
-        empresa.email = txtMail.getText();
-        empresa.regimenFiscal_idregimenFiscal = getIdRegimenFiscal();
-        empresa.logo = photo.getPosiblePathPhoto();
+        empresa.emp_nombre = txtNombre.getText();
+        empresa.emp_rfc = txtRFC.getText();
+        empresa.emp_tel = txtTel1.getText();
+        empresa.emp_tel2 = txtTel2.getText();
+        empresa.emp_web = txtWebEmpresa.getText();
+        empresa.emp_email = txtMail.getText();
+        empresa.regimen_id_regimen = getIdRegimenFiscal();
+        empresa.emp_logo = photo.getPosiblePathPhoto();
         return empresa;
     }
 
     private synchronized void setDatosEmpresaForm(Empresa empresa) {
         cleanDatosEmpresaForm();
-        txtNombre.setText(empresa.nombre);
-        txtRFC.setText(empresa.rfc);
-        txtTel1.setText(empresa.tel);
-        txtTel2.setText(empresa.tel2);
-        txtWebEmpresa.setText(empresa.web);
-        txtMail.setText(empresa.email);
+        txtNombre.setText(empresa.emp_nombre);
+        txtRFC.setText(empresa.emp_rfc);
+        txtTel1.setText(empresa.emp_tel);
+        txtTel2.setText(empresa.emp_tel2);
+        txtWebEmpresa.setText(empresa.emp_web);
+        txtMail.setText(empresa.emp_email);
         setIdRegimenFiscal(empresa);
-        if (empresa.logo.length() > 1) {
-            photo.setPhoto(empresa.logo);
+        if (empresa.emp_logo.length() > 1) {
+            photo.setPhoto(empresa.emp_logo);
             photo.setPhotoJPanel(panelFoto);
         }
     }
@@ -354,13 +354,13 @@ public class EmpresasPanel extends AbstractConfigurationPanel {
     
     private int getIdRegimenFiscal() {
         String selectedValue = (String)comboRegimen.getSelectedItem();
-        return ((Regimen)(getComboSQLModel().findByMainField(selectedValue))).idregimenFiscal;
+        return ((Regimen)(getComboSQLModel().findByMainField(selectedValue))).id_regimen;
     }
     
     private void setIdRegimenFiscal(Empresa empresa) {
         comboRegimen.setSelectedItem(((Regimen)
-        getComboSQLModel().findByFielNameAndValue("idregimenFiscal",
-                empresa.regimenFiscal_idregimenFiscal)).descripcionRegimenFiscal
+        getComboSQLModel().findByFielNameAndValue("id_regimen",
+                empresa.regimen_id_regimen)).reg_descripcion
         );
     }
     
@@ -424,16 +424,16 @@ public class EmpresasPanel extends AbstractConfigurationPanel {
             Empresa empresa = (Empresa) ((MerchantTableModel) tableEmpresas.getModel()).getObjectByRow(row);
             setDatosEmpresaForm(empresa);
             btnOpcionForm.setText("Editar");
-            idActualizar = empresa.id;
+            idActualizar = empresa.id_empresa;
             crearEmpresa = false;
     }
 
     @Override
     public void eventDelFromJtable(int row) {
             Empresa empresa = (Empresa) ((MerchantTableModel) tableEmpresas.getModel()).getObjectByRow(row);
-            int res = JOptionPane.showConfirmDialog(null, "¿Esta seguro de eliminar la empresa \"" + empresa.nombre + "\"?");
+            int res = JOptionPane.showConfirmDialog(null, "¿Esta seguro de eliminar la empresa \"" + empresa.emp_nombre + "\"?");
             if (res == JOptionPane.OK_OPTION) {
-                if (empresaController.delete(connection, empresa.id)) {
+                if (empresaController.delete(connection, empresa.id_empresa)) {
                     ((EmpresaTableModel) tableEmpresas.getModel()).initData(connection);
                 } else {
                     JOptionPane.showMessageDialog(null, "Por favor intente más tarde...", "ERROR AL ELIMINAR", 1);

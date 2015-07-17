@@ -32,11 +32,11 @@ public class EmpresaTableModel extends MerchantTableModel{
         String value = "";
         Empresa empresa = (Empresa)objects.get(row);
         switch (column) {
-            case 0: value = empresa.nombre;break;
-            case 1: value = empresa.rfc;break;
-            case 2: value = empresa.email;break;
-            case 3: value = empresa.tel;break;
-            case 4: value = empresa.web;
+            case 0: value = empresa.emp_nombre;break;
+            case 1: value = empresa.emp_rfc;break;
+            case 2: value = empresa.emp_email;break;
+            case 3: value = empresa.emp_tel;break;
+            case 4: value = empresa.emp_web;
         }
         return value;
     }

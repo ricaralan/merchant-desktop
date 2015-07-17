@@ -29,7 +29,7 @@ public class RegimenesTableModel extends MerchantTableModel {
     @Override
     public Object getValueAt(int row, int column) {
         // Si se agregan más campos a la tabla regimen solo se necesita utilizar un switch de column
-        return ((Regimen)objects.get(row)).descripcionRegimenFiscal;
+        return ((Regimen)objects.get(row)).reg_descripcion;
     }
 
 }

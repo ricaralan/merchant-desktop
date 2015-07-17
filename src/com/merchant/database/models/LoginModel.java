@@ -17,14 +17,14 @@ public class LoginModel {
     public User existeUsuario(Connection connection, String user, String password) {
         // TODO mejorar la consulta...
         query = "SELECT * FROM usuario WHERE "
-                + "nombreUsuario='" + user + "' AND passwordUsuario='" + password + "' ";
+                + "usu_nombre = '" + user + "' AND usu_password = '" + password + "' ";
         User usuario = null;
         try {
             Statement statement = connection.createStatement();
             ResultSet resUsuario = statement.executeQuery(query);
             if (resUsuario.next()) {
                 usuario = new User();
-                usuario.name = resUsuario.getString("nombreUsuario");
+                usuario.usu_nombre = resUsuario.getString("usu_nombre");
             }
         } catch (SQLException e) {
             System.err.print(e.getMessage());

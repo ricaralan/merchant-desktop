@@ -150,7 +150,7 @@ public class RegimenPanel extends AbstractConfigurationPanel {
 
     private Regimen getRegimenFromForm() {
         Regimen regimen = new Regimen();
-        regimen.descripcionRegimenFiscal = txtNombreRegimen.getText();
+        regimen.reg_descripcion = txtNombreRegimen.getText();
         return regimen;
     }
 
@@ -159,9 +159,9 @@ public class RegimenPanel extends AbstractConfigurationPanel {
     }
 
     private void setRegimenForEdit(Regimen regimen) {
-        txtNombreRegimen.setText(regimen.descripcionRegimenFiscal);
+        txtNombreRegimen.setText(regimen.reg_descripcion);
         btnOpcion.setText("Editar");
-        idRegimenEditar = regimen.idregimenFiscal;
+        idRegimenEditar = regimen.id_regimen;
         createRegimen = false;
     }
 
@@ -187,10 +187,10 @@ public class RegimenPanel extends AbstractConfigurationPanel {
     @Override
     public void eventDelFromJtable(int row) {
         Regimen regimen = getRegimentFromTable(row);
-        String mensaje = "¿Estas seguro de eliminar: " + regimen.descripcionRegimenFiscal + "?";
+        String mensaje = "¿Estas seguro de eliminar: " + regimen.reg_descripcion + "?";
         int opc = JOptionPane.showConfirmDialog(this, mensaje);
         if (opc == JOptionPane.OK_OPTION) {
-            if (controller.delete(connection, regimen.idregimenFiscal)) {
+            if (controller.delete(connection, regimen.id_regimen)) {
                 initDataTable();
                 clean();
             }

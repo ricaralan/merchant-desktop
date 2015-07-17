@@ -17,7 +17,7 @@ public class ImpuestosTableModel extends MerchantTableModel {
     public ImpuestosTableModel() {
         objects = new ArrayList<>();
         controller = new ImpuestosController();
-        header = new String[]{"Código", "Valor (%)", "Descripción"};
+        header = new String[]{"ID", "Código", "Descripción", "Valor (%)"};
     }
 
     @Override
@@ -32,13 +32,15 @@ public class ImpuestosTableModel extends MerchantTableModel {
         Impuesto impuesto = (Impuesto) objects.get(row);
         switch (column) {
             case 0:
-                value = impuesto.codigoImpuesto;
+                value = String.valueOf(impuesto.id_impuesto);
                 break;
             case 1:
-                value = impuesto.valorImpuesto;
+                value = impuesto.impto_codigo;
                 break;
             case 2:
-                value = impuesto.descripcionImpuesto;
+                value = impuesto.impto_descripcion;
+            case 3: 
+                value = impuesto.impto_valor;
         }
         return value;
     }

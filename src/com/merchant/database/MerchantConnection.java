@@ -14,7 +14,7 @@ public class MerchantConnection {
     private String database, userDB, passwordDB;
 
     public MerchantConnection() {
-        database = "merchant";
+        database = "db_merchant";
         userDB = "merchant";
         passwordDB = "merchant";
         try {

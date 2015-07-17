@@ -11,7 +11,6 @@ import com.merchant.controllers.EmpleadoController;
 import com.merchant.database.MerchantConnection;
 import com.merchant.database.models.SucursalModel;
 import com.merchant.database.models.TipoEmpleadoModel;
-import com.merchant.database.models.UsuarioModel;
 import com.merchant.pojos.Domicilio;
 import com.merchant.pojos.Empleado;
 import com.merchant.pojos.Sucursal;
@@ -20,14 +19,9 @@ import com.merchant.pojos.Usuario;
 import com.merchant.utils.ImageJPanel;
 import com.merchant.utils.MerchantComboSQL;
 import com.merchant.utils.Photo;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.nio.channels.FileChannel;
 import java.sql.Connection;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 /**
@@ -56,8 +50,8 @@ public class EmpleadosPanel extends MerchantPanel {
         photo.setBasePath("/images/empleados/");
         //tableEmpleados = table;
         tableEmpleados.setModel(new EmpleadoTableModel());
-        comboEmpleado.setModel(new MerchantComboSQL(connection, new TipoEmpleadoModel(), "tipoEmpleado"));
-        comboSucursal.setModel(new MerchantComboSQL(connection, new SucursalModel(), "nombreSucursal"));
+        comboEmpleado.setModel(new MerchantComboSQL(connection, new TipoEmpleadoModel(), "tipo_empleado"));
+        comboSucursal.setModel(new MerchantComboSQL(connection, new SucursalModel(), "suc_nombre"));
         initDataTable();
     }
 
@@ -583,7 +577,7 @@ public class EmpleadosPanel extends MerchantPanel {
             Empleado empleado = (Empleado) ((MerchantTableModel) tableEmpleados.getModel()).getObjectByRow(row);
             setDatosEmpleadoForm(empleado);
             btnOpcionForm.setText("Editar");
-            idActualizar = empleado.idEmpleado;
+            idActualizar = empleado.id_empleado;
             crearEmpleado = false;
         }
     }//GEN-LAST:event_EditarActionPerformed
@@ -592,9 +586,9 @@ public class EmpleadosPanel extends MerchantPanel {
         int row = tableEmpleados.getSelectedRow();
         if (row != -1) {
             Empleado empleado = (Empleado) ((MerchantTableModel) tableEmpleados.getModel()).getObjectByRow(row);
-            int res = JOptionPane.showConfirmDialog(null, "¿Esta seguro de eliminar al empleado \"" + empleado.nombreEmpleado + "\"?");
+            int res = JOptionPane.showConfirmDialog(null, "¿Esta seguro de eliminar al empleado \"" + empleado.emp_nombre + "\"?");
             if (res == JOptionPane.OK_OPTION) {
-                if (empleadoController.delete(connection, empleado.idEmpleado)) {
+                if (empleadoController.delete(connection, empleado.id_empleado)) {
                     ((EmpleadoTableModel) tableEmpleados.getModel()).initData(connection);
                 } else {
                     JOptionPane.showMessageDialog(null, "Por favor intente más tarde...", "ERROR AL ELIMINAR", 1);
@@ -643,56 +637,56 @@ public class EmpleadosPanel extends MerchantPanel {
 
     private synchronized Empleado getDatosEmpleado() {
         Empleado empleado = new Empleado();
-        empleado.rfcEmpleado = txtRFC.getText();
-        empleado.tipoEmpleado_idtipoEmpleado = getIdTipoEmpleado();
-        empleado.nombreEmpleado = txtNombre.getText();
-        empleado.apellidosEmpleado = txtApellidos.getText();
-        empleado.telefonoCelularEmpleado = txtTelCelular.getText();
-        empleado.telefonoEmpleado = txtTelCasa.getText();
-        empleado.mailEmpleado = txtEmail.getText();
-        empleado.salarioDiarioEmpleado = Float.parseFloat(txtSalario.getText());
-        empleado.diasLaboralesEmpleado = Integer.parseInt(txtDiasLaborales.getText());
-        empleado.altaEmpleado = fecha();
+        empleado.emp_rfc = txtRFC.getText();
+        empleado.tipo_empleado_id_tipo_empleado = getIdTipoEmpleado();
+        empleado.emp_nombre = txtNombre.getText();
+        empleado.emp_apellidos = txtApellidos.getText();
+        empleado.emp_telefono_celular = txtTelCelular.getText();
+        empleado.emp_telefono_casa = txtTelCasa.getText();
+        empleado.emp_email = txtEmail.getText();
+        empleado.emp_salario_diario = Float.parseFloat(txtSalario.getText());
+        empleado.emp_dias_laborales = Integer.parseInt(txtDiasLaborales.getText());
+        empleado.emp_alta = fecha();
         //empleado.usuario_idUsuario = getIdCreateUsuario();
         //empleado.domicilioFiscal_idDomicilioFiscal = getIdCreateDomicilioFiscal();
-        empleado.sucursal_idSucursal = getIdSucursal();
-        empleado.statusEmpleado = 1;
-        empleado.imagenEmpleado = photo.getPosiblePathPhoto();
+        empleado.sucursal_id_sucursal = getIdSucursal();
+        empleado.emp_status = 1;
+        empleado.imagen_empleado = photo.getPosiblePathPhoto();
         return empleado;
     }
 
     private synchronized Domicilio getDatosDomicilio() {
         Domicilio domicilio = new Domicilio();
-        domicilio.calle = txtCalle.getText();
-        domicilio.numExt = txtNoExt.getText();
-        domicilio.numInt = txtNoInt.getText();
-        domicilio.colonia = txtColonia.getText();
-        domicilio.codigoPostal = txtCP.getText();
-        domicilio.localidad = txtLocalidad.getText();
-        domicilio.municipio = txtMunicipio.getText();
-        domicilio.estado = txtEstado.getText();
-        domicilio.pais = txtPais.getText();
+        domicilio.dom_calle = txtCalle.getText();
+        domicilio.dom_numExt = txtNoExt.getText();
+        domicilio.dom_numInt = txtNoInt.getText();
+        domicilio.dom_colonia = txtColonia.getText();
+        domicilio.dom_cod_postal = txtCP.getText();
+        domicilio.dom_localidad = txtLocalidad.getText();
+        domicilio.dom_municipio = txtMunicipio.getText();
+        domicilio.dom_estado = txtEstado.getText();
+        domicilio.dom_pais = txtPais.getText();
         return domicilio;
     }
 
     private synchronized void setDatosEmpleadoForm(Empleado empleado) {
         cleanDatosEmpleadoForm();
-        txtRFC.setText(empleado.rfcEmpleado);
+        txtRFC.setText(empleado.emp_rfc);
         setIdTipoEmpleado(empleado);
-        txtNombre.setText(empleado.nombreEmpleado);
-        txtApellidos.setText(empleado.apellidosEmpleado);
-        txtTelCelular.setText(empleado.telefonoCelularEmpleado);
-        txtTelCasa.setText(empleado.telefonoEmpleado);
-        txtEmail.setText(empleado.mailEmpleado);
-        txtSalario.setText(Float.toString(empleado.salarioDiarioEmpleado));
-        txtDiasLaborales.setText(Integer.toString(empleado.diasLaboralesEmpleado));
+        txtNombre.setText(empleado.emp_nombre);
+        txtApellidos.setText(empleado.emp_apellidos);
+        txtTelCelular.setText(empleado.emp_telefono_celular);
+        txtTelCasa.setText(empleado.emp_telefono_casa);
+        txtEmail.setText(empleado.emp_email);
+        txtSalario.setText(Float.toString(empleado.emp_salario_diario));
+        txtDiasLaborales.setText(Integer.toString(empleado.emp_dias_laborales));
         //Date.valueOf(fecha(empleado));
         //setIdCreateUsuario(empleado);
         //getIdCreateDomicilioFiscal();
         setIdSucursal(empleado);
         //true;
-        if (empleado.imagenEmpleado.length() > 1) {
-            photo.setPhoto(empleado.imagenEmpleado);
+        if (empleado.imagen_empleado.length() > 1) {
+            photo.setPhoto(empleado.imagen_empleado);
             photo.setPhotoJPanel(panelFoto);
         }
     }
@@ -722,38 +716,38 @@ public class EmpleadosPanel extends MerchantPanel {
 
     private int getIdTipoEmpleado() {
         String selectedValue = (String) comboEmpleado.getSelectedItem();
-        return ((TipoEmpleado) (getComboSQLModelEmpleado().findByMainField(selectedValue))).idtipoEmpleado;
+        return ((TipoEmpleado) (getComboSQLModelEmpleado().findByMainField(selectedValue))).id_tipo_empleado;
     }
 
     private void setIdTipoEmpleado(Empleado empleado) {
-        comboEmpleado.setSelectedItem(((TipoEmpleado) getComboSQLModelEmpleado().findByFielNameAndValue("idtipoEmpleado",
-                empleado.tipoEmpleado_idtipoEmpleado)).tipoEmpleado
+        comboEmpleado.setSelectedItem(((TipoEmpleado) getComboSQLModelEmpleado().findByFielNameAndValue("id_tipo_empleado",
+                empleado.tipo_empleado_id_tipo_empleado)).tipo_empleado
         );
     }
 
     private int getIdSucursal() {
         String selectedValue = (String) comboSucursal.getSelectedItem();
-        return ((Sucursal) (getComboSQLModelSucursal().findByMainField(selectedValue))).idSucursal;
+        return ((Sucursal) (getComboSQLModelSucursal().findByMainField(selectedValue))).id_sucursal;
     }
 
     private void setIdSucursal(Empleado empleado) {
-        comboSucursal.setSelectedItem(((Sucursal) getComboSQLModelSucursal().findByFielNameAndValue("idSucursal",
-                empleado.sucursal_idSucursal)).nombreSucursal
+        comboSucursal.setSelectedItem(((Sucursal) getComboSQLModelSucursal().findByFielNameAndValue("id_sucursal",
+                empleado.sucursal_id_sucursal)).suc_nombre
         );
     }
 
     //Aquí se mandara a los textField el valor del domicilio, recuperando todos sus valores mediante el id
     private void setIdCreateDomicilioFiscal(Domicilio domicilio) {
 
-        txtCalle.setText(domicilio.calle);
-        txtNoExt.setText(domicilio.numExt);
-        txtNoInt.setText(domicilio.numInt);
-        txtColonia.setText(domicilio.colonia);
-        txtCP.setText(domicilio.codigoPostal);
-        txtLocalidad.setText(domicilio.localidad);
-        txtMunicipio.setText(domicilio.municipio);
-        txtEstado.setText(domicilio.estado);
-        txtPais.setText(domicilio.pais);
+        txtCalle.setText(domicilio.dom_calle);
+        txtNoExt.setText(domicilio.dom_numExt);
+        txtNoInt.setText(domicilio.dom_numInt);
+        txtColonia.setText(domicilio.dom_colonia);
+        txtCP.setText(domicilio.dom_cod_postal);
+        txtLocalidad.setText(domicilio.dom_localidad);
+        txtMunicipio.setText(domicilio.dom_municipio);
+        txtEstado.setText(domicilio.dom_estado);
+        txtPais.setText(domicilio.dom_pais);
 
     }
 

@@ -6,6 +6,6 @@ package com.merchant.pojos;
  */
 public class Regimen {
 
-    public int idregimenFiscal;
-    public String descripcionRegimenFiscal;
+    public int id_regimen;
+    public String reg_descripcion;
 }

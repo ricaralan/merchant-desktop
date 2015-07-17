@@ -9,8 +9,8 @@ import com.merchant.utils.validate.annotations.NotNull;
 public class Impuesto {
 
     @NotNull
-    public int idImpuesto;
-    public String codigoImpuesto;
-    public String descripcionImpuesto;
-    public String valorImpuesto;
+    public int id_impuesto;
+    public String impto_codigo;
+    public String impto_descripcion;
+    public String impto_valor;
 }

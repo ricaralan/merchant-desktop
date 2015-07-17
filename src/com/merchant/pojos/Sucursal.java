@@ -6,9 +6,9 @@ package com.merchant.pojos;
  */
 public class Sucursal {
 
-    public int idSucursal;
-    public String nombreSucursal;
-    public int empresa_idEmpresa;
-    public int domicilioFiscal_idDomicilioFiscal;
+    public int id_sucursal;
+    public String suc_nombre;
+    public int empresa_id_empresa;
+    public int domicilio_id_domicilio;
     
 }

@@ -6,6 +6,6 @@ package com.merchant.pojos;
  */
 public class User {
 
-    public String name;
+    public String usu_nombre;
 
 }

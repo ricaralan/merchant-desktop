@@ -11,8 +11,8 @@ package com.merchant.pojos;
  */
 public class Usuario {
 
-    public int idUsuario;
-    public String nombreUsuario;
-    public String passwordUsuario;
-    public int statusUsuario;
+    public int id_usuario;
+    public String usu_nombre;
+    public String usu_password;
+    public int usu_status;
 }

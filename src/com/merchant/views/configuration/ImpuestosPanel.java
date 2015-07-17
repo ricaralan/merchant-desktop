@@ -177,16 +177,16 @@ public class ImpuestosPanel extends AbstractConfigurationPanel {
 
     public Impuesto getDatosImpuesto() {
         Impuesto impuesto = new Impuesto();
-        impuesto.codigoImpuesto = txtCodigo.getText();
-        impuesto.valorImpuesto = txtValor.getText();
-        impuesto.descripcionImpuesto = txtDescripcion.getText();
+        impuesto.impto_codigo = txtCodigo.getText();
+        impuesto.impto_valor = txtValor.getText();
+        impuesto.impto_descripcion = txtDescripcion.getText();
         return impuesto;
     }
     
     public void setDatosImpuesto(Impuesto impuesto) {
-        txtCodigo.setText(impuesto.codigoImpuesto);
-        txtValor.setText(impuesto.valorImpuesto);
-        txtDescripcion.setText(impuesto.descripcionImpuesto);
+        txtCodigo.setText(impuesto.impto_codigo);
+        txtValor.setText(impuesto.impto_valor);
+        txtDescripcion.setText(impuesto.impto_descripcion);
     }
 
     public void clean() {
@@ -213,7 +213,7 @@ public class ImpuestosPanel extends AbstractConfigurationPanel {
     @Override
     public void eventEditFromJtable(int row) {
         Impuesto impuesto = ((Impuesto)getTableModel().getObjectByRow(row));
-        idActualizar = impuesto.idImpuesto;
+        idActualizar = impuesto.id_impuesto;
         crearImpuesto = false;
         btnOpcion.setText("Editar");
         setDatosImpuesto(impuesto);
@@ -222,9 +222,9 @@ public class ImpuestosPanel extends AbstractConfigurationPanel {
     @Override
     public void eventDelFromJtable(int row) {
         Impuesto impuesto = (Impuesto) ((Impuesto)getTableModel().getObjectByRow(row));
-        int res = JOptionPane.showConfirmDialog(null, "¿Esta seguro de eliminar el impuesto \"" + impuesto.codigoImpuesto + "\"?");
+        int res = JOptionPane.showConfirmDialog(null, "¿Esta seguro de eliminar el impuesto \"" + impuesto.impto_codigo + "\"?");
         if (res == JOptionPane.OK_OPTION) {
-            if (controller.delete(connection, impuesto.idImpuesto)) {
+            if (controller.delete(connection, impuesto.id_impuesto)) {
                 initDataTable();
                 clean();
             } else {
