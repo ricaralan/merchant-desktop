@@ -12,6 +12,8 @@ File Encoding         : 65001
 
 Date: 2015-07-16 20:24:55
 */
+CREATE DATABASE db_merchant;
+USE db_merchant;
 
 SET FOREIGN_KEY_CHECKS=0;
 
