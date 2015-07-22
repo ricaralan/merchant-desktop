@@ -7,6 +7,7 @@ package com.merchant.views;
 
 import com.merchant.components.tableModels.EmpleadoTableModel;
 import com.merchant.components.tableModels.MerchantTableModel;
+import com.merchant.controllers.DomicilioController;
 import com.merchant.controllers.EmpleadoController;
 import com.merchant.database.MerchantConnection;
 import com.merchant.database.models.SucursalModel;
@@ -209,7 +210,7 @@ public class EmpleadosPanel extends MerchantPanel {
         );
         panelFotoLayout.setVerticalGroup(
             panelFotoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 93, Short.MAX_VALUE)
+            .addGap(0, 94, Short.MAX_VALUE)
         );
 
         btnCargarImagen.setText("Subir");
@@ -485,7 +486,7 @@ public class EmpleadosPanel extends MerchantPanel {
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(13, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(jLabel24)
@@ -520,6 +521,12 @@ public class EmpleadosPanel extends MerchantPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tableEmpleados.setComponentPopupMenu(opcionesEmpleado);
+        tableEmpleados.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableEmpleadosMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tableEmpleados);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -635,6 +642,23 @@ public class EmpleadosPanel extends MerchantPanel {
         photo.setPhotoJPanel(panelFoto);
     }//GEN-LAST:event_btnCargarImagenActionPerformed
 
+    private void tableEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableEmpleadosMouseClicked
+        // TODO add your handling code here:
+        if(evt.getClickCount() > 1) {
+            int row = tableEmpleados.getSelectedRow();
+            if(row != -1) {
+                Empleado empleado = (Empleado)((EmpleadoTableModel)tableEmpleados.getModel())
+                        .getObjectByRow(row);
+                // TODO GET DOMICILIO BY ID EMPLEADO
+                Domicilio domicilio = new DomicilioController().getById(connection, empleado.id_empleado);
+                // setDatosForm(empleado, domicilio);
+                setDatosEmpleadoForm(empleado);
+            }
+        }
+    }//GEN-LAST:event_tableEmpleadosMouseClicked
+
+    
+    
     private synchronized Empleado getDatosEmpleado() {
         Empleado empleado = new Empleado();
         empleado.emp_rfc = txtRFC.getText();
@@ -672,7 +696,7 @@ public class EmpleadosPanel extends MerchantPanel {
     private synchronized void setDatosEmpleadoForm(Empleado empleado) {
         cleanDatosEmpleadoForm();
         txtRFC.setText(empleado.emp_rfc);
-        setIdTipoEmpleado(empleado);
+    //setIdTipoEmpleado(empleado);
         txtNombre.setText(empleado.emp_nombre);
         txtApellidos.setText(empleado.emp_apellidos);
         txtTelCelular.setText(empleado.emp_telefono_celular);
@@ -683,7 +707,7 @@ public class EmpleadosPanel extends MerchantPanel {
         //Date.valueOf(fecha(empleado));
         //setIdCreateUsuario(empleado);
         //getIdCreateDomicilioFiscal();
-        setIdSucursal(empleado);
+    //setIdSucursal(empleado);
         //true;
         if (empleado.imagen_empleado.length() > 1) {
             photo.setPhoto(empleado.imagen_empleado);

@@ -98,5 +98,30 @@ public class DomicilioModel extends MerchantModel<Domicilio> {
         }
         return res;
     }
+    
+    public Domicilio getById(Connection connection, Object id) {
+        String query = "SELECT * FROM domicilio WHERE id_domicilio="+id;
+        Domicilio domicilio = new Domicilio();
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet todosLosDomicilios = statement.executeQuery(query);
+            while (todosLosDomicilios.next()) {
+                
+                domicilio.id_domicilio = todosLosDomicilios.getInt("id_domicilio");
+                domicilio.dom_calle = todosLosDomicilios.getString("dom_calle");
+                domicilio.dom_numExt = todosLosDomicilios.getString("dom_numExt");
+                domicilio.dom_numInt = todosLosDomicilios.getString("dom_numInt");
+                domicilio.dom_colonia = todosLosDomicilios.getString("dom_colonia");
+                domicilio.dom_cod_postal = todosLosDomicilios.getString("dom_cod_postal");
+                domicilio.dom_localidad = todosLosDomicilios.getString("dom_localidad");
+                domicilio.dom_municipio = todosLosDomicilios.getString("dom_municipio");
+                domicilio.dom_estado = todosLosDomicilios.getString("dom_estado");
+                domicilio.dom_pais = todosLosDomicilios.getString("dom_pais");
+            }
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return domicilio;
+    }
 
 }

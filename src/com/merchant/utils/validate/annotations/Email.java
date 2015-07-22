@@ -15,7 +15,7 @@ import java.lang.annotation.Target;
 @MerchantAnnotation(validatedBy = PatternValidator.class, fieldsValidatedBy = {"pattern", "value"})
 public @interface Email {
 
-    public String message() default "{error.invalid.email}";
+    public String message() default "{error.invalid.emp_email}";
 
     public String pattern() default "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
             + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";

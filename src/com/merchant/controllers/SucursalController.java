@@ -36,4 +36,9 @@ public class SucursalController extends MerchantController<Regimen>{
     public boolean delete(Connection connection, Object id) {
         return model.delete(connection, id) == 1;
     }
+
+    @Override
+    public Regimen getById(Connection connection, Object id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

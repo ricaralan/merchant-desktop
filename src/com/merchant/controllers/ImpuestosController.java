@@ -36,4 +36,9 @@ public class ImpuestosController extends MerchantController<Impuesto> {
     public List<Impuesto> getAll(Connection connection) {
         return model.getAll(connection);
     }
+
+    @Override
+    public Impuesto getById(Connection connection, Object id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

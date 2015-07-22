@@ -19,6 +19,8 @@ public abstract class MerchantModel<T> {
     public abstract Integer update(Connection connection, T o, Object id);
 
     public abstract Integer delete(Connection connection, Object id);
+    
+    public abstract T getById(Connection connection, Object id);
 
     public abstract List<T> getAll(Connection connection);
 }

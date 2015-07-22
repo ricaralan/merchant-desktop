@@ -1,8 +1,6 @@
 package com.merchant.controllers;
 
-import com.merchant.database.models.RegimenModel;
 import com.merchant.database.models.TipoEmpleadoModel;
-import com.merchant.pojos.Regimen;
 import com.merchant.pojos.TipoEmpleado;
 import java.sql.Connection;
 import java.util.List;
@@ -37,5 +35,10 @@ public class TipoEmpleadoController extends MerchantController<TipoEmpleado> {
     @Override
     public boolean delete(Connection connection, Object id) {
         return model.delete(connection, id) == 1;
+    }
+
+    @Override
+    public TipoEmpleado getById(Connection connection, Object id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

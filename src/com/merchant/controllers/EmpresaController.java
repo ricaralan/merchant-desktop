@@ -36,4 +36,9 @@ public class EmpresaController extends MerchantController<Empresa> {
     public List<Empresa> getAll(Connection connection) {
         return empresaModel.getAll(connection);
     }
+
+    @Override
+    public Empresa getById(Connection connection, Object id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

@@ -114,4 +114,9 @@ public class EmpleadoModel extends MerchantModel<Empleado> {
         return res;
     }
 
+    @Override
+    public Empleado getById(Connection connection, Object id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

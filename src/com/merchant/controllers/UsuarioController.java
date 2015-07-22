@@ -1,7 +1,6 @@
 package com.merchant.controllers;
 
 import com.merchant.database.models.UsuarioModel;
-import com.merchant.pojos.Domicilio;
 import com.merchant.pojos.Usuario;
 import java.sql.Connection;
 import java.util.List;
@@ -36,5 +35,10 @@ public class UsuarioController extends MerchantController<Usuario> {
     @Override
     public List<Usuario> getAll(Connection connection) {
         return usuarioModel.getAll(connection);
+    }
+
+    @Override
+    public Usuario getById(Connection connection, Object id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

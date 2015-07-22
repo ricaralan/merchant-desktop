@@ -59,9 +59,9 @@ public class EmpresasPanel extends AbstractConfigurationPanel {
     private MerchantTableModel getTableModel() {
         return ((MerchantTableModel) tableEmpresas.getModel());
     }
-    
+
     private MerchantComboSQL getComboSQLModel() {
-        return (MerchantComboSQL)(comboRegimen.getModel());
+        return (MerchantComboSQL) (comboRegimen.getModel());
     }
 
     /**
@@ -169,67 +169,60 @@ public class EmpresasPanel extends AbstractConfigurationPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(230, 230, 230)
-                        .addComponent(btnOpcionForm, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(panelFoto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel8)
-                                    .addGap(36, 36, 36)
-                                    .addComponent(txtWebEmpresa))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addGap(14, 14, 14)
-                                            .addComponent(jLabel3))
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jLabel5))
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addGap(12, 12, 12)
-                                            .addComponent(txtRFC, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGap(12, 12, 12)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(txtMail, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addGap(14, 14, 14)
-                                            .addComponent(jLabel7))))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(jLabel4)
-                                            .addGap(136, 136, 136))
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(comboRegimen, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addGap(17, 17, 17)))
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addGap(187, 187, 187)
-                                            .addComponent(jLabel6))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                            .addComponent(txtTel1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                            .addComponent(txtTel2, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(btnOpcionForm, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtWebEmpresa))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtNombre)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
+                                        .addGap(46, 46, 46))
+                                    .addComponent(comboRegimen, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(12, 12, 12)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addGap(0, 0, 0)
+                                        .addComponent(txtTel1))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE)
+                                        .addGap(112, 112, 112))
+                                    .addComponent(txtRFC)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addGap(0, 0, 0)
+                                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addGap(12, 12, 12)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtTel2)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel6)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
+                                        .addGap(132, 132, 132))
+                                    .addComponent(txtMail))))
+                        .addGap(12, 12, 12)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                            .addComponent(panelFoto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGap(15, 15, 15))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
+                .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -241,36 +234,35 @@ public class EmpresasPanel extends AbstractConfigurationPanel {
                             .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtRFC, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtMail, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(12, 12, 12)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
                             .addComponent(jLabel5)
                             .addComponent(jLabel6))
                         .addGap(8, 8, 8)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(comboRegimen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtTel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(txtTel2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(comboRegimen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(txtTel2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(panelFoto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(txtWebEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1))
-                .addGap(18, 18, 18)
+                .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnOpcionForm)
                     .addComponent(jButton2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(15, 15, 15)
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24))
+                .addGap(15, 15, 15))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnOpcionFormActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpcionFormActionPerformed
-        if(validar()){
-            try{
+        if (validar()) {
+            try {
                 Empresa empresa = getDatosEmpresa();
                 if (crearEmpresa) {
                     if (!new EmpresaController().create(connection, empresa)) {
@@ -288,7 +280,7 @@ public class EmpresasPanel extends AbstractConfigurationPanel {
                 photo.uploadSelectedPhoto();
                 initDataTable();
                 cleanDatosEmpresaForm();
-            }catch (NullPointerException e){
+            } catch (NullPointerException e) {
                 JOptionPane.showMessageDialog(this, "Tienes que seleccionar un regimen para tu empresa", "ERROR...", 1);
             }
         }
@@ -351,19 +343,18 @@ public class EmpresasPanel extends AbstractConfigurationPanel {
         comboRegimen.setSelectedIndex(0);
         photo.cleanPanelPhoto(panelFoto);
     }
-    
+
     private int getIdRegimenFiscal() {
-        String selectedValue = (String)comboRegimen.getSelectedItem();
-        return ((Regimen)(getComboSQLModel().findByMainField(selectedValue))).id_regimen;
+        String selectedValue = (String) comboRegimen.getSelectedItem();
+        return ((Regimen) (getComboSQLModel().findByMainField(selectedValue))).id_regimen;
     }
-    
+
     private void setIdRegimenFiscal(Empresa empresa) {
-        comboRegimen.setSelectedItem(((Regimen)
-        getComboSQLModel().findByFielNameAndValue("id_regimen",
+        comboRegimen.setSelectedItem(((Regimen) getComboSQLModel().findByFielNameAndValue("id_regimen",
                 empresa.regimen_id_regimen)).reg_descripcion
         );
     }
-    
+
     @Override
     public boolean validar() {
         // PRUEBA DE VALIDACIÓN DE LOS CAMPOS RFC E EMAIL
@@ -372,22 +363,25 @@ public class EmpresasPanel extends AbstractConfigurationPanel {
         Validator v = new Validator();
         List<ValidateFieldError> errors = v.validateFields(empresa);
         Border borderRED = BorderFactory.createLineBorder(Color.RED, 3);
-        for (ValidateFieldError e:errors){
-            switch (e.fieldName){
-                case "email":
-                    if (e.getErrors().size() > 0){
+        Border borderBlack = BorderFactory.createLineBorder(Color.yellow, 1);
+        for (ValidateFieldError e : errors) {
+            switch (e.fieldName) {
+                case "emp_email":
+                    if (e.getErrors().size() > 0) {
                         txtMail.setBorder(borderRED);
                         valido = false;
                     } else {
-                        txtMail.setBorder(null);
+                        //txtMail.setBorder(null);
+                        txtMail.setBorder(borderBlack);
                     }
                     break;
-                case "rfc":
-                    if (e.getErrors().size() > 0){
+                case "emp_rfc":
+                    if (e.getErrors().size() > 0) {
                         txtRFC.setBorder(borderRED);
                         valido = false;
                     } else {
-                        txtRFC.setBorder(null);
+                        //txtRFC.setBorder(null);
+                        txtRFC.setBorder(borderBlack);
                     }
             }
         }
@@ -421,24 +415,24 @@ public class EmpresasPanel extends AbstractConfigurationPanel {
 
     @Override
     public void eventEditFromJtable(int row) {
-            Empresa empresa = (Empresa) ((MerchantTableModel) tableEmpresas.getModel()).getObjectByRow(row);
-            setDatosEmpresaForm(empresa);
-            btnOpcionForm.setText("Editar");
-            idActualizar = empresa.id_empresa;
-            crearEmpresa = false;
+        Empresa empresa = (Empresa) ((MerchantTableModel) tableEmpresas.getModel()).getObjectByRow(row);
+        setDatosEmpresaForm(empresa);
+        btnOpcionForm.setText("Editar");
+        idActualizar = empresa.id_empresa;
+        crearEmpresa = false;
     }
 
     @Override
     public void eventDelFromJtable(int row) {
-            Empresa empresa = (Empresa) ((MerchantTableModel) tableEmpresas.getModel()).getObjectByRow(row);
-            int res = JOptionPane.showConfirmDialog(null, "¿Esta seguro de eliminar la empresa \"" + empresa.emp_nombre + "\"?");
-            if (res == JOptionPane.OK_OPTION) {
-                if (empresaController.delete(connection, empresa.id_empresa)) {
-                    ((EmpresaTableModel) tableEmpresas.getModel()).initData(connection);
-                } else {
-                    JOptionPane.showMessageDialog(null, "Por favor intente más tarde...", "ERROR AL ELIMINAR", 1);
-                }
+        Empresa empresa = (Empresa) ((MerchantTableModel) tableEmpresas.getModel()).getObjectByRow(row);
+        int res = JOptionPane.showConfirmDialog(null, "¿Esta seguro de eliminar la empresa \"" + empresa.emp_nombre + "\"?");
+        if (res == JOptionPane.OK_OPTION) {
+            if (empresaController.delete(connection, empresa.id_empresa)) {
+                ((EmpresaTableModel) tableEmpresas.getModel()).initData(connection);
+            } else {
+                JOptionPane.showMessageDialog(null, "Por favor intente más tarde...", "ERROR AL ELIMINAR", 1);
             }
-            cleanDatosEmpresaForm();
+        }
+        cleanDatosEmpresaForm();
     }
 }

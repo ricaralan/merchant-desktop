@@ -36,4 +36,9 @@ public class DomicilioController extends MerchantController<Domicilio> {
     public List<Domicilio> getAll(Connection connection) {
         return domicilioModel.getAll(connection);
     }
+    
+    @Override
+    public Domicilio getById(Connection connection, Object id) {
+        return domicilioModel.getById(connection, id);
+    }
 }

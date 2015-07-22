@@ -79,4 +79,9 @@ public class RegimenModel extends MerchantModel<Regimen> {
         return res;
     }
 
+    @Override
+    public Regimen getById(Connection connection, Object id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

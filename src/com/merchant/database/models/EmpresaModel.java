@@ -91,4 +91,9 @@ public class EmpresaModel extends MerchantModel<Empresa> {
         }
         return empresas;
     }
+
+    @Override
+    public Empresa getById(Connection connection, Object id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

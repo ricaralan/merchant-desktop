@@ -5,14 +5,12 @@
  */
 package com.merchant.database.models;
 
-import com.merchant.database.MerchantConnection;
 import com.merchant.pojos.TipoEmpleado;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -79,6 +77,11 @@ public class TipoEmpleadoModel extends MerchantModel<TipoEmpleado> {
             System.err.println(query + "\n" + e.getMessage());
         }
         return res;
+    }
+
+    @Override
+    public TipoEmpleado getById(Connection connection, Object id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

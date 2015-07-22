@@ -20,7 +20,7 @@ import java.lang.annotation.Target;
 @MerchantAnnotation(validatedBy = PatternValidator.class, fieldsValidatedBy = {"pattern", "value"})
 public @interface RFC {
 
-    public String message() default "{error.invalid.rfc}";
+    public String message() default "{error.invalid.emp_rfc}";
 
     // RFC Conformado por 4 letras A-Z y 6 números
     public String pattern() default "^[A-Z]{4}[0-9]{6}";
