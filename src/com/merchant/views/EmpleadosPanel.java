@@ -651,8 +651,8 @@ public class EmpleadosPanel extends MerchantPanel {
                         .getObjectByRow(row);
                 // TODO GET DOMICILIO BY ID EMPLEADO
                 Domicilio domicilio = new DomicilioController().getById(connection, empleado.id_empleado);
-                // setDatosForm(empleado, domicilio);
                 setDatosEmpleadoForm(empleado);
+                setDatosDomicilioForm(domicilio);
             }
         }
     }//GEN-LAST:event_tableEmpleadosMouseClicked
@@ -696,7 +696,7 @@ public class EmpleadosPanel extends MerchantPanel {
     private synchronized void setDatosEmpleadoForm(Empleado empleado) {
         cleanDatosEmpleadoForm();
         txtRFC.setText(empleado.emp_rfc);
-    //setIdTipoEmpleado(empleado);
+        setIdTipoEmpleado(empleado);
         txtNombre.setText(empleado.emp_nombre);
         txtApellidos.setText(empleado.emp_apellidos);
         txtTelCelular.setText(empleado.emp_telefono_celular);
@@ -707,12 +707,25 @@ public class EmpleadosPanel extends MerchantPanel {
         //Date.valueOf(fecha(empleado));
         //setIdCreateUsuario(empleado);
         //getIdCreateDomicilioFiscal();
-    //setIdSucursal(empleado);
+        setIdSucursal(empleado);
         //true;
         if (empleado.imagen_empleado.length() > 1) {
             photo.setPhoto(empleado.imagen_empleado);
             photo.setPhotoJPanel(panelFoto);
         }
+    }
+    
+    private synchronized void setDatosDomicilioForm(Domicilio domicilio) {
+        txtCalle.setText(domicilio.dom_calle);
+        txtNoExt.setText(domicilio.dom_numExt);
+        txtNoInt.setText(domicilio.dom_numInt);
+        txtColonia.setText(domicilio.dom_colonia);
+        txtCP.setText(domicilio.dom_cod_postal);
+        txtLocalidad.setText(domicilio.dom_localidad);
+        txtMunicipio.setText(domicilio.dom_municipio);
+        txtEstado.setText(domicilio.dom_estado);
+        txtPais.setText(domicilio.dom_pais);
+        
     }
 
     private void cleanDatosEmpleadoForm() {
@@ -744,7 +757,8 @@ public class EmpleadosPanel extends MerchantPanel {
     }
 
     private void setIdTipoEmpleado(Empleado empleado) {
-        comboEmpleado.setSelectedItem(((TipoEmpleado) getComboSQLModelEmpleado().findByFielNameAndValue("id_tipo_empleado",
+        comboEmpleado.setSelectedItem(((TipoEmpleado) getComboSQLModelEmpleado()
+                .findByFielNameAndValue("id_tipo_empleado",
                 empleado.tipo_empleado_id_tipo_empleado)).tipo_empleado
         );
     }
@@ -755,7 +769,8 @@ public class EmpleadosPanel extends MerchantPanel {
     }
 
     private void setIdSucursal(Empleado empleado) {
-        comboSucursal.setSelectedItem(((Sucursal) getComboSQLModelSucursal().findByFielNameAndValue("id_sucursal",
+        comboSucursal.setSelectedItem(((Sucursal) getComboSQLModelSucursal()
+                .findByFielNameAndValue("id_sucursal",
                 empleado.sucursal_id_sucursal)).suc_nombre
         );
     }

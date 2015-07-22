@@ -24,10 +24,11 @@ public class EmpleadoModel extends MerchantModel<Empleado> {
             while (todasLosEmpleados.next()) {
                 Empleado empleado = new Empleado();
                 empleado.id_empleado = todasLosEmpleados.getInt("id_empleado");
+                empleado.tipo_empleado_id_tipo_empleado = todasLosEmpleados.getInt("tipo_empleado_id_tipo_empleado");
                 empleado.emp_nombre = todasLosEmpleados.getString("emp_nombre");
                 empleado.emp_apellidos = todasLosEmpleados.getString("emp_apellidos");
                 empleado.emp_telefono_celular = todasLosEmpleados.getString("emp_telefono_celular");
-                 empleado.emp_telefono_casa = todasLosEmpleados.getString("emp_telefono_casa");
+                empleado.emp_telefono_casa = todasLosEmpleados.getString("emp_telefono_casa");
                 empleado.emp_email = todasLosEmpleados.getString("emp_email");
                 empleado.emp_salario_diario = todasLosEmpleados.getFloat("emp_salario_diario");
                 empleado.emp_dias_laborales = todasLosEmpleados.getInt("emp_dias_laborales");
