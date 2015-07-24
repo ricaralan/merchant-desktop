@@ -25,7 +25,7 @@ public class EmpleadoController extends MerchantController<Empleado> {
         usuarioModel = new UsuarioModel();
     }
     
-    public boolean create(Connection connection, Empleado empleado, Domicilio dom,Usuario usu) {
+    public boolean create(Connection connection, Empleado empleado, Domicilio dom, Usuario usu) {
         empleado.domicilio_id_domicilio = domicilioModel.create(connection, dom);
         empleado.usuario_id_usuario = usuarioModel.create(connection, usu);
         return empleadoModel.create(connection, empleado) == 1;
@@ -35,12 +35,31 @@ public class EmpleadoController extends MerchantController<Empleado> {
         empleado.domicilio_id_domicilio = domicilioModel.create(connection, dom);
         return empleadoModel.create(connection, empleado) == 1;
     }
+    public boolean update(Connection connection, Empleado empleado, Object id, 
+            Domicilio dom,Object id_domicilio, Usuario usu, Object id_usuario) {
+        domicilioModel.update(connection, dom, id_domicilio);
+        usuarioModel.update(connection, usu, id_usuario);
+        return empleadoModel.update(connection, empleado, id) == 1;
+    }
+    
+    public boolean update(Connection connection, Empleado empleado, Object id, 
+            Domicilio dom, Object id_domicilio) {
+        domicilioModel.update(connection, dom, id_domicilio);
+        return empleadoModel.update(connection, empleado, id) == 1;
+    }
 
     @Override
     public boolean update(Connection connection, Empleado empleado, Object id) {
         return empleadoModel.update(connection, empleado, id) == 1;
     }
-
+    
+    public boolean delete(Connection connection, Object id,Object id_domicilio) {
+        if (domicilioModel.delete(connection, id_domicilio)== 1) {
+            empleadoModel.delete(connection, id);
+        }
+        return true;
+    }
+    
     @Override
     public boolean delete(Connection connection, Object id) {
         return empleadoModel.delete(connection, id) == 1;

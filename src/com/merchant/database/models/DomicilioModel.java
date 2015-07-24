@@ -65,7 +65,7 @@ public class DomicilioModel extends MerchantModel<Domicilio> {
 
     @Override
     public Integer update(Connection connection, Domicilio domicilio, Object id) {
-        String query = "UPDATE domicilio SET"
+        String query = "UPDATE domicilio SET "
                 + "dom_calle = '" + domicilio.dom_calle + "',"
                 + "dom_numExt = '" + domicilio.dom_numExt + "',"
                 + "dom_numInt = '" + domicilio.dom_numInt + "',"
@@ -99,6 +99,7 @@ public class DomicilioModel extends MerchantModel<Domicilio> {
         return res;
     }
     
+    @Override
     public Domicilio getById(Connection connection, Object id) {
         String query = "SELECT * FROM domicilio WHERE id_domicilio="+id;
         Domicilio domicilio = new Domicilio();

@@ -25,6 +25,7 @@ public class EmpleadoModel extends MerchantModel<Empleado> {
                 Empleado empleado = new Empleado();
                 empleado.id_empleado = todasLosEmpleados.getInt("id_empleado");
                 empleado.tipo_empleado_id_tipo_empleado = todasLosEmpleados.getInt("tipo_empleado_id_tipo_empleado");
+                empleado.emp_rfc = todasLosEmpleados.getString("emp_rfc");
                 empleado.emp_nombre = todasLosEmpleados.getString("emp_nombre");
                 empleado.emp_apellidos = todasLosEmpleados.getString("emp_apellidos");
                 empleado.emp_telefono_celular = todasLosEmpleados.getString("emp_telefono_celular");
@@ -86,12 +87,11 @@ public class EmpleadoModel extends MerchantModel<Empleado> {
                 + "emp_email = '" + empleado.emp_email + "',"
                 + "emp_salario_diario = " + empleado.emp_salario_diario + ","
                 + "emp_dias_laborales = " + empleado.emp_dias_laborales + ","
-                + "emp_alta = '" + empleado.emp_alta + "',"
                 + "usuario_id_usuario = " + empleado.usuario_id_usuario + ","
                 + "domicilio_id_domicilio = " + empleado.domicilio_id_domicilio + ","
                 + "sucursal_id_sucursal = " + empleado.sucursal_id_sucursal + ","
                 + "emp_status = '" + empleado.emp_status + "'"
-                + "WHERE id_empleado = " + (Integer) id + " AND domicilio_id_domicilio = " + empleado.domicilio_id_domicilio;
+                + "WHERE id_empleado = " + (Integer) id;
         Integer res = null;
         try {
             Statement statement = connection.createStatement();

@@ -16,14 +16,17 @@ import com.merchant.pojos.Domicilio;
 import com.merchant.pojos.Empleado;
 import com.merchant.pojos.Sucursal;
 import com.merchant.pojos.TipoEmpleado;
-import com.merchant.pojos.Usuario;
 import com.merchant.utils.ImageJPanel;
 import com.merchant.utils.MerchantComboSQL;
 import com.merchant.utils.Photo;
 import java.sql.Connection;
-import java.sql.Date;
-import java.text.SimpleDateFormat;
+import java.util.List;
 import javax.swing.JOptionPane;
+import com.merchant.utils.validate.ValidateFieldError;
+import com.merchant.utils.validate.Validator;
+import java.awt.Color;
+import javax.swing.BorderFactory;
+import javax.swing.border.Border;
 
 /**
  *
@@ -38,9 +41,9 @@ public class EmpleadosPanel extends MerchantPanel {
     private EmpleadoController empleadoController = null;
     private boolean crearEmpleado;
     private int idActualizar;
+    private int idActualizarDomicilio;
     private ImageJPanel imagePanel;
     private Photo photo;
-    //private JTable tableEmpleados;
 
     public EmpleadosPanel(MerchantConnection c) {
         initComponents();
@@ -49,7 +52,6 @@ public class EmpleadosPanel extends MerchantPanel {
         crearEmpleado = true;
         photo = new Photo();
         photo.setBasePath("/images/empleados/");
-        //tableEmpleados = table;
         tableEmpleados.setModel(new EmpleadoTableModel());
         comboEmpleado.setModel(new MerchantComboSQL(connection, new TipoEmpleadoModel(), "tipo_empleado"));
         comboSucursal.setModel(new MerchantComboSQL(connection, new SucursalModel(), "suc_nombre"));
@@ -206,7 +208,7 @@ public class EmpleadosPanel extends MerchantPanel {
         panelFoto.setLayout(panelFotoLayout);
         panelFotoLayout.setHorizontalGroup(
             panelFotoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 96, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         panelFotoLayout.setVerticalGroup(
             panelFotoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -228,7 +230,7 @@ public class EmpleadosPanel extends MerchantPanel {
                 .addGap(10, 10, 10)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtNombre)
-                    .addComponent(txtRFC, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
+                    .addComponent(txtRFC)
                     .addComponent(txtTelCasa)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -240,22 +242,22 @@ public class EmpleadosPanel extends MerchantPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel10)
-                            .addComponent(jLabel4)
+                            .addComponent(txtTelCelular)
+                            .addComponent(txtEmail)
                             .addComponent(txtApellidos)
-                            .addComponent(txtTelCelular))
-                        .addGap(18, 18, 18)
-                        .addComponent(panelFoto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel10)
+                                    .addComponent(jLabel4))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(10, 10, 10)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnCargarImagen, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
+                            .addComponent(panelFoto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(15, 15, 15))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)
-                                .addGap(173, 173, 173))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(txtEmail)
-                                .addGap(25, 25, 25)))
-                        .addComponent(btnCargarImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(15, 15, 15))
+                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -345,56 +347,53 @@ public class EmpleadosPanel extends MerchantPanel {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtCalle)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
+                                        .addGap(94, 94, 94))
                                     .addGroup(jPanel2Layout.createSequentialGroup()
                                         .addComponent(txtMunicipio)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGap(94, 94, 94)))
+                                        .addGap(12, 12, 12)))
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jLabel21, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel21, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
                                         .addGap(103, 103, 103))
                                     .addComponent(txtEstado)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(txtCP)
-                                        .addGap(18, 18, 18))
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGap(113, 113, 113)))
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGap(101, 101, 101))
-                                    .addComponent(txtColonia, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(103, 103, 103))
+                            .addComponent(txtCalle, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(txtCP, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtColonia)))
                         .addGap(10, 10, 10)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                                        .addComponent(txtNoExt)
-                                        .addGap(10, 10, 10)
-                                        .addComponent(txtNoInt))
-                                    .addComponent(txtLocalidad, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                                        .addGap(1, 1, 1)
-                                        .addComponent(jLabel16)
-                                        .addGap(21, 21, 21)
-                                        .addComponent(jLabel17)
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addComponent(jLabel22, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(15, 15, 15))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(txtPais, javax.swing.GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE)
-                                .addGap(84, 84, 84))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addContainerGap())))))
+                                .addContainerGap())
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel22, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(txtPais, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                                        .addGap(1, 1, 1)
+                                                        .addComponent(jLabel16))
+                                                    .addComponent(txtNoExt, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(txtNoInt, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(jLabel17)))
+                                            .addComponent(txtLocalidad, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addGap(15, 15, 15))))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -465,23 +464,20 @@ public class EmpleadosPanel extends MerchantPanel {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtSalario)
-                    .addComponent(jLabel27, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE))
+                    .addComponent(jLabel27, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE))
                 .addGap(10, 10, 10)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtDiasLaborales)
-                    .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE))
+                    .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE))
                 .addGap(10, 10, 10)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(comboEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(comboSucursal, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(15, 15, 15)))
-                .addGap(244, 244, 244))
+                    .addComponent(comboEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboSucursal, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(278, 278, 278))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -544,8 +540,8 @@ public class EmpleadosPanel extends MerchantPanel {
                             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addGap(15, 15, 15)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(15, 15, 15))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(456, 456, 456)
@@ -581,10 +577,14 @@ public class EmpleadosPanel extends MerchantPanel {
     private void EditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditarActionPerformed
         int row = tableEmpleados.getSelectedRow();
         if (row != -1) {
-            Empleado empleado = (Empleado) ((MerchantTableModel) tableEmpleados.getModel()).getObjectByRow(row);
+            Empleado empleado = (Empleado) ((EmpleadoTableModel) tableEmpleados.getModel())
+                    .getObjectByRow(row);
+            Domicilio domicilio = new DomicilioController().getById(connection, empleado.domicilio_id_domicilio);
             setDatosEmpleadoForm(empleado);
-            btnOpcionForm.setText("Editar");
+            setDatosDomicilioForm(domicilio);
+            btnOpcionForm.setText("Actualizar");
             idActualizar = empleado.id_empleado;
+            idActualizarDomicilio = empleado.domicilio_id_domicilio;
             crearEmpleado = false;
         }
     }//GEN-LAST:event_EditarActionPerformed
@@ -595,7 +595,7 @@ public class EmpleadosPanel extends MerchantPanel {
             Empleado empleado = (Empleado) ((MerchantTableModel) tableEmpleados.getModel()).getObjectByRow(row);
             int res = JOptionPane.showConfirmDialog(null, "¿Esta seguro de eliminar al empleado \"" + empleado.emp_nombre + "\"?");
             if (res == JOptionPane.OK_OPTION) {
-                if (empleadoController.delete(connection, empleado.id_empleado)) {
+                if (empleadoController.delete(connection, empleado.id_empleado, empleado.domicilio_id_domicilio)) {
                     ((EmpleadoTableModel) tableEmpleados.getModel()).initData(connection);
                 } else {
                     JOptionPane.showMessageDialog(null, "Por favor intente más tarde...", "ERROR AL ELIMINAR", 1);
@@ -611,29 +611,33 @@ public class EmpleadosPanel extends MerchantPanel {
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void btnOpcionFormActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpcionFormActionPerformed
-        try {
-            Empleado empleado = getDatosEmpleado();
-            Domicilio domicilio = getDatosDomicilio();
-            if (true) {
-                if (!new EmpleadoController().create(connection, empleado, domicilio, new Usuario())) {
-                    JOptionPane.showMessageDialog(this, "Por favor intente más tarde...", "ERROR AL REGISTRAR", 1);
-                }
-            } else {
-                if (!new EmpleadoController().update(connection, empleado, idActualizar)) {
-                    JOptionPane.showMessageDialog(this, "Por favor intente más tarde...", "ERROR AL ACTUALIZAR", 1);
+        if (validar()) {
+            try {
+                Empleado empleado = getDatosEmpleado();
+                Domicilio domicilio = getDatosDomicilio();
+                if (crearEmpleado) {
+                    if (!new EmpleadoController().create(connection, empleado, domicilio)) {
+                        JOptionPane.showMessageDialog(this, "Por favor intente más tarde...", "ERROR AL REGISTRAR", 1);
+                    }
                 } else {
-                    crearEmpleado = true;
-                    btnOpcionForm.setText("Actualizar");
-                    idActualizar = 0;
+                    if (!new EmpleadoController().update(connection, empleado, idActualizar,
+                            domicilio, idActualizarDomicilio)) {
+                        JOptionPane.showMessageDialog(this, "Por favor intente más tarde...", "ERROR AL ACTUALIZAR", 1);
+                    } else {
+                        crearEmpleado = true;
+                        btnOpcionForm.setText("Crear");
+                        idActualizar = 0;
+                        idActualizarDomicilio = 0;
+                    }
                 }
-            }
-            photo.uploadSelectedPhoto();
-            initDataTable();
-            cleanDatosEmpleadoForm();
+                photo.uploadSelectedPhoto();
+                initDataTable();
+                cleanDatosEmpleadoForm();
 
-        } catch (NullPointerException e) {
-            JOptionPane.showMessageDialog(this, "Tienes que asignar Sucursal y definir el "
-                    + "Tipo de empleado para el Empleado" + e, "ERROR...", 1);
+            } catch (NullPointerException e) {
+                JOptionPane.showMessageDialog(this, "Tienes que asignar Sucursal y definir el "
+                        + "Tipo de empleado para el Empleado" + e, "ERROR...", 1);
+            }
         }
     }//GEN-LAST:event_btnOpcionFormActionPerformed
 
@@ -643,22 +647,22 @@ public class EmpleadosPanel extends MerchantPanel {
     }//GEN-LAST:event_btnCargarImagenActionPerformed
 
     private void tableEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableEmpleadosMouseClicked
-        // TODO add your handling code here:
-        if(evt.getClickCount() > 1) {
+        if (evt.getClickCount() > 1) {
             int row = tableEmpleados.getSelectedRow();
-            if(row != -1) {
-                Empleado empleado = (Empleado)((EmpleadoTableModel)tableEmpleados.getModel())
+            if (row != -1) {
+                Empleado empleado = (Empleado) ((EmpleadoTableModel) tableEmpleados.getModel())
                         .getObjectByRow(row);
-                // TODO GET DOMICILIO BY ID EMPLEADO
-                Domicilio domicilio = new DomicilioController().getById(connection, empleado.id_empleado);
+                Domicilio domicilio = new DomicilioController().getById(connection, empleado.domicilio_id_domicilio);
                 setDatosEmpleadoForm(empleado);
                 setDatosDomicilioForm(domicilio);
+                btnOpcionForm.setText("Actualizar");
+                idActualizar = empleado.id_empleado;
+                idActualizarDomicilio = empleado.domicilio_id_domicilio;
+                crearEmpleado = false;
             }
         }
     }//GEN-LAST:event_tableEmpleadosMouseClicked
 
-    
-    
     private synchronized Empleado getDatosEmpleado() {
         Empleado empleado = new Empleado();
         empleado.emp_rfc = txtRFC.getText();
@@ -670,9 +674,9 @@ public class EmpleadosPanel extends MerchantPanel {
         empleado.emp_email = txtEmail.getText();
         empleado.emp_salario_diario = Float.parseFloat(txtSalario.getText());
         empleado.emp_dias_laborales = Integer.parseInt(txtDiasLaborales.getText());
-        empleado.emp_alta = fecha();
+        //empleado.emp_alta = fecha();
         //empleado.usuario_idUsuario = getIdCreateUsuario();
-        //empleado.domicilioFiscal_idDomicilioFiscal = getIdCreateDomicilioFiscal();
+        empleado.domicilio_id_domicilio = idActualizarDomicilio;
         empleado.sucursal_id_sucursal = getIdSucursal();
         empleado.emp_status = 1;
         empleado.imagen_empleado = photo.getPosiblePathPhoto();
@@ -704,18 +708,15 @@ public class EmpleadosPanel extends MerchantPanel {
         txtEmail.setText(empleado.emp_email);
         txtSalario.setText(Float.toString(empleado.emp_salario_diario));
         txtDiasLaborales.setText(Integer.toString(empleado.emp_dias_laborales));
-        //Date.valueOf(fecha(empleado));
-        //setIdCreateUsuario(empleado);
-        //getIdCreateDomicilioFiscal();
         setIdSucursal(empleado);
-        //true;
         if (empleado.imagen_empleado.length() > 1) {
             photo.setPhoto(empleado.imagen_empleado);
             photo.setPhotoJPanel(panelFoto);
         }
     }
-    
+
     private synchronized void setDatosDomicilioForm(Domicilio domicilio) {
+        idActualizarDomicilio = domicilio.id_domicilio;
         txtCalle.setText(domicilio.dom_calle);
         txtNoExt.setText(domicilio.dom_numExt);
         txtNoInt.setText(domicilio.dom_numInt);
@@ -725,7 +726,7 @@ public class EmpleadosPanel extends MerchantPanel {
         txtMunicipio.setText(domicilio.dom_municipio);
         txtEstado.setText(domicilio.dom_estado);
         txtPais.setText(domicilio.dom_pais);
-        
+
     }
 
     private void cleanDatosEmpleadoForm() {
@@ -749,6 +750,7 @@ public class EmpleadosPanel extends MerchantPanel {
         comboEmpleado.setSelectedIndex(0);
         comboSucursal.setSelectedIndex(0);
         photo.cleanPanelPhoto(panelFoto);
+        idActualizarDomicilio = 0;
     }
 
     private int getIdTipoEmpleado() {
@@ -759,7 +761,7 @@ public class EmpleadosPanel extends MerchantPanel {
     private void setIdTipoEmpleado(Empleado empleado) {
         comboEmpleado.setSelectedItem(((TipoEmpleado) getComboSQLModelEmpleado()
                 .findByFielNameAndValue("id_tipo_empleado",
-                empleado.tipo_empleado_id_tipo_empleado)).tipo_empleado
+                        empleado.tipo_empleado_id_tipo_empleado)).tipo_empleado
         );
     }
 
@@ -771,38 +773,52 @@ public class EmpleadosPanel extends MerchantPanel {
     private void setIdSucursal(Empleado empleado) {
         comboSucursal.setSelectedItem(((Sucursal) getComboSQLModelSucursal()
                 .findByFielNameAndValue("id_sucursal",
-                empleado.sucursal_id_sucursal)).suc_nombre
+                        empleado.sucursal_id_sucursal)).suc_nombre
         );
     }
 
-    //Aquí se mandara a los textField el valor del domicilio, recuperando todos sus valores mediante el id
-    private void setIdCreateDomicilioFiscal(Domicilio domicilio) {
-
-        txtCalle.setText(domicilio.dom_calle);
-        txtNoExt.setText(domicilio.dom_numExt);
-        txtNoInt.setText(domicilio.dom_numInt);
-        txtColonia.setText(domicilio.dom_colonia);
-        txtCP.setText(domicilio.dom_cod_postal);
-        txtLocalidad.setText(domicilio.dom_localidad);
-        txtMunicipio.setText(domicilio.dom_municipio);
-        txtEstado.setText(domicilio.dom_estado);
-        txtPais.setText(domicilio.dom_pais);
-
-    }
-
-    private String fecha() {
-        Date now = new Date(System.currentTimeMillis());
-        SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat hour = new SimpleDateFormat("HH:mm:ss");
-        String fecha = date.format(now) + " " + hour.format(now);
-        return fecha;
-    }
-
+    /*private String fecha() {
+     Date now = new Date(System.currentTimeMillis());
+     SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
+     SimpleDateFormat hour = new SimpleDateFormat("HH:mm:ss");
+     String fecha = date.format(now) + " " + hour.format(now);
+     return fecha;
+     }*/
     private synchronized void setFotoLogo(String path) {
         imagePanel = new ImageJPanel(panelFoto, path);
         panelFoto.add(imagePanel).repaint();
     }
 
+    public boolean validar() {
+        boolean valido = true;
+        Empleado empleado = getDatosEmpleado();
+        Validator v = new Validator();
+        List<ValidateFieldError> errors = v.validateFields(empleado);
+        Border borderRED = BorderFactory.createLineBorder(Color.RED, 3);
+        Border borderBlack = BorderFactory.createLineBorder(Color.yellow, 1);
+        for (ValidateFieldError e : errors) {
+            switch (e.fieldName) {
+                case "emp_email":
+                    if (e.getErrors().size() > 0) {
+                        txtEmail.setBorder(borderRED);
+                        valido = false;
+                    } else {
+                        //txtMail.setBorder(null);
+                        txtEmail.setBorder(borderBlack);
+                    }
+                    break;
+                case "emp_rfc":
+                    if (e.getErrors().size() > 0) {
+                        txtRFC.setBorder(borderRED);
+                        valido = false;
+                    } else {
+                        //txtRFC.setBorder(null);
+                        txtRFC.setBorder(borderBlack);
+                    }
+            }
+        }
+        return valido;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem Editar;
     private javax.swing.JMenuItem Eliminar;

@@ -1,7 +1,8 @@
 package com.merchant.pojos;
 
-import java.sql.Date;
-
+import com.merchant.utils.validate.annotations.Email;
+import com.merchant.utils.validate.annotations.NotNull;
+import com.merchant.utils.validate.annotations.RFC;
 /**
  *
  * @author Eleazar
@@ -9,12 +10,15 @@ import java.sql.Date;
 public class Empleado {
 
     public int id_empleado;
+    @RFC
     public String emp_rfc;
     public int tipo_empleado_id_tipo_empleado;
     public String emp_nombre;
     public String emp_apellidos;
     public String emp_telefono_celular; 
-    public String emp_telefono_casa; 
+    public String emp_telefono_casa;
+    @Email
+    @NotNull
     public String emp_email;
     public float emp_salario_diario;
     public int emp_dias_laborales; 
