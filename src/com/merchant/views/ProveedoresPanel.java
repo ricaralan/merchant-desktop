@@ -5,19 +5,14 @@
  */
 package com.merchant.views;
 
-import com.merchant.components.tableModels.EmpleadoTableModel;
+import com.merchant.components.tableModels.ProveedorTableModel;
 import com.merchant.components.tableModels.MerchantTableModel;
+import com.merchant.controllers.ProveedorController;
 import com.merchant.controllers.DomicilioController;
-import com.merchant.controllers.EmpleadoController;
 import com.merchant.database.MerchantConnection;
-import com.merchant.database.models.SucursalModel;
-import com.merchant.database.models.TipoEmpleadoModel;
+import com.merchant.pojos.Proveedor;
 import com.merchant.pojos.Domicilio;
-import com.merchant.pojos.Empleado;
-import com.merchant.pojos.Sucursal;
-import com.merchant.pojos.TipoEmpleado;
 import com.merchant.utils.ImageJPanel;
-import com.merchant.utils.MerchantComboSQL;
 import com.merchant.utils.Photo;
 import java.sql.Connection;
 import java.util.List;
@@ -32,31 +27,27 @@ import javax.swing.border.Border;
  *
  * @author Eleazar
  */
-public class EmpleadosPanel extends MerchantPanel {
+public class ProveedoresPanel extends MerchantPanel {
 
     /**
-     * Creates new form EmpleadoForm
+     * Creates new form ProveedorForm
      */
     Connection connection = null;
-    private EmpleadoController empleadoController = null;
-    private boolean crearEmpleado;
+    private ProveedorController proveedorController = null;
+    private boolean crearProveedor;
     private int idActualizar;
     private int idActualizarDomicilio;
     private ImageJPanel imagePanel;
     private Photo photo;
 
-    public EmpleadosPanel(MerchantConnection c) {
+    public ProveedoresPanel(MerchantConnection c) {
         initComponents();
         this.connection = c.getConnection();
-        empleadoController = new EmpleadoController();
-        crearEmpleado = true;
+        proveedorController = new ProveedorController();
+        crearProveedor = true;
         photo = new Photo();
-        photo.setBasePath("/images/empleados/");
-        tableEmpleados.setModel(new EmpleadoTableModel());
-        comboEmpleado.setModel(new MerchantComboSQL(connection,
-                new TipoEmpleadoModel(), "tipo_empleado"));
-        comboSucursal.setModel(new MerchantComboSQL(connection,
-                new SucursalModel(), "suc_nombre"));
+        photo.setBasePath("/images/proveedores/");
+        tableProveedores.setModel(new ProveedorTableModel());
         initDataTable();
     }
 
@@ -65,15 +56,7 @@ public class EmpleadosPanel extends MerchantPanel {
     }
 
     private MerchantTableModel getTableModel() {
-        return ((MerchantTableModel) tableEmpleados.getModel());
-    }
-
-    private MerchantComboSQL getComboSQLModelEmpleado() {
-        return (MerchantComboSQL) (comboEmpleado.getModel());
-    }
-
-    private MerchantComboSQL getComboSQLModelSucursal() {
-        return (MerchantComboSQL) (comboSucursal.getModel());
+        return ((MerchantTableModel) tableProveedores.getModel());
     }
 
     /**
@@ -85,7 +68,7 @@ public class EmpleadosPanel extends MerchantPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        opcionesEmpleado = new javax.swing.JPopupMenu();
+        opcionesProveedor = new javax.swing.JPopupMenu();
         Editar = new javax.swing.JMenuItem();
         Eliminar = new javax.swing.JMenuItem();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -126,18 +109,9 @@ public class EmpleadosPanel extends MerchantPanel {
         txtEstado = new javax.swing.JTextField();
         jLabel22 = new javax.swing.JLabel();
         txtPais = new javax.swing.JTextField();
-        jPanel3 = new javax.swing.JPanel();
-        jLabel24 = new javax.swing.JLabel();
-        txtDiasLaborales = new javax.swing.JTextField();
-        jLabel27 = new javax.swing.JLabel();
-        txtSalario = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
-        comboEmpleado = new javax.swing.JComboBox();
-        comboSucursal = new javax.swing.JComboBox();
-        jLabel8 = new javax.swing.JLabel();
         btnOpcionForm = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tableEmpleados = new javax.swing.JTable();
+        tableProveedores = new javax.swing.JTable();
 
         Editar.setText("Editar");
         Editar.addActionListener(new java.awt.event.ActionListener() {
@@ -145,7 +119,7 @@ public class EmpleadosPanel extends MerchantPanel {
                 EditarActionPerformed(evt);
             }
         });
-        opcionesEmpleado.add(Editar);
+        opcionesProveedor.add(Editar);
 
         Eliminar.setText("Eliminar");
         Eliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -153,7 +127,7 @@ public class EmpleadosPanel extends MerchantPanel {
                 EliminarActionPerformed(evt);
             }
         });
-        opcionesEmpleado.add(Eliminar);
+        opcionesProveedor.add(Eliminar);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -180,7 +154,7 @@ public class EmpleadosPanel extends MerchantPanel {
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setText("Para más opciones, selecciona una fila y presiona clic derecho");
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos Empleado", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(102, 153, 255)));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos Proveedor", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(102, 153, 255)));
 
         jLabel2.setText("Nombre:");
 
@@ -232,7 +206,7 @@ public class EmpleadosPanel extends MerchantPanel {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtTelCelular)
-                            .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
+                            .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 273, Short.MAX_VALUE)
                             .addComponent(txtApellidos)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -286,7 +260,7 @@ public class EmpleadosPanel extends MerchantPanel {
                 .addContainerGap(13, Short.MAX_VALUE))
         );
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Dirección Empleado", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(102, 153, 255)));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Dirección Proveedor", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(102, 153, 255)));
 
         jLabel14.setText("Calle");
 
@@ -342,9 +316,9 @@ public class EmpleadosPanel extends MerchantPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txtColonia)))
                         .addGap(10, 10, 10)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(txtPais, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtPais)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel2Layout.createSequentialGroup()
                                         .addGap(1, 1, 1)
@@ -354,9 +328,9 @@ public class EmpleadosPanel extends MerchantPanel {
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtNoInt, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel17)))
-                            .addComponent(txtLocalidad, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel19, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtLocalidad)
+                            .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(15, 15, 15))))
         );
         jPanel2Layout.setVerticalGroup(
@@ -402,63 +376,6 @@ public class EmpleadosPanel extends MerchantPanel {
                 .addContainerGap())
         );
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos Complementarios", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(102, 153, 255)));
-
-        jLabel24.setText("Días Laborales");
-
-        jLabel27.setText("Salario Diario");
-
-        jLabel7.setText("Tipo Empleado");
-
-        comboEmpleado.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        comboSucursal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jLabel8.setText("Sucursal");
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtSalario)
-                    .addComponent(jLabel27, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE))
-                .addGap(10, 10, 10)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtDiasLaborales)
-                    .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE))
-                .addGap(10, 10, 10)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(comboEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(comboSucursal, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(278, 278, 278))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap(13, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel24)
-                    .addComponent(jLabel27)
-                    .addComponent(jLabel8))
-                .addGap(12, 12, 12)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(comboEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(comboSucursal, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtSalario, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtDiasLaborales, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
         btnOpcionForm.setText("Crear");
         btnOpcionForm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -466,9 +383,9 @@ public class EmpleadosPanel extends MerchantPanel {
             }
         });
 
-        tableEmpleados.setAutoCreateRowSorter(true);
-        tableEmpleados.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        tableEmpleados.setModel(new javax.swing.table.DefaultTableModel(
+        tableProveedores.setAutoCreateRowSorter(true);
+        tableProveedores.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        tableProveedores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -479,39 +396,38 @@ public class EmpleadosPanel extends MerchantPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        tableEmpleados.setComponentPopupMenu(opcionesEmpleado);
-        tableEmpleados.addMouseListener(new java.awt.event.MouseAdapter() {
+        tableProveedores.setComponentPopupMenu(opcionesProveedor);
+        tableProveedores.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tableEmpleadosMouseClicked(evt);
+                tableProveedoresMouseClicked(evt);
             }
         });
-        jScrollPane2.setViewportView(tableEmpleados);
-        tableEmpleados.getAccessibleContext().setAccessibleName("");
-        tableEmpleados.getAccessibleContext().setAccessibleDescription("");
+        jScrollPane2.setViewportView(tableProveedores);
+        tableProveedores.getAccessibleContext().setAccessibleName("");
+        tableProveedores.getAccessibleContext().setAccessibleDescription("");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane2)
-                        .addContainerGap())
+                        .addGap(15, 15, 15))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 652, Short.MAX_VALUE)
                                 .addComponent(btnOpcionForm, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(26, 26, 26)
+                                .addGap(18, 18, 18)
                                 .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(15, 15, 15)
-                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(15, 15, 15))))
         );
         layout.setVerticalGroup(
@@ -521,53 +437,50 @@ public class EmpleadosPanel extends MerchantPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnOpcionForm)
                     .addComponent(btnCancel))
                 .addGap(10, 10, 10)
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void EditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditarActionPerformed
-        int row = tableEmpleados.getSelectedRow();
+        int row = tableProveedores.getSelectedRow();
         if (row != -1) {
-            Empleado empleado = (Empleado) ((EmpleadoTableModel) tableEmpleados
-                    .getModel())
+            Proveedor proveedor = (Proveedor) ((ProveedorTableModel) 
+                    tableProveedores.getModel())
                     .getObjectByRow(row);
-            Domicilio domicilio = new DomicilioController().getById(connection,
-                    empleado.domicilio_id_domicilio);
-            setDatosEmpleadoForm(empleado);
+            Domicilio domicilio = new DomicilioController().getById(connection, 
+                    proveedor.domicilio_id_domicilio);
+            setDatosProveedorForm(proveedor);
             setDatosDomicilioForm(domicilio);
             btnOpcionForm.setText("Actualizar");
-            idActualizar = empleado.id_empleado;
-            idActualizarDomicilio = empleado.domicilio_id_domicilio;
-            crearEmpleado = false;
+            idActualizar = proveedor.id_proveedor;
+            idActualizarDomicilio = proveedor.domicilio_id_domicilio;
+            crearProveedor = false;
         }
     }//GEN-LAST:event_EditarActionPerformed
 
     private void EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarActionPerformed
-
-        int row = tableEmpleados.getSelectedRow();
+        int row = tableProveedores.getSelectedRow();
         if (row != -1) {
-            Empleado empleado = (Empleado) ((MerchantTableModel) tableEmpleados
+            Proveedor proveedor = (Proveedor) ((MerchantTableModel) tableProveedores
                     .getModel()).getObjectByRow(row);
-            if (empleado.id_empleado == idActualizar) {
+            if (proveedor.id_proveedor == idActualizar) {
                 JOptionPane.showMessageDialog(this, "Este registro esta en edición,"
                         + " \n finalize para poder eliminar ", "ERROR AL ELIMINAR", 1);
             } else {
-                int res = JOptionPane.showConfirmDialog(this,
-                        "¿Esta seguro de eliminar al empleado \"" + empleado.nombre + "\"?");
+                int res = JOptionPane.showConfirmDialog(this, "¿Esta seguro de eliminar al proveedor \""
+                        + proveedor.nombre + "\"?");
                 if (res == JOptionPane.OK_OPTION) {
-                    if (empleadoController.delete(connection, empleado.id_empleado,
-                            empleado.domicilio_id_domicilio)) {
-                        ((EmpleadoTableModel) tableEmpleados.getModel()).initData(connection);
+                    if (proveedorController.delete(connection, proveedor.id_proveedor,
+                            proveedor.domicilio_id_domicilio)) {
+                        ((ProveedorTableModel) tableProveedores.getModel()).initData(connection);
                     } else {
                         JOptionPane.showMessageDialog(this, "Por favor intente más tarde...",
                                 "ERROR AL ELIMINAR", 1);
@@ -578,11 +491,11 @@ public class EmpleadosPanel extends MerchantPanel {
     }//GEN-LAST:event_EliminarActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
-        cleanDatosEmpleadoForm();
+        cleanDatosProveedorForm();
         btnOpcionForm.setText("Crear");
         idActualizar = 0;
         idActualizarDomicilio = 0;
-        crearEmpleado = true;
+        crearProveedor = true;
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void btnOpcionFormActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpcionFormActionPerformed
@@ -609,21 +522,21 @@ public class EmpleadosPanel extends MerchantPanel {
             txtColonia.setBorder(borderBlack);
             if (validar()) {
                 try {
-                    Empleado empleado = getDatosEmpleado();
+                    Proveedor proveedor = getDatosProveedor();
                     Domicilio domicilio = getDatosDomicilio();
-                    if (crearEmpleado) {
-                        if (!new EmpleadoController().create(connection, empleado,
+                    if (crearProveedor) {
+                        if (!new ProveedorController().create(connection, proveedor,
                                 domicilio)) {
                             JOptionPane.showMessageDialog(this, "Por favor intente más tarde...",
                                     "ERROR AL REGISTRAR", 1);
                         }
                     } else {
-                        if (!new EmpleadoController().update(connection, empleado,
-                                idActualizar, domicilio, idActualizarDomicilio)) {
+                        if (!new ProveedorController().update(connection, proveedor, idActualizar,
+                                domicilio, idActualizarDomicilio)) {
                             JOptionPane.showMessageDialog(this, "Por favor intente más tarde...",
                                     "ERROR AL ACTUALIZAR", 1);
                         } else {
-                            crearEmpleado = true;
+                            crearProveedor = true;
                             btnOpcionForm.setText("Crear");
                             idActualizar = 0;
                             idActualizarDomicilio = 0;
@@ -631,11 +544,11 @@ public class EmpleadosPanel extends MerchantPanel {
                     }
                     photo.uploadSelectedPhoto();
                     initDataTable();
-                    cleanDatosEmpleadoForm();
+                    cleanDatosProveedorForm();
 
                 } catch (NullPointerException e) {
-                    JOptionPane.showMessageDialog(this, "Tienes que asignar Sucursal y definir el "
-                            + "Tipo de empleado para el Empleado" + e, "ERROR...", 1);
+                    JOptionPane.showMessageDialog(this, "Ha ocurrido un error " 
+                            + e, "ERROR...", 1);
                 }
             }
         }
@@ -646,43 +559,37 @@ public class EmpleadosPanel extends MerchantPanel {
         photo.setPhotoJPanel(panelFoto);
     }//GEN-LAST:event_btnCargarImagenActionPerformed
 
-    private void tableEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableEmpleadosMouseClicked
+    private void tableProveedoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableProveedoresMouseClicked
         if (evt.getClickCount() > 1) {
-            int row = tableEmpleados.getSelectedRow();
+            int row = tableProveedores.getSelectedRow();
             if (row != -1) {
-                Empleado empleado = (Empleado) ((EmpleadoTableModel) tableEmpleados
-                        .getModel())
+                Proveedor proveedor = (Proveedor) ((ProveedorTableModel) 
+                        tableProveedores.getModel())
                         .getObjectByRow(row);
                 Domicilio domicilio = new DomicilioController().getById(connection,
-                        empleado.domicilio_id_domicilio);
-                setDatosEmpleadoForm(empleado);
+                        proveedor.domicilio_id_domicilio);
+                setDatosProveedorForm(proveedor);
                 setDatosDomicilioForm(domicilio);
                 btnOpcionForm.setText("Actualizar");
-                idActualizar = empleado.id_empleado;
-                idActualizarDomicilio = empleado.domicilio_id_domicilio;
-                crearEmpleado = false;
+                idActualizar = proveedor.id_proveedor;
+                idActualizarDomicilio = proveedor.domicilio_id_domicilio;
+                crearProveedor = false;
             }
         }
-    }//GEN-LAST:event_tableEmpleadosMouseClicked
+    }//GEN-LAST:event_tableProveedoresMouseClicked
 
-    private synchronized Empleado getDatosEmpleado() {
-        Empleado empleado = new Empleado();
-        empleado.rfc = txtRFC.getText();
-        empleado.tipo_empleado_id_tipo_empleado = getIdTipoEmpleado();
-        empleado.nombre = txtNombre.getText();
-        empleado.emp_apellidos = txtApellidos.getText();
-        empleado.emp_telefono_celular = txtTelCelular.getText();
-        empleado.emp_telefono_casa = txtTelCasa.getText();
-        empleado.email = txtEmail.getText();
-        empleado.emp_salario_diario = Float.parseFloat(txtSalario.getText());
-        empleado.emp_dias_laborales = Float.parseFloat(txtDiasLaborales.getText());
-        //empleado.emp_alta = fecha();
-        //empleado.usuario_idUsuario = getIdCreateUsuario();
-        empleado.domicilio_id_domicilio = idActualizarDomicilio;
-        empleado.sucursal_id_sucursal = getIdSucursal();
-        empleado.emp_status = 1;
-        empleado.imagen_empleado = photo.getPosiblePathPhoto();
-        return empleado;
+    private synchronized Proveedor getDatosProveedor() {
+        Proveedor proveedor = new Proveedor();
+        proveedor.rfc = txtRFC.getText();
+        proveedor.nombre = txtNombre.getText();
+        proveedor.prov_apellidos = txtApellidos.getText();
+        proveedor.prov_telefono_celular = txtTelCelular.getText();
+        proveedor.prov_telefono_casa = txtTelCasa.getText();
+        proveedor.email = txtEmail.getText();
+        proveedor.domicilio_id_domicilio = idActualizarDomicilio;
+        proveedor.prov_status = 1;
+        proveedor.imagen_proveedor = photo.getPosiblePathPhoto();
+        return proveedor;
     }
 
     private synchronized Domicilio getDatosDomicilio() {
@@ -699,20 +606,16 @@ public class EmpleadosPanel extends MerchantPanel {
         return domicilio;
     }
 
-    private synchronized void setDatosEmpleadoForm(Empleado empleado) {
-        cleanDatosEmpleadoForm();
-        txtRFC.setText(empleado.rfc);
-        setIdTipoEmpleado(empleado);
-        txtNombre.setText(empleado.nombre);
-        txtApellidos.setText(empleado.emp_apellidos);
-        txtTelCelular.setText(empleado.emp_telefono_celular);
-        txtTelCasa.setText(empleado.emp_telefono_casa);
-        txtEmail.setText(empleado.email);
-        txtSalario.setText(Float.toString(empleado.emp_salario_diario));
-        txtDiasLaborales.setText(Float.toString(empleado.emp_dias_laborales));
-        setIdSucursal(empleado);
-        if (empleado.imagen_empleado.length() > 1) {
-            photo.setPhoto(empleado.imagen_empleado);
+    private synchronized void setDatosProveedorForm(Proveedor proveedor) {
+        cleanDatosProveedorForm();
+        txtRFC.setText(proveedor.rfc);
+        txtNombre.setText(proveedor.nombre);
+        txtApellidos.setText(proveedor.prov_apellidos);
+        txtTelCelular.setText(proveedor.prov_telefono_celular);
+        txtTelCasa.setText(proveedor.prov_telefono_casa);
+        txtEmail.setText(proveedor.email);
+        if (proveedor.imagen_proveedor.length() > 1) {
+            photo.setPhoto(proveedor.imagen_proveedor);
             photo.setPhotoJPanel(panelFoto);
         }
     }
@@ -731,12 +634,11 @@ public class EmpleadosPanel extends MerchantPanel {
 
     }
 
-    private void cleanDatosEmpleadoForm() {
+    private void cleanDatosProveedorForm() {
         txtApellidos.setText("");
         txtCP.setText("");
         txtCalle.setText("");
         txtColonia.setText("");
-        txtDiasLaborales.setText("");
         txtEmail.setText("");
         txtEstado.setText("");
         txtLocalidad.setText("");
@@ -746,38 +648,10 @@ public class EmpleadosPanel extends MerchantPanel {
         txtNombre.setText("");
         txtPais.setText("");
         txtRFC.setText("");
-        txtSalario.setText("");
         txtTelCasa.setText("");
         txtTelCelular.setText("");
-        comboEmpleado.setSelectedIndex(0);
-        comboSucursal.setSelectedIndex(0);
         photo.cleanPanelPhoto(panelFoto);
         idActualizarDomicilio = 0;
-    }
-
-    private int getIdTipoEmpleado() {
-        String selectedValue = (String) comboEmpleado.getSelectedItem();
-        return ((TipoEmpleado) (getComboSQLModelEmpleado().findByMainField(selectedValue))).id_tipo_empleado;
-    }
-
-    private void setIdTipoEmpleado(Empleado empleado) {
-        comboEmpleado.setSelectedItem(((TipoEmpleado) getComboSQLModelEmpleado()
-                .findByFielNameAndValue("id_tipo_empleado",
-                        empleado.tipo_empleado_id_tipo_empleado)).tipo_empleado
-        );
-    }
-
-    private int getIdSucursal() {
-        String selectedValue = (String) comboSucursal.getSelectedItem();
-        return ((Sucursal) (getComboSQLModelSucursal().
-                findByMainField(selectedValue))).id_sucursal;
-    }
-
-    private void setIdSucursal(Empleado empleado) {
-        comboSucursal.setSelectedItem(((Sucursal) getComboSQLModelSucursal()
-                .findByFielNameAndValue("id_sucursal",
-                        empleado.sucursal_id_sucursal)).suc_nombre
-        );
     }
 
     /*private String fecha() {
@@ -794,9 +668,9 @@ public class EmpleadosPanel extends MerchantPanel {
 
     public boolean validar() {
         boolean valido = true;
-        Empleado empleado = getDatosEmpleado();
+        Proveedor proveedor = getDatosProveedor();
         Validator v = new Validator();
-        List<ValidateFieldError> errors = v.validateFields(empleado);
+        List<ValidateFieldError> errors = v.validateFields(proveedor);
         Border borderRED = BorderFactory.createLineBorder(Color.RED, 3);
         Border borderBlack = BorderFactory.createLineBorder(Color.yellow, 1);
         for (ValidateFieldError e : errors) {
@@ -837,8 +711,6 @@ public class EmpleadosPanel extends MerchantPanel {
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnCargarImagen;
     private javax.swing.JButton btnOpcionForm;
-    private javax.swing.JComboBox comboEmpleado;
-    private javax.swing.JComboBox comboSucursal;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel14;
@@ -851,28 +723,22 @@ public class EmpleadosPanel extends MerchantPanel {
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JPopupMenu opcionesEmpleado;
+    private javax.swing.JPopupMenu opcionesProveedor;
     private javax.swing.JPanel panelFoto;
-    private javax.swing.JTable tableEmpleados;
+    private javax.swing.JTable tableProveedores;
     private javax.swing.JTextField txtApellidos;
     private javax.swing.JTextField txtCP;
     private javax.swing.JTextField txtCalle;
     private javax.swing.JTextField txtColonia;
-    private javax.swing.JTextField txtDiasLaborales;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtEstado;
     private javax.swing.JTextField txtLocalidad;
@@ -882,7 +748,6 @@ public class EmpleadosPanel extends MerchantPanel {
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtPais;
     private javax.swing.JTextField txtRFC;
-    private javax.swing.JTextField txtSalario;
     private javax.swing.JTextField txtTelCasa;
     private javax.swing.JTextField txtTelCelular;
     // End of variables declaration//GEN-END:variables

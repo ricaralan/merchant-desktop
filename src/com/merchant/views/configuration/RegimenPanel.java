@@ -201,4 +201,9 @@ public class RegimenPanel extends AbstractConfigurationPanel {
     public boolean validar() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public void eventNewPassFromJtable(int row) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

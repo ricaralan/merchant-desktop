@@ -5,6 +5,7 @@ import com.merchant.pojos.Empleado;
 import java.sql.Connection;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  *
@@ -16,11 +17,8 @@ public class EmpleadoTableModel extends MerchantTableModel{
 
     public EmpleadoTableModel() {
         objects = new ArrayList<>();
-        header = new String[]{"emp_nombre","emp_apellidos","emp_telefono_celular",
-                        "emp_telefono_casa","emp_email","emp_salario_diario",
-                        "emp_dias_laborales","emp_alta","usuario_id_usuario",
-                        "domicilio_id_domicilio","sucursal_id_sucursal",
-                        "emp_baja","emp_status"};
+        header = new String[]{"Nombre","Cel.","Email","R.F.C.","Tipo Empleado ","Sucursal",
+                        "Usuario","Dirección","Persepción","Fecha Alta","Status"};
         empleadoController = new EmpleadoController();
     }
     
@@ -35,21 +33,19 @@ public class EmpleadoTableModel extends MerchantTableModel{
         String value = "";
         Empleado empleado = (Empleado)objects.get(row);
         switch (column) {
-            case 0: value = empleado.emp_nombre;break;
-            case 1: value = empleado.emp_apellidos;break;
-            case 2: value = empleado.emp_telefono_celular;break;
-            case 3: value = empleado.emp_telefono_casa;break;
-            case 4: value = empleado.emp_email;break;
-            case 5: value = ""+empleado.emp_salario_diario;break;
-            case 6: value = String.valueOf(empleado.emp_dias_laborales);break;
-            case 7: value = String.valueOf(empleado.emp_alta);break;
-            case 8: value = String.valueOf(empleado.usuario_id_usuario);break;
-            case 9: value = String.valueOf(empleado.domicilio_id_domicilio);break;
-            case 10: value = String.valueOf(empleado.sucursal_id_sucursal);break;
-            case 11: value = String.valueOf(empleado.emp_baja);break;
-            case 12: value = String.valueOf(empleado.emp_status);break;
+            case 0: value = empleado.nombre+" "+empleado.emp_apellidos;break;
+            case 1: value = empleado.emp_telefono_celular;break;
+            case 2: value = empleado.email;break;
+            case 3: value = empleado.rfc;break;
+            case 4: value = empleado.tipo_empleado;break;
+            case 5: value = empleado.suc_nombre;break;
+            case 6: value = empleado.usuario;break;
+            case 7: value = empleado.direccion;break;
+            case 8: value = String.valueOf(empleado.percepcion);break;
+            case 9: value = empleado.emp_alta;break;
+            case 10: value = empleado.status;break;
         }
         return value;
     }
-    
+  
 }

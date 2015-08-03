@@ -7,23 +7,23 @@ package com.merchant.components;
 
 import com.merchant.database.MerchantConnection;
 import com.merchant.utils.KeyCode;
+import com.merchant.views.ClientesPanel;
 import com.merchant.views.EmpleadosPanel;
 import com.merchant.views.configuration.ConfigurationPanel;
 import com.merchant.views.MerchantPanel;
+import com.merchant.views.ProveedoresPanel;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.beans.PropertyVetoException;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
@@ -54,20 +54,21 @@ public class MerchantMainFrame extends javax.swing.JFrame {
         keyCode = new KeyCode();
         initHora();
     }
-    
-    private void setFullScreen () {
+
+    private void setFullScreen() {
         GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
         gd = env.getDefaultScreenDevice();
         gd.setFullScreenWindow(this);
     }
-    
-    private void initHora(){
-        class Hora extends Thread{
+
+    private void initHora() {
+        class Hora extends Thread {
+
             @Override
-            public void run(){
-                while(true) {
+            public void run() {
+                while (true) {
                     String hora[] = new Date().toString().split(":");
-                    int horas = Integer.parseInt(hora[0].substring(hora[0].length()-2, hora[0].length()));
+                    int horas = Integer.parseInt(hora[0].substring(hora[0].length() - 2, hora[0].length()));
                     int minutos = Integer.parseInt(hora[1]);
                     int segundos = Integer.parseInt(hora[2].substring(0, 2));
                     txtHora.setText(horas + ":" + minutos + ":" + segundos);
@@ -95,6 +96,8 @@ public class MerchantMainFrame extends javax.swing.JFrame {
         menuConfiguracion = new javax.swing.JMenu();
         itemConfiguracion = new javax.swing.JMenuItem();
         itemEmpleados = new javax.swing.JMenuItem();
+        itemClientes = new javax.swing.JMenuItem();
+        itemProveedores = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         itemSalir = new javax.swing.JMenuItem();
         backgroundDesktop = new javax.swing.JDesktopPane();
@@ -126,6 +129,22 @@ public class MerchantMainFrame extends javax.swing.JFrame {
         menuConfiguracion.add(itemEmpleados);
         itemEmpleados.getAccessibleContext().setAccessibleName("Empleados");
 
+        itemClientes.setText("Clientes");
+        itemClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemClientesActionPerformed(evt);
+            }
+        });
+        menuConfiguracion.add(itemClientes);
+
+        itemProveedores.setText("Proveedores");
+        itemProveedores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemProveedoresActionPerformed(evt);
+            }
+        });
+        menuConfiguracion.add(itemProveedores);
+
         desktopMenu.add(menuConfiguracion);
         desktopMenu.add(jSeparator1);
 
@@ -155,22 +174,23 @@ public class MerchantMainFrame extends javax.swing.JFrame {
         });
 
         txtHora.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        txtHora.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtHora.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         txtHora.setText("00:00:00");
+        txtHora.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
 
         javax.swing.GroupLayout backgroundDesktopLayout = new javax.swing.GroupLayout(backgroundDesktop);
         backgroundDesktop.setLayout(backgroundDesktopLayout);
         backgroundDesktopLayout.setHorizontalGroup(
             backgroundDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundDesktopLayout.createSequentialGroup()
-                .addGap(0, 508, Short.MAX_VALUE)
-                .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 550, Short.MAX_VALUE)
+                .addComponent(txtHora))
         );
         backgroundDesktopLayout.setVerticalGroup(
             backgroundDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundDesktopLayout.createSequentialGroup()
-                .addGap(0, 302, Short.MAX_VALUE)
-                .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 293, Short.MAX_VALUE)
+                .addComponent(txtHora))
         );
         backgroundDesktop.setLayer(txtHora, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
@@ -208,7 +228,7 @@ public class MerchantMainFrame extends javax.swing.JFrame {
 
     private void itemSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemSalirActionPerformed
         int res = JOptionPane.showConfirmDialog(this, "¿Realmente deseas salir?");
-        if(res == JOptionPane.OK_OPTION) {
+        if (res == JOptionPane.OK_OPTION) {
             System.exit(0);
         }
     }//GEN-LAST:event_itemSalirActionPerformed
@@ -223,27 +243,37 @@ public class MerchantMainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_itemConfiguracionActionPerformed
 
     private void itemEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEmpleadosActionPerformed
-        EmpleadosPanel form = new EmpleadosPanel(merchantConnection); 
+        EmpleadosPanel form = new EmpleadosPanel(merchantConnection);
         newInternalFrame(form, "Empleados");
     }//GEN-LAST:event_itemEmpleadosActionPerformed
 
-    public void aparecerMenuInicio(int code){
+    private void itemClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemClientesActionPerformed
+        ClientesPanel form = new ClientesPanel(merchantConnection);
+        newInternalFrame(form, "Clientes");
+    }//GEN-LAST:event_itemClientesActionPerformed
+
+    private void itemProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemProveedoresActionPerformed
+        ProveedoresPanel form = new ProveedoresPanel(merchantConnection);
+        newInternalFrame(form, "Proveedores");
+    }//GEN-LAST:event_itemProveedoresActionPerformed
+
+    public void aparecerMenuInicio(int code) {
         if (keyCode.codeIsPressed("windows", code)) {
             toggleShowMenuInicio();
         }
     }
-    
-    private void toggleShowMenuInicio () {
+
+    private void toggleShowMenuInicio() {
         int x = lblInicio.getBounds().x - 15;
-        int y = (lblInicio.getBounds().y - (lblInicio.getHeight()/2)) - (desktopMenu.getComponentCount() * 20);
-        if (!desktopMenu.isShowing()){
+        int y = (lblInicio.getBounds().y - (lblInicio.getHeight() / 2)) - (desktopMenu.getComponentCount() * 20);
+        if (!desktopMenu.isShowing()) {
             desktopMenu.show(lblInicio, x, y + 5);
         } else {
             desktopMenu.setFocusable(false);
             desktopMenu.setVisible(false);
         }
     }
-    
+
     private void newInternalFrame(final MerchantPanel panel, final String internalTitle) {
         final MerchantMainFrame frame = this;
         frame.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
@@ -252,13 +282,13 @@ public class MerchantMainFrame extends javax.swing.JFrame {
             public void run() {
                 final MerchantInternalFrame internal = new MerchantInternalFrame(internalTitle, panel, false, true, false, true);
                 final JButton botonInternal = new JButton(internalTitle);
-                botonInternal.addActionListener(new ActionListener(){
+                botonInternal.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent ae) {
                         try {
-                            if (internal.isVisible() && internal.isSelected()){
+                            if (internal.isVisible() && internal.isSelected()) {
                                 internal.setIcon(true);
-                            }else {
+                            } else {
                                 internal.setIcon(false);
                             }
                             internal.setSelected(true);
@@ -267,12 +297,14 @@ public class MerchantMainFrame extends javax.swing.JFrame {
                         }
                     }
                 });
-                internal.addInternalFrameListener(new InternalFrameListener(){
+                internal.addInternalFrameListener(new InternalFrameListener() {
                     @Override
-                    public void internalFrameOpened(InternalFrameEvent ife) {}
+                    public void internalFrameOpened(InternalFrameEvent ife) {
+                    }
 
                     @Override
-                    public void internalFrameClosing(InternalFrameEvent ife) {}
+                    public void internalFrameClosing(InternalFrameEvent ife) {
+                    }
 
                     @Override
                     public void internalFrameClosed(InternalFrameEvent ife) {
@@ -291,11 +323,17 @@ public class MerchantMainFrame extends javax.swing.JFrame {
                     }
 
                     @Override
-                    public void internalFrameActivated(InternalFrameEvent ife) {}
+                    public void internalFrameActivated(InternalFrameEvent ife) {
+                    }
 
                     @Override
-                    public void internalFrameDeactivated(InternalFrameEvent ife) {}
+                    public void internalFrameDeactivated(InternalFrameEvent ife) {
+                    }
                 });
+                
+                Dimension window = internal.getSize();  
+                internal.setLocation((screen.width - window.width) / 2, (screen.height - window.height) / 2);
+                //internal.setSize(300, 315);
                 internal.setVisible(true);
                 backgroundDesktop.add(internal);
                 barraInicio.add(botonInternal);
@@ -313,8 +351,10 @@ public class MerchantMainFrame extends javax.swing.JFrame {
     private javax.swing.JDesktopPane backgroundDesktop;
     private javax.swing.JToolBar barraInicio;
     private javax.swing.JPopupMenu desktopMenu;
+    private javax.swing.JMenuItem itemClientes;
     private javax.swing.JMenuItem itemConfiguracion;
     private javax.swing.JMenuItem itemEmpleados;
+    private javax.swing.JMenuItem itemProveedores;
     private javax.swing.JMenuItem itemSalir;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JLabel lblInicio;

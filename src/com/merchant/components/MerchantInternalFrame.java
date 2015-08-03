@@ -5,6 +5,8 @@
  */
 package com.merchant.components;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import javax.swing.JPanel;
 
 /**
@@ -23,7 +25,7 @@ public class MerchantInternalFrame extends javax.swing.JInternalFrame {
         this.setContentPane(panel);
         this.pack();
     }
-    
+
     public MerchantInternalFrame(String title, JPanel panel,
             boolean resizable, boolean closable, boolean maximizable, boolean iconable) {
         super(title, resizable, closable, maximizable, iconable);

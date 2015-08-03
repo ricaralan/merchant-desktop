@@ -18,7 +18,7 @@ public final class ConfigurationListModel extends AbstractListModel {
     public JTable table;
 
     public ConfigurationListModel(JPanel panel, JTable table) {
-        this.configurationNames = new String[]{"Empresa", "Regimen", "Sucursal", "Impuestos", "Lineas", "Tipo de comprobante", "Tipo de empleado", "Tipo de unidad", "Álmacen"};
+        this.configurationNames = new String[]{"Empresa", "Regimen", "Sucursal", "Impuestos", "Lineas", "Tipo de comprobante", "Tipo de empleado", "Tipo de unidad", "Álmacen", "Usuario"};
         this.configurationPathClass = new String[]{
             "com.merchant.views.configuration.EmpresasPanel",
             "com.merchant.views.configuration.RegimenPanel",
@@ -28,7 +28,8 @@ public final class ConfigurationListModel extends AbstractListModel {
             "com.merchant.views.configuration.TiposDeComprobantesPanel",
             "com.merchant.views.configuration.TiposDeEmpleadosPanel",
             "com.merchant.views.configuration.TiposDeUnidadesPanel",
-            "com.merchant.views.configuration.AlmacenesPanel"
+            "com.merchant.views.configuration.AlmacenesPanel",
+            "com.merchant.views.configuration.UsuariosPanel"
         };
         this.panel = panel;
         this.table = table;

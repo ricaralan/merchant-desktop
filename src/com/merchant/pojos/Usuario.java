@@ -5,6 +5,8 @@
  */
 package com.merchant.pojos;
 
+import com.merchant.utils.validate.annotations.NotEmpty;
+
 /**
  *
  * @author Eleazar
@@ -12,7 +14,15 @@ package com.merchant.pojos;
 public class Usuario {
 
     public int id_usuario;
-    public String usu_nombre;
-    public String usu_password;
+    @NotEmpty
+    public String nombre;
+    @NotEmpty
+    public String password;
     public int usu_status;
+    
+    public String status;
+   
+    public String old_password;
+    public String new_password;
+    public String conf_password;
 }

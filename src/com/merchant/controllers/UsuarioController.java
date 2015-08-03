@@ -23,8 +23,12 @@ public class UsuarioController extends MerchantController<Usuario> {
     }
 
     @Override
-    public boolean update(Connection connection, Usuario domicilio, Object id) {
-        return usuarioModel.update(connection, domicilio, id) == 1;
+    public boolean update(Connection connection, Usuario usuario, Object id) {
+        return usuarioModel.update(connection, usuario, id) == 1;
+    }
+    
+    public boolean updatePassword(Connection connection, Usuario usuario, Object id) {
+        return usuarioModel.updatePassword(connection, usuario, id) == 1;
     }
 
     @Override

@@ -16,9 +16,11 @@ public class VerifyProyect {
     File folders[];
 
     public VerifyProyect() {
-        folders = new File[1];
+        folders = new File[4];
         folders[0] = new File("images/empresas");
-        folders[0] = new File("images/empleados");
+        folders[1] = new File("images/empleados");
+        folders[2] = new File("images/clientes");
+        folders[3] = new File("images/proveedores");
     }
 
     public void verify() {

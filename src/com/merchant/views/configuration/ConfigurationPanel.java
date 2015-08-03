@@ -48,6 +48,7 @@ public class ConfigurationPanel extends MerchantPanel {
         menuJTable = new javax.swing.JPopupMenu();
         itemEditar = new javax.swing.JMenuItem();
         itemEliminar = new javax.swing.JMenuItem();
+        itemNuevoPassword = new javax.swing.JMenuItem();
         jScrollPane1 = new javax.swing.JScrollPane();
         listPrueba = new javax.swing.JList();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -69,6 +70,14 @@ public class ConfigurationPanel extends MerchantPanel {
             }
         });
         menuJTable.add(itemEliminar);
+
+        itemNuevoPassword.setText("Nueva Contraseña");
+        itemNuevoPassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemNuevoPasswordActionPerformed(evt);
+            }
+        });
+        menuJTable.add(itemNuevoPassword);
 
         listPrueba.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         listPrueba.setModel(new ConfigurationListModel(contentConfigurations, tableConfigurations));
@@ -146,7 +155,7 @@ public class ConfigurationPanel extends MerchantPanel {
     private void itemEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEditarActionPerformed
         int row = tableConfigurations.getSelectedRow();
         if (row != -1) {
-            ((AbstractConfigurationPanel)contentConfigurations.getComponent(0))
+            ((AbstractConfigurationPanel) contentConfigurations.getComponent(0))
                     .eventEditFromJtable(row);
         }
     }//GEN-LAST:event_itemEditarActionPerformed
@@ -154,7 +163,7 @@ public class ConfigurationPanel extends MerchantPanel {
     private void itemEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEliminarActionPerformed
         int row = tableConfigurations.getSelectedRow();
         if (row != -1) {
-            ((AbstractConfigurationPanel)contentConfigurations.getComponent(0))
+            ((AbstractConfigurationPanel) contentConfigurations.getComponent(0))
                     .eventDelFromJtable(row);
         }
     }//GEN-LAST:event_itemEliminarActionPerformed
@@ -162,17 +171,26 @@ public class ConfigurationPanel extends MerchantPanel {
     private void tableConfigurationsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableConfigurationsMouseClicked
         int row = tableConfigurations.getSelectedRow();
         if (row != -1) {
-            if (evt.getClickCount() > 1){
-                ((AbstractConfigurationPanel)contentConfigurations.getComponent(0))
+            if (evt.getClickCount() > 1) {
+                ((AbstractConfigurationPanel) contentConfigurations.getComponent(0))
                         .eventEditFromJtable(row);
             }
         }
     }//GEN-LAST:event_tableConfigurationsMouseClicked
 
+    private void itemNuevoPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemNuevoPasswordActionPerformed
+        int row = tableConfigurations.getSelectedRow();
+        if (row != -1) {
+            ((AbstractConfigurationPanel) contentConfigurations.getComponent(0))
+                    .eventNewPassFromJtable(row);
+        }
+    }//GEN-LAST:event_itemNuevoPasswordActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel contentConfigurations;
     private javax.swing.JMenuItem itemEditar;
     private javax.swing.JMenuItem itemEliminar;
+    private javax.swing.JMenuItem itemNuevoPassword;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JList listPrueba;

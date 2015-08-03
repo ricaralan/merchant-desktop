@@ -435,4 +435,9 @@ public class EmpresasPanel extends AbstractConfigurationPanel {
         }
         cleanDatosEmpresaForm();
     }
+
+    @Override
+    public void eventNewPassFromJtable(int row) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

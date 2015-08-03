@@ -16,7 +16,7 @@ public class UsuarioTableModel extends MerchantTableModel{
 
     public UsuarioTableModel() {
         objects = new ArrayList<>();
-        header = new String[]{"ID","Nombre","Contraseña","Status"};
+        header = new String[]{"Nombre","Contraseña","Status"};
         usuarioController = new UsuarioController();
     }
     
@@ -31,9 +31,9 @@ public class UsuarioTableModel extends MerchantTableModel{
         String value = "";
         Usuario usuario = (Usuario)objects.get(row);
         switch (column) {
-            case 0: value = usuario.usu_nombre;break;
-            case 1: value = usuario.usu_password;break;
-            case 2: value = String.valueOf(usuario.usu_status);break;
+            case 0: value = usuario.nombre;break;
+            case 1: value = usuario.password;break;
+            case 2: value = usuario.status;break;
         }
         return value;
     }

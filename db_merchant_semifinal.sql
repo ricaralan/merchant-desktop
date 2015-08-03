@@ -10,10 +10,11 @@ Target Server Type    : MYSQL
 Target Server Version : 50621
 File Encoding         : 65001
 
-Date: 2015-07-16 20:24:55
+Date: 2015-07-28 09:45:12
 */
-CREATE DATABASE db_merchant;
-USE db_merchant;
+
+CREATE DATABASE IF NOT EXISTS `db_merchant`;
+USE `db_merchant`;
 
 SET FOREIGN_KEY_CHECKS=0;
 
@@ -39,16 +40,19 @@ DROP TABLE IF EXISTS `cliente`;
 CREATE TABLE `cliente` (
   `id_cliente` int(11) NOT NULL AUTO_INCREMENT,
   `clte_rfc` varchar(15) NOT NULL,
-  `clte_nombre` varchar(145) NOT NULL,
-  `clte_tel` varchar(15) NOT NULL,
-  `clte_tel2` varchar(15) DEFAULT NULL,
+  `clte_nombre` varchar(45) NOT NULL,
+  `clte_apellidos` varchar(60) DEFAULT NULL,
+  `clte_telefono_celular` varchar(15) NOT NULL,
+  `clte_telefono_casa` varchar(15) DEFAULT NULL,
   `clte_email` varchar(45) NOT NULL,
-  `clte_fecha_alta` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `clte_status` tinyint(4) DEFAULT NULL,
-  `domicilio_fiscal_id_domicilio` int(11) NOT NULL,
+  `clte_alta` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `clte_status` tinyint(4) DEFAULT '1',
+  `domicilio_id_domicilio` int(11) NOT NULL,
+  `imagen_cliente` varchar(255) DEFAULT NULL,
+  `clte_baja` timestamp NULL ,
   PRIMARY KEY (`id_cliente`),
-  KEY `fk_cliente_domicilio_fiscal1_idx` (`domicilio_fiscal_id_domicilio`),
-  CONSTRAINT `fk_cliente_domicilio_fiscal1` FOREIGN KEY (`domicilio_fiscal_id_domicilio`) REFERENCES `domicilio` (`id_domicilio`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `fk_cliente_domicilio_fiscal1_idx` (`domicilio_id_domicilio`),
+  CONSTRAINT `fk_cliente_domicilio_fiscal1` FOREIGN KEY (`domicilio_id_domicilio`) REFERENCES `domicilio` (`id_domicilio`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -155,12 +159,16 @@ CREATE TABLE `domicilio` (
   `dom_estado` varchar(45) DEFAULT NULL,
   `dom_pais` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id_domicilio`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of domicilio
 -- ----------------------------
 INSERT INTO `domicilio` VALUES ('1', 'Av. Avila Camacho ', '1010', '02', 'Obrero Campesino', '91000', 'Xalapa', 'Xalapa', 'Veracruz', 'México');
+INSERT INTO `domicilio` VALUES ('2', 'Diana Laura Riojas de Colosio', '19', '19', '23 de Marzo ', '91153', 'Xalapa', 'Xalapa', 'Veracruz', 'México');
+INSERT INTO `domicilio` VALUES ('3', 'Manuel Armenta', '11', '11', 'Centro', '91450', 'Plan de las Hayas', 'Juchique de Ferrer', 'Veracruz', 'México');
+INSERT INTO `domicilio` VALUES ('4', 'Manuel Armenta', '11', '11', 'Centro', '91450', 'Plan de las Hayas', 'Juchique de Ferrer', 'Veracruz', 'México');
+INSERT INTO `domicilio` VALUES ('5', 'Calle del Proveedor', '12', '12', 'Colonia del Proveedor', '91000', 'Localidad del Proveedor', 'Mpio. del Proveedor', 'Estado del Proveedor', 'México');
 
 -- ----------------------------
 -- Table structure for empleado
@@ -178,7 +186,7 @@ CREATE TABLE `empleado` (
   `emp_salario_diario` double NOT NULL,
   `emp_dias_laborales` int(11) DEFAULT NULL,
   `emp_alta` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `usuario_id_usuario` int(11) NULL DEFAULT NULL,
+  `usuario_id_usuario` int(11) DEFAULT NULL,
   `domicilio_id_domicilio` int(11) NOT NULL,
   `sucursal_id_sucursal` int(11) NOT NULL,
   `emp_baja` timestamp NULL DEFAULT NULL,
@@ -300,13 +308,16 @@ CREATE TABLE `proveedor` (
   `id_proveedor` int(11) NOT NULL AUTO_INCREMENT,
   `prov_rfc` varchar(15) NOT NULL,
   `prov_nombre` varchar(45) NOT NULL,
-  `prov_tel` varchar(15) DEFAULT NULL,
-  `prov_tel2` varchar(15) DEFAULT NULL,
-  `prov_email` varchar(45) DEFAULT NULL,
-  `domicilio_fiscal_id_domicilio` int(11) NOT NULL,
-  PRIMARY KEY (`id_proveedor`),
-  KEY `fk_proveedor_domicilio_fiscal1_idx` (`domicilio_fiscal_id_domicilio`),
-  CONSTRAINT `fk_proveedor_domicilio_fiscal1` FOREIGN KEY (`domicilio_fiscal_id_domicilio`) REFERENCES `domicilio` (`id_domicilio`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  `prov_apellidos` varchar(60) DEFAULT NULL,
+  `prov_telefono_celular` varchar(15) NOT NULL,
+  `prov_telefono_casa` varchar(15) DEFAULT NULL,
+  `prov_email` varchar(45) NOT NULL,
+  `prov_alta` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `prov_status` tinyint(4) DEFAULT '1',
+  `domicilio_id_domicilio` int(11) NOT NULL,
+  `imagen_proveedor` varchar(255) DEFAULT NULL,
+  `prov_baja` timestamp NULL ,
+  PRIMARY KEY (`id_proveedor`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -335,7 +346,7 @@ INSERT INTO `regimen` VALUES ('5', 'INCORPORACION FISCAL');
 INSERT INTO `regimen` VALUES ('6', 'PERSONAS MORALES DEL R�GIMEN GENERAL');
 INSERT INTO `regimen` VALUES ('7', 'PERSONAS MORALES CON FINES NO LUCRATIVOS');
 INSERT INTO `regimen` VALUES ('8', 'ASOCIACIONES RELIGIOSAS');
-INSERT INTO `regimen` VALUES ('9', 'R�GIMEN FISCAL DE EXTRANJEROS QUE PERCIBEN INGRESO');
+INSERT INTO `regimen` VALUES ('9', 'RÉGIMEN FISCAL DE EXTRANJEROS QUE PERCIBEN INGRESO');
 
 -- ----------------------------
 -- Table structure for sucursal
@@ -444,7 +455,7 @@ CREATE TABLE `usuario` (
 -- ----------------------------
 -- Records of usuario
 -- ----------------------------
-INSERT INTO `usuario` VALUES ('1', 'admin', 'admin', '1');
+INSERT INTO `usuario` VALUES ('1', 'admin', 'sFuFOyugbgHGcRb4sHzcdQ==', '1');
 
 -- ----------------------------
 -- Table structure for venta

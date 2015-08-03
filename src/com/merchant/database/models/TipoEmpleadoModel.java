@@ -22,7 +22,7 @@ public class TipoEmpleadoModel extends MerchantModel<TipoEmpleado> {
     @Override
     public List<TipoEmpleado> getAll(Connection connection) {
         List<TipoEmpleado> tipoEmpleados = new ArrayList<>();
-        String query = "SELECT * FROM tipo_empleado";
+        String query = "SELECT * FROM tipo_empleado WHERE tipo_empleado <> 'Administrador'";
         try {
             Statement statement = connection.createStatement();
             ResultSet todosLosTiposEmpleados = statement.executeQuery(query);

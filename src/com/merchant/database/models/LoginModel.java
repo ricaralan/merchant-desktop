@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import com.merchant.utils.Encriptation;
 
 /**
  *
@@ -13,11 +14,12 @@ import java.sql.Statement;
 public class LoginModel {
     
     private String query;
-
+    Encriptation encriptation = new Encriptation();
     public User existeUsuario(Connection connection, String user, String password) {
         // TODO mejorar la consulta...
         query = "SELECT * FROM usuario WHERE "
-                + "usu_nombre = '" + user + "' AND usu_password = '" + password + "' ";
+                + "usu_nombre = '" + user + "' AND usu_password = '" 
+                + encriptation.encrypt(password) + "' ";
         User usuario = null;
         try {
             Statement statement = connection.createStatement();
