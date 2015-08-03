@@ -6,6 +6,7 @@
 package com.merchant.views.configuration;
 
 import com.merchant.components.listModels.ConfigurationListModel;
+import com.merchant.components.tableModels.ZebraJTable;
 import com.merchant.database.MerchantConnection;
 import com.merchant.views.MerchantPanel;
 import java.lang.reflect.InvocationTargetException;
@@ -52,7 +53,7 @@ public class ConfigurationPanel extends MerchantPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         listPrueba = new javax.swing.JList();
         jScrollPane3 = new javax.swing.JScrollPane();
-        tableConfigurations = new javax.swing.JTable();
+        tableConfigurations = new ZebraJTable();
         contentConfigurations = new javax.swing.JPanel();
 
         itemEditar.setText("Editar");

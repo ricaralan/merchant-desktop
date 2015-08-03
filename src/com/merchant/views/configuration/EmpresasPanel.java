@@ -327,7 +327,7 @@ public class EmpresasPanel extends AbstractConfigurationPanel {
         txtWebEmpresa.setText(empresa.emp_web);
         txtMail.setText(empresa.emp_email);
         setIdRegimenFiscal(empresa);
-        if (empresa.emp_logo.length() > 1) {
+        if (empresa.emp_logo != null && empresa.emp_logo.length() > 1) {
             photo.setPhoto(empresa.emp_logo);
             photo.setPhotoJPanel(panelFoto);
         }
@@ -415,25 +415,33 @@ public class EmpresasPanel extends AbstractConfigurationPanel {
 
     @Override
     public void eventEditFromJtable(int row) {
-        Empresa empresa = (Empresa) ((MerchantTableModel) tableEmpresas.getModel()).getObjectByRow(row);
-        setDatosEmpresaForm(empresa);
-        btnOpcionForm.setText("Editar");
-        idActualizar = empresa.id_empresa;
-        crearEmpresa = false;
+        try{
+            Empresa empresa = (Empresa) ((MerchantTableModel) tableEmpresas.getModel()).getObjectByRow(row);
+            setDatosEmpresaForm(empresa);
+            btnOpcionForm.setText("Editar");
+            idActualizar = empresa.id_empresa;
+            crearEmpresa = false;
+        }catch(Exception e) {
+            System.err.println(e);
+        }
     }
 
     @Override
     public void eventDelFromJtable(int row) {
-        Empresa empresa = (Empresa) ((MerchantTableModel) tableEmpresas.getModel()).getObjectByRow(row);
-        int res = JOptionPane.showConfirmDialog(null, "¿Esta seguro de eliminar la empresa \"" + empresa.emp_nombre + "\"?");
-        if (res == JOptionPane.OK_OPTION) {
-            if (empresaController.delete(connection, empresa.id_empresa)) {
-                ((EmpresaTableModel) tableEmpresas.getModel()).initData(connection);
-            } else {
-                JOptionPane.showMessageDialog(null, "Por favor intente más tarde...", "ERROR AL ELIMINAR", 1);
+        try{
+            Empresa empresa = (Empresa) ((MerchantTableModel) tableEmpresas.getModel()).getObjectByRow(row);
+            int res = JOptionPane.showConfirmDialog(null, "¿Esta seguro de eliminar la empresa \"" + empresa.emp_nombre + "\"?");
+            if (res == JOptionPane.OK_OPTION) {
+                if (empresaController.delete(connection, empresa.id_empresa)) {
+                    ((EmpresaTableModel) tableEmpresas.getModel()).initData(connection);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Por favor intente más tarde...", "ERROR AL ELIMINAR", 1);
+                }
             }
-        }
-        cleanDatosEmpresaForm();
+            cleanDatosEmpresaForm();
+        } catch(Exception e) {
+            System.err.println(e);
+        } 
     }
 
     @Override

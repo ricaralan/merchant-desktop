@@ -53,10 +53,8 @@ public class EmpleadosPanel extends MerchantPanel {
         photo = new Photo();
         photo.setBasePath("/images/empleados/");
         tableEmpleados.setModel(new EmpleadoTableModel());
-        comboEmpleado.setModel(new MerchantComboSQL(connection,
-                new TipoEmpleadoModel(), "tipo_empleado"));
-        comboSucursal.setModel(new MerchantComboSQL(connection,
-                new SucursalModel(), "suc_nombre"));
+        comboEmpleado.setModel(new MerchantComboSQL(connection,new TipoEmpleadoModel(), "tipo_empleado"));
+        comboSucursal.setModel(new MerchantComboSQL(connection, new SucursalModel(), "suc_nombre"));
         initDataTable();
     }
 
@@ -204,7 +202,7 @@ public class EmpleadosPanel extends MerchantPanel {
         );
         panelFotoLayout.setVerticalGroup(
             panelFotoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 94, Short.MAX_VALUE)
+            .addGap(0, 93, Short.MAX_VALUE)
         );
 
         btnCargarImagen.setText("Subir");
@@ -283,7 +281,7 @@ public class EmpleadosPanel extends MerchantPanel {
                     .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCargarImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtTelCasa, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Dirección Empleado", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(102, 153, 255)));
@@ -424,15 +422,15 @@ public class EmpleadosPanel extends MerchantPanel {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtSalario)
-                    .addComponent(jLabel27, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE))
+                    .addComponent(jLabel27, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE))
                 .addGap(10, 10, 10)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtDiasLaborales)
-                    .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE))
+                    .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE))
                 .addGap(10, 10, 10)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(comboEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE))
+                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -588,8 +586,10 @@ public class EmpleadosPanel extends MerchantPanel {
     private void btnOpcionFormActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpcionFormActionPerformed
         Border borderBlack = BorderFactory.createLineBorder(Color.black, 1);
         Border borderOrange = BorderFactory.createLineBorder(Color.orange, 2);
-        if (txtNombre.getText().isEmpty() && txtApellidos.getText().isEmpty()
-                && txtRFC.getText().isEmpty()) {
+        if (txtNombre.getText().isEmpty() || txtApellidos.getText().isEmpty() ||
+            txtRFC.getText().isEmpty()    || txtCalle.getText().isEmpty() ||
+            txtNoExt.getText().isEmpty()  || txtCP.getText().isEmpty()    ||
+            txtColonia.getText().isEmpty()) {
             txtNombre.setBorder(borderOrange);
             txtApellidos.setBorder(borderOrange);
             txtRFC.setBorder(borderOrange);
@@ -667,21 +667,25 @@ public class EmpleadosPanel extends MerchantPanel {
 
     private synchronized Empleado getDatosEmpleado() {
         Empleado empleado = new Empleado();
-        empleado.rfc = txtRFC.getText();
-        empleado.tipo_empleado_id_tipo_empleado = getIdTipoEmpleado();
-        empleado.nombre = txtNombre.getText();
-        empleado.emp_apellidos = txtApellidos.getText();
-        empleado.emp_telefono_celular = txtTelCelular.getText();
-        empleado.emp_telefono_casa = txtTelCasa.getText();
-        empleado.email = txtEmail.getText();
-        empleado.emp_salario_diario = Float.parseFloat(txtSalario.getText());
-        empleado.emp_dias_laborales = Float.parseFloat(txtDiasLaborales.getText());
-        //empleado.emp_alta = fecha();
-        //empleado.usuario_idUsuario = getIdCreateUsuario();
-        empleado.domicilio_id_domicilio = idActualizarDomicilio;
-        empleado.sucursal_id_sucursal = getIdSucursal();
-        empleado.emp_status = 1;
-        empleado.imagen_empleado = photo.getPosiblePathPhoto();
+        try {
+            empleado.rfc = txtRFC.getText();
+            empleado.tipo_empleado_id_tipo_empleado = getIdTipoEmpleado();
+            empleado.sucursal_id_sucursal = getIdSucursal();
+            empleado.domicilio_id_domicilio = idActualizarDomicilio;
+            empleado.nombre = txtNombre.getText();
+            empleado.emp_apellidos = txtApellidos.getText();
+            empleado.emp_telefono_celular = txtTelCelular.getText();
+            empleado.emp_telefono_casa = txtTelCasa.getText();
+            empleado.email = txtEmail.getText();
+            //empleado.emp_alta = fecha();
+            //empleado.usuario_idUsuario = getIdCreateUsuario();
+            empleado.emp_status = 1;
+            empleado.imagen_empleado = photo.getPosiblePathPhoto();
+            empleado.emp_salario_diario = Float.parseFloat(txtSalario.getText());
+            empleado.emp_dias_laborales = Float.parseFloat(txtDiasLaborales.getText());
+        } catch(Exception e) {
+            System.err.println(e);
+        }
         return empleado;
     }
 
